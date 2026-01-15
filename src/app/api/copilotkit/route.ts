@@ -6,12 +6,27 @@ import {
 import OpenAI from "openai";
 import { NextRequest } from "next/server";
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const serviceAdapter = new OpenAIAdapter({ openai });
+// Lazy initialization to avoid build-time errors
+let openai: OpenAI | null = null;
+let serviceAdapter: OpenAIAdapter | null = null;
+let runtime: CopilotRuntime | null = null;
 
-const runtime = new CopilotRuntime();
+function getRuntime() {
+  if (!openai) {
+    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  if (!serviceAdapter) {
+    serviceAdapter = new OpenAIAdapter({ openai });
+  }
+  if (!runtime) {
+    runtime = new CopilotRuntime();
+  }
+  return { runtime, serviceAdapter };
+}
 
 export const POST = async (req: NextRequest) => {
+  const { runtime, serviceAdapter } = getRuntime();
+
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     runtime,
     serviceAdapter,
