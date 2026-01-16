@@ -90,15 +90,19 @@ RULES:
         console.log("🎤 Connecting with configId:", configId);
         console.log("🎤 Session:", sessionId);
 
-        // Connect with sessionSettings (matches lost.london-v2 pattern)
+        // Connect with sessionSettings (matches relocation.quest pattern)
         await connect({
           auth: { type: 'accessToken' as const, value: accessToken },
           configId: configId,
           sessionSettings: {
             type: 'session_settings' as const,
-            systemPrompt,
+            variables: {
+              user_id: userId || '',
+              first_name: userName || '',
+              is_authenticated: userName ? 'true' : 'false',
+            },
             customSessionId: sessionId,
-          },
+          } as any,
         });
 
         console.log("🎤 Connected successfully");
