@@ -23,6 +23,9 @@ from pydantic_ai.ag_ui import StateDeps
 from zep_cloud.client import Zep
 from zep_cloud import NotFoundError
 
+# Neon PostgreSQL
+import psycopg2
+
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv()
@@ -31,6 +34,10 @@ load_dotenv()
 ZEP_API_KEY = os.environ.get("ZEP_API_KEY")
 ZEP_GRAPH_ID = "stamp_duty_calculator"
 zep_client = Zep(api_key=ZEP_API_KEY) if ZEP_API_KEY else None
+
+# Initialize Neon database
+DATABASE_URL = os.environ.get("DATABASE_URL")
+print(f"[INIT] Database URL configured: {bool(DATABASE_URL)}", file=sys.stderr)
 
 # ============================================================================
 # ZEP USER MEMORY HELPERS
@@ -303,15 +310,40 @@ Use this context to personalize your responses.
   - Additional properties: +4% surcharge
 
 ## TOOLS AVAILABLE
-- `calculate_stamp_duty`: Calculate stamp duty for a specific scenario
+
+### Calculation Tools
+- `calculate_stamp_duty_tool`: Calculate stamp duty for a specific scenario
 - `compare_buyer_types`: Compare costs across different buyer types
 
+### User Profile & Memory Tools
+- `get_user_profile`: Get user's saved preferences and calculation history
+- `save_user_preference`: Save user preferences (region, buyer_type, price_range)
+- `save_calculation`: Save a calculation to user's history
+- `get_zep_memory`: Get what you remember about the user from past conversations
+
 ## BEHAVIOR
-1. When user mentions a price/location, use calculate_stamp_duty immediately
+
+### When calculating:
+1. When user mentions a price/location, use calculate_stamp_duty_tool immediately
 2. Always explain the breakdown clearly
-3. Offer to compare scenarios (e.g., "Want to see what you'd pay as a first-time buyer?")
-4. Be concise but accurate
-5. Mention important caveats (e.g., first-time buyer limits)
+3. Offer to compare scenarios
+4. After calculating, offer to save it: "Want me to save this calculation?"
+
+### When user shares preferences:
+- "I'm a first-time buyer" → save_user_preference("buyer_type", "first-time")
+- "I'm looking in Scotland" → save_user_preference("preferred_region", "scotland")
+- "My budget is around 500k" → save_user_preference("price_range", "500000")
+
+### When user asks about their profile:
+- "What do you know about me?" → get_user_profile()
+- "What do you remember?" → get_zep_memory()
+- "My past calculations" → get_user_profile() and show calculation_history
+
+### Important:
+- Be concise but accurate
+- Mention important caveats (e.g., first-time buyer £625k limit)
+- Use the user's name when you know it
+- Reference their saved preferences when relevant
 """
 
 
@@ -382,6 +414,269 @@ async def compare_buyer_types(
         "comparisons": comparisons,
         "first_time_buyer_savings": savings
     }
+
+
+# ============================================================================
+# USER PROFILE & MEMORY TOOLS
+# ============================================================================
+
+@agent.tool
+async def get_user_profile(ctx: RunContext[StateDeps[AppState]]) -> dict:
+    """
+    Get the current user's profile information from Neon database and Zep memory.
+    Call this when user asks 'what do you know about me', 'my profile', 'my preferences', etc.
+
+    Returns their name, saved preferences (region, buyer type), and any Zep memory facts.
+    """
+    state = ctx.deps.state
+    user = state.user
+
+    if not user or not user.id:
+        return {"logged_in": False, "message": "User is not logged in. Sign in to save your preferences."}
+
+    profile = {
+        "logged_in": True,
+        "user_id": user.id,
+        "name": user.name or "Unknown",
+        "preferences": {},
+        "calculation_history": [],
+        "zep_facts": []
+    }
+
+    # Fetch from Neon database
+    if DATABASE_URL:
+        try:
+            conn = psycopg2.connect(DATABASE_URL)
+            cur = conn.cursor()
+
+            # Get user preferences
+            cur.execute("""
+                SELECT item_type, value, metadata, created_at
+                FROM user_profile_items
+                WHERE user_id = %s
+                ORDER BY created_at DESC
+            """, (user.id,))
+            items = cur.fetchall()
+
+            for item_type, value, metadata, created_at in items:
+                if item_type in ['preferred_region', 'buyer_type', 'price_range']:
+                    profile["preferences"][item_type] = value
+                elif item_type == 'calculation':
+                    profile["calculation_history"].append({
+                        "value": value,
+                        "metadata": metadata,
+                        "date": str(created_at)
+                    })
+
+            cur.close()
+            conn.close()
+            print(f"[TOOL] get_user_profile: Found {len(items)} items for user {user.id[:8]}...", file=sys.stderr)
+        except Exception as e:
+            print(f"[TOOL] get_user_profile DB error: {e}", file=sys.stderr)
+
+    # Fetch Zep memory facts
+    if zep_client and user.id:
+        try:
+            context = zep_client.user.get_context(user.id, min_score=0.5)
+            if context and context.facts:
+                profile["zep_facts"] = [f.fact for f in context.facts[:5]]
+        except Exception as e:
+            print(f"[TOOL] get_user_profile Zep error: {e}", file=sys.stderr)
+
+    return profile
+
+
+@agent.tool
+async def save_user_preference(
+    ctx: RunContext[StateDeps[AppState]],
+    preference_type: str,
+    value: str
+) -> dict:
+    """
+    Save a user preference to their profile in Neon database.
+
+    Use this when user mentions their preferences:
+    - "I'm a first-time buyer" → save_user_preference("buyer_type", "first-time")
+    - "I'm looking in Scotland" → save_user_preference("preferred_region", "scotland")
+    - "My budget is 500k" → save_user_preference("price_range", "500000")
+
+    Args:
+        preference_type: One of 'preferred_region', 'buyer_type', 'price_range'
+        value: The value to save
+
+    Returns:
+        Confirmation of saved preference
+    """
+    state = ctx.deps.state
+    user = state.user
+
+    if not user or not user.id:
+        return {"saved": False, "message": "User not logged in. Sign in to save preferences."}
+
+    if not DATABASE_URL:
+        return {"saved": False, "message": "Database not configured"}
+
+    # Normalize values
+    VALID_REGIONS = ['england', 'scotland', 'wales']
+    VALID_BUYER_TYPES = ['standard', 'first-time', 'additional']
+
+    normalized_value = value.lower().strip()
+
+    if preference_type == "preferred_region":
+        if normalized_value not in VALID_REGIONS:
+            return {"saved": False, "error": f"Invalid region. Use: {', '.join(VALID_REGIONS)}"}
+        normalized_value = normalized_value.title()
+
+    elif preference_type == "buyer_type":
+        # Handle variations
+        if 'first' in normalized_value:
+            normalized_value = 'first-time'
+        elif 'additional' in normalized_value or 'second' in normalized_value:
+            normalized_value = 'additional'
+        else:
+            normalized_value = 'standard'
+
+    elif preference_type == "price_range":
+        # Extract number from price
+        import re
+        numbers = re.findall(r'[\d,]+', normalized_value.replace('£', ''))
+        if numbers:
+            normalized_value = numbers[0].replace(',', '')
+
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()
+
+        # Check for existing preference of same type
+        cur.execute("""
+            SELECT id, value FROM user_profile_items
+            WHERE user_id = %s AND item_type = %s
+            LIMIT 1
+        """, (user.id, preference_type))
+        existing = cur.fetchone()
+
+        old_value = None
+        if existing:
+            old_value = existing[1]
+            # Delete old value (single-value fields)
+            cur.execute("""
+                DELETE FROM user_profile_items
+                WHERE user_id = %s AND item_type = %s
+            """, (user.id, preference_type))
+
+        # Insert new value
+        cur.execute("""
+            INSERT INTO user_profile_items (user_id, item_type, value, metadata, confirmed)
+            VALUES (%s, %s, %s, %s, %s)
+            ON CONFLICT (user_id, item_type, value) DO UPDATE SET updated_at = NOW()
+            RETURNING id
+        """, (user.id, preference_type, normalized_value, '{"source": "voice"}', True))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        print(f"[TOOL] save_user_preference: {preference_type}={normalized_value} for user {user.id[:8]}...", file=sys.stderr)
+
+        if old_value:
+            return {"saved": True, "preference": preference_type, "value": normalized_value, "replaced": old_value}
+        return {"saved": True, "preference": preference_type, "value": normalized_value}
+
+    except Exception as e:
+        print(f"[TOOL] save_user_preference error: {e}", file=sys.stderr)
+        return {"saved": False, "error": str(e)}
+
+
+@agent.tool
+async def save_calculation(
+    ctx: RunContext[StateDeps[AppState]],
+    price: float,
+    region: str,
+    buyer_type: str,
+    stamp_duty: float
+) -> dict:
+    """
+    Save a stamp duty calculation to the user's history.
+    Call this AFTER calculating stamp duty to save it for the user.
+
+    Args:
+        price: Property price
+        region: Region (england, scotland, wales)
+        buyer_type: Buyer type (standard, first-time, additional)
+        stamp_duty: Calculated stamp duty amount
+
+    Returns:
+        Confirmation of saved calculation
+    """
+    state = ctx.deps.state
+    user = state.user
+
+    if not user or not user.id:
+        return {"saved": False, "message": "User not logged in"}
+
+    if not DATABASE_URL:
+        return {"saved": False, "message": "Database not configured"}
+
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()
+
+        metadata = json.dumps({
+            "price": price,
+            "region": region,
+            "buyer_type": buyer_type,
+            "stamp_duty": stamp_duty,
+            "source": "voice"
+        })
+
+        cur.execute("""
+            INSERT INTO user_profile_items (user_id, item_type, value, metadata, confirmed)
+            VALUES (%s, 'calculation', %s, %s, TRUE)
+        """, (user.id, f"£{price:,.0f} in {region.title()}", metadata))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        print(f"[TOOL] save_calculation: £{price:,.0f} {region} for user {user.id[:8]}...", file=sys.stderr)
+        return {"saved": True, "calculation": f"£{price:,.0f} property in {region.title()}"}
+
+    except Exception as e:
+        print(f"[TOOL] save_calculation error: {e}", file=sys.stderr)
+        return {"saved": False, "error": str(e)}
+
+
+@agent.tool
+async def get_zep_memory(ctx: RunContext[StateDeps[AppState]]) -> dict:
+    """
+    Get what the AI remembers about the user from Zep knowledge graph.
+    Call this when user asks 'what do you remember', 'what do you know about me'.
+
+    Returns facts extracted from past conversations.
+    """
+    state = ctx.deps.state
+    user = state.user
+
+    if not user or not user.id:
+        return {"has_memory": False, "message": "Sign in to enable memory."}
+
+    if not zep_client:
+        return {"has_memory": False, "message": "Memory not configured."}
+
+    try:
+        context = zep_client.user.get_context(user.id, min_score=0.3)
+        if context and context.facts:
+            facts = [{"fact": f.fact, "score": f.score} for f in context.facts[:10]]
+            return {
+                "has_memory": True,
+                "user_id": user.id,
+                "facts_count": len(facts),
+                "facts": facts
+            }
+        return {"has_memory": True, "facts_count": 0, "message": "No memories yet. Keep chatting!"}
+    except Exception as e:
+        print(f"[TOOL] get_zep_memory error: {e}", file=sys.stderr)
+        return {"has_memory": False, "error": str(e)}
 
 
 # ============================================================================

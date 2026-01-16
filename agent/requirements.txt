@@ -5,3 +5,4 @@ pydantic-ai-slim[ag-ui]>=0.1.0
 pydantic-ai-slim[google]>=0.1.0
 python-dotenv>=1.0.0
 zep-cloud>=2.0.0
+psycopg2-binary>=2.9.0
