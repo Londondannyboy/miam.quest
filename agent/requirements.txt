@@ -1,0 +1,6 @@
+uvicorn>=0.32.0
+fastapi>=0.115.0
+starlette>=0.38.0
+pydantic-ai-slim[ag-ui]>=0.1.0
+pydantic-ai-slim[google]>=0.1.0
+python-dotenv>=1.0.0
