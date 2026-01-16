@@ -234,12 +234,21 @@ def calculate_stamp_duty(
 # PYDANTIC AI AGENT
 # ============================================================================
 
+class UserProfile(BaseModel):
+    """User profile for personalization."""
+    id: Optional[str] = None
+    name: Optional[str] = None
+    email: Optional[str] = None
+
+
 class AppState(BaseModel):
     """Shared state between frontend and agent."""
     current_price: float = 0
     current_region: str = "england"
     current_buyer_type: str = "standard"
     last_calculation: Optional[dict] = None
+    user: Optional[UserProfile] = None
+    zep_context: str = ""
 
 
 # Create the agent
@@ -250,8 +259,32 @@ agent = Agent(
 
 
 @agent.system_prompt
-async def base_system_prompt() -> str:
-    return """You are an expert UK stamp duty assistant. Help users understand their stamp duty obligations when buying property in the UK.
+async def dynamic_system_prompt(ctx: RunContext[StateDeps[AppState]]) -> str:
+    """Build system prompt with user context."""
+    state = ctx.deps.state
+
+    # Build user context section
+    user_section = ""
+    if state.user and state.user.name:
+        user_section = f"""
+## USER CONTEXT
+- **Name**: {state.user.name}
+- **User ID**: {state.user.id or 'Unknown'}
+When greeting or addressing the user, use their name: {state.user.name}
+"""
+
+    # Build Zep memory section
+    memory_section = ""
+    if state.zep_context:
+        memory_section = f"""
+## MEMORY (What I know about this user)
+{state.zep_context}
+Use this context to personalize your responses.
+"""
+
+    return f"""You are an expert UK stamp duty assistant. Help users understand their stamp duty obligations when buying property in the UK.
+{user_section}
+{memory_section}
 
 ## KEY KNOWLEDGE
 - **England & Northern Ireland**: SDLT (Stamp Duty Land Tax)
@@ -516,11 +549,65 @@ async def stream_sse_response(content: str, msg_id: str):
     yield "data: [DONE]\n\n"
 
 
+async def run_agent_for_clm(user_message: str, state: AppState, conversation_history: list = None) -> str:
+    """
+    Run the Pydantic AI agent and return text response for CLM.
+    This gives voice the SAME brain as CopilotKit chat.
+    """
+    try:
+        from pydantic_ai.messages import ModelMessage, ModelRequest, UserPromptPart, ModelResponse, TextPart
+
+        deps = StateDeps(state)
+
+        # Build message history for multi-turn context
+        message_history = []
+        if conversation_history:
+            for msg in conversation_history[:-1]:  # Exclude current message
+                role = msg.get("role", "user")
+                content = msg.get("content", "")
+                if isinstance(content, str) and content.strip():
+                    if role == "user":
+                        message_history.append(
+                            ModelRequest(parts=[UserPromptPart(content=content)])
+                        )
+                    elif role == "assistant":
+                        message_history.append(
+                            ModelResponse(parts=[TextPart(content=content)])
+                        )
+
+        print(f"[CLM] Running agent with {len(message_history)} history messages", file=sys.stderr)
+        print(f"[CLM] State: user={state.user}, zep_context={state.zep_context[:50] if state.zep_context else 'None'}...", file=sys.stderr)
+
+        # Run the agent with full context
+        result = await agent.run(
+            user_message,
+            deps=deps,
+            message_history=message_history if message_history else None
+        )
+
+        # Extract text from result
+        if hasattr(result, 'data') and result.data:
+            return str(result.data)
+        elif hasattr(result, 'output'):
+            return str(result.output)
+        else:
+            return str(result)
+
+    except Exception as e:
+        print(f"[CLM] Agent error: {e}", file=sys.stderr)
+        import traceback
+        traceback.print_exc(file=sys.stderr)
+        return ""
+
+
 @main_app.post("/chat/completions")
 async def clm_endpoint(request: Request):
-    """OpenAI-compatible endpoint for Hume EVI voice interface with Zep memory."""
+    """
+    OpenAI-compatible CLM endpoint for Hume EVI voice.
+    This gives voice the SAME brain as CopilotKit chat - full agent with tools.
+    """
     import asyncio
-    import re
+    import time
 
     global _last_clm_request
 
@@ -529,7 +616,6 @@ async def clm_endpoint(request: Request):
         messages = body.get("messages", [])
 
         # Store for debugging
-        import time
         _last_clm_request = {
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
             "body_keys": list(body.keys()),
@@ -541,21 +627,15 @@ async def clm_endpoint(request: Request):
             "messages": [{"role": m.get("role"), "content_preview": str(m.get("content", ""))[:500]} for m in messages]
         }
 
-        # DEBUG: Log session info
-        print(f"[CLM] === REQUEST DEBUG ===", file=sys.stderr)
-        print(f"[CLM] body keys: {list(body.keys())}", file=sys.stderr)
-        print(f"[CLM] custom_session_id: {body.get('custom_session_id')}", file=sys.stderr)
-        print(f"[CLM] customSessionId: {body.get('customSessionId')}", file=sys.stderr)
+        print(f"[CLM] === REQUEST ===", file=sys.stderr)
 
         # Extract session ID (format: "userName|userId")
         session_id = extract_session_id(request, body)
-        print(f"[CLM] Extracted session_id: {session_id}", file=sys.stderr)
-
         parsed = parse_session_id(session_id)
         user_name = parsed["user_name"]
         user_id = parsed["user_id"]
 
-        # Fallback: extract from system messages if not in session_id
+        # Fallback: extract from system messages
         if not user_name or not user_id:
             msg_parsed = extract_user_from_messages(messages)
             if not user_name and msg_parsed["user_name"]:
@@ -563,7 +643,7 @@ async def clm_endpoint(request: Request):
             if not user_id and msg_parsed["user_id"]:
                 user_id = msg_parsed["user_id"]
 
-        print(f"[CLM] Final parsed: name={user_name}, id={user_id}", file=sys.stderr)
+        print(f"[CLM] User: name={user_name}, id={user_id}", file=sys.stderr)
 
         # Extract user message
         user_msg = ""
@@ -575,61 +655,51 @@ async def clm_endpoint(request: Request):
         if not user_msg:
             user_msg = "Hello"
 
-        print(f"[CLM] User message: {user_msg[:80]}...", file=sys.stderr)
+        print(f"[CLM] Message: {user_msg[:80]}...", file=sys.stderr)
 
-        # Get user context from Zep
-        user_context = ""
+        # Get Zep context for the user
+        zep_context = ""
         if user_id and zep_client:
             try:
                 await get_or_create_zep_user(user_id, None, user_name)
-                user_context = await get_user_context(user_id)
-                print(f"[CLM] Zep context: {user_context[:100]}..." if user_context else "[CLM] No Zep context", file=sys.stderr)
+                zep_context = await get_user_context(user_id)
+                if zep_context:
+                    print(f"[CLM] Zep context: {zep_context[:100]}...", file=sys.stderr)
             except Exception as e:
                 print(f"[CLM] Zep error: {e}", file=sys.stderr)
 
-        # Handle "what is my name" question directly
-        user_lower = user_msg.lower()
-        if any(phrase in user_lower for phrase in ['my name', 'who am i', "what's my name", 'do you know me']):
+        # Build state with user profile and Zep context
+        user_profile = UserProfile(
+            id=user_id if user_id else None,
+            name=user_name if user_name else None,
+        ) if user_id or user_name else None
+
+        state = AppState(
+            current_price=0,
+            current_region="england",
+            current_buyer_type="standard",
+            last_calculation=None,
+            user=user_profile,
+            zep_context=zep_context
+        )
+
+        # Run the actual Pydantic AI agent with full context
+        response_text = await run_agent_for_clm(user_msg, state, conversation_history=messages)
+
+        # Fallback if agent fails
+        if not response_text:
             if user_name:
-                response_text = f"Your name is {user_name}! I remembered that from when you logged in."
+                response_text = f"Hi {user_name}! I can help you calculate stamp duty. What property price and location are you looking at?"
             else:
-                response_text = "I don't know your name yet. You can tell me, or sign in so I can remember you!"
-            msg_id = f"clm-{hash(user_msg) % 100000}"
-            return StreamingResponse(stream_sse_response(response_text, msg_id), media_type="text/event-stream")
+                response_text = "I can help you calculate stamp duty for properties in England, Scotland, or Wales. What's the property price?"
 
-        # Build personalized greeting
-        greeting_name = f" {user_name}" if user_name else ""
+        print(f"[CLM] Response: {response_text[:80]}...", file=sys.stderr)
 
-        if any(word in user_lower for word in ['stamp duty', 'calculate', 'how much', 'what would', 'property']):
-            response_text = f"I can help you calculate stamp duty{greeting_name}! Just tell me the property price, location (England, Scotland, or Wales), and whether you're a first-time buyer, and I'll work out exactly what you'll pay."
-        elif any(word in user_lower for word in ['first-time', 'first time']):
-            response_text = "First-time buyers can save significantly! In England, you pay no stamp duty on the first £425,000. In Scotland, it's the first £175,000. Wales unfortunately doesn't have first-time buyer relief."
-        elif any(word in user_lower for word in ['additional', 'second home', 'buy to let']):
-            response_text = "Additional properties attract surcharges - 5% in England and Northern Ireland, 6% in Scotland, and 4% in Wales. These apply on top of the standard rates from pound zero."
-        elif any(word in user_lower for word in ['hello', 'hi', 'hey', 'speak your greeting']):
-            if user_name:
-                response_text = f"Hello {user_name}! Great to chat with you. I'm your UK stamp duty calculator assistant. What property are you looking at?"
-            else:
-                response_text = "Hello! I'm your UK stamp duty calculator assistant. I can help you work out stamp duty for England, Scotland, or Wales. What property are you looking at?"
-        elif '£' in user_msg or any(char.isdigit() for char in user_msg):
-            # Try to extract a number
-            numbers = re.findall(r'[\d,]+', user_msg.replace('£', ''))
-            if numbers:
-                price = int(numbers[0].replace(',', ''))
-                # Default calculation for England standard
-                result = calculate_stamp_duty(price, 'england', 'standard')
-                response_text = f"For a £{price:,} property in England, the stamp duty would be £{result['total_tax']:,.2f}. That's an effective rate of {result['effective_rate']}%. Would you like me to check Scotland or Wales rates, or see the first-time buyer discount?"
-            else:
-                response_text = "I'd be happy to help! Just tell me the property price and I'll calculate the stamp duty for you."
-        else:
-            response_text = "I'm here to help with UK stamp duty calculations. Tell me about the property you're interested in - the price and location - and I'll work out what you'll pay."
-
-        msg_id = f"clm-{hash(user_msg) % 100000}"
-
-        # Store conversation in Zep for memory (fire and forget)
-        if user_id and zep_client:
+        # Store to Zep memory (fire and forget)
+        if user_id and zep_client and user_msg:
             asyncio.create_task(add_conversation_to_zep(user_id, user_msg, response_text))
 
+        msg_id = f"clm-{hash(user_msg) % 100000}"
         return StreamingResponse(
             stream_sse_response(response_text, msg_id),
             media_type="text/event-stream"
@@ -637,7 +707,9 @@ async def clm_endpoint(request: Request):
 
     except Exception as e:
         print(f"[CLM] ERROR: {e}", file=sys.stderr)
-        error_response = f"Sorry, I encountered an error: {str(e)}"
+        import traceback
+        traceback.print_exc(file=sys.stderr)
+        error_response = f"Sorry, I encountered an error. Please try again."
         return StreamingResponse(
             stream_sse_response(error_response, "error"),
             media_type="text/event-stream"
