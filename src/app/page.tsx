@@ -7,7 +7,7 @@ import { UserButton, SignedIn, SignedOut } from "@neondatabase/auth/react/ui";
 import { authClient } from "@/lib/auth/client";
 import StampDutyCalculator from "@/components/StampDutyCalculator";
 import { VoiceInput } from "@/components/VoiceInput";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 const SYSTEM_PROMPT = `You are an expert UK stamp duty assistant. You help users understand their stamp duty obligations when buying property in the UK.
 
@@ -34,14 +34,35 @@ Important notes:
 Always be helpful, accurate, and explain things in plain English. If you're unsure about something, say so.`;
 
 export default function Home() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Always start open
   const [voiceMessage, setVoiceMessage] = useState("");
   const { appendMessage } = useCopilotChat();
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
+
+  // Debug auth state
+  console.log("🔐 Auth state:", { isPending, hasSession: !!session, user: session?.user?.email });
 
   // Get user from session
   const user = session?.user;
   const firstName = user?.name?.split(' ')[0] || user?.email?.split('@')[0] || null;
+
+  // Register user with agent for Zep memory
+  useEffect(() => {
+    if (user?.id) {
+      const agentUrl = process.env.NEXT_PUBLIC_AGENT_URL || "https://stamp-duty-agent-production.up.railway.app";
+      fetch(`${agentUrl}/user`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: user.id,
+          email: user.email,
+          name: user.name
+        })
+      }).then(res => res.json())
+        .then(data => console.log("🧠 User registered with agent:", data))
+        .catch(err => console.log("⚠️ Agent registration skipped:", err.message));
+    }
+  }, [user?.id, user?.email, user?.name]);
 
   const handleVoiceMessage = useCallback((text: string, role?: "user" | "assistant") => {
     // Open the sidebar
@@ -131,19 +152,25 @@ export default function Home() {
 
       {/* Voice Input - centered at bottom */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40">
-        <VoiceInput onMessage={handleVoiceMessage} userName={firstName} />
+        <VoiceInput
+          onMessage={handleVoiceMessage}
+          userName={firstName}
+          userId={user?.id}
+          userEmail={user?.email}
+        />
       </div>
 
-      {/* CopilotSidebar */}
+      {/* CopilotSidebar - Always visible */}
       <CopilotSidebar
         instructions={SYSTEM_PROMPT}
         labels={{
           title: "Stamp Duty Assistant",
-          initial:
-            "Hi! I can help you calculate stamp duty for your property purchase. Tell me the property price and location, and I'll work out what you'll pay.",
+          initial: firstName
+            ? `Hi ${firstName}! I can help you calculate stamp duty for your property purchase. Tell me the price and location.`
+            : "Hi! I can help you calculate stamp duty for your property purchase. Tell me the property price and location, and I'll work out what you'll pay.",
         }}
-        defaultOpen={sidebarOpen}
-        clickOutsideToClose={true}
+        defaultOpen={true}
+        clickOutsideToClose={false}
         onSetOpen={setSidebarOpen}
       />
     </div>

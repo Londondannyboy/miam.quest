@@ -6,6 +6,8 @@ import { VoiceProvider, useVoice } from "@humeai/voice-react";
 interface VoiceInputProps {
   onMessage: (text: string, role?: "user" | "assistant") => void;
   userName?: string | null;
+  userId?: string | null;
+  userEmail?: string | null;
 }
 
 // Session storage keys for anti-re-greeting
@@ -25,7 +27,7 @@ function setSessionValue(key: string, value: number | boolean): void {
 }
 
 // Inner component using voice hook
-function VoiceButton({ onMessage, userName }: VoiceInputProps) {
+function VoiceButton({ onMessage, userName, userId, userEmail }: VoiceInputProps) {
   const { connect, disconnect, status, messages, error, sendUserInput } = useVoice();
   const [isPending, setIsPending] = useState(false);
   const lastSentMsgId = useRef<string | null>(null);
@@ -104,7 +106,9 @@ You are a friendly UK stamp duty calculator assistant with voice capabilities.
 Help users understand how much stamp duty they'll pay when buying property.
 
 ## USER
+${userId ? `ID: ${userId}` : 'Guest'}
 ${userName ? `Name: ${userName}` : 'Guest user'}
+${userEmail ? `Email: ${userEmail}` : ''}
 
 ## GREETING
 ${greetingInstruction}
@@ -214,11 +218,11 @@ const handleVoiceOpen = () => console.log("🟢 Hume WebSocket connected");
 const handleVoiceClose = (e: any) => console.log("🟡 Hume closed:", e?.code, e?.reason);
 
 // Exported component with VoiceProvider - memoized to prevent remounting
-export function VoiceInput({ onMessage, userName }: VoiceInputProps) {
+export function VoiceInput({ onMessage, userName, userId, userEmail }: VoiceInputProps) {
   // Memoize the button to prevent unnecessary re-renders
   const voiceButton = useCallback(() => (
-    <VoiceButton onMessage={onMessage} userName={userName} />
-  ), [onMessage, userName]);
+    <VoiceButton onMessage={onMessage} userName={userName} userId={userId} userEmail={userEmail} />
+  ), [onMessage, userName, userId, userEmail]);
 
   return (
     <VoiceProvider

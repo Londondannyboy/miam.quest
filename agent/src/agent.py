@@ -1,6 +1,7 @@
 """
 UK Stamp Duty Calculator Agent
 Pydantic AI agent with AG-UI and CLM endpoints for CopilotKit and Hume Voice.
+Integrates with Zep for user memory and knowledge graphs.
 """
 
 import os
@@ -8,7 +9,7 @@ import json
 from typing import Optional
 from dataclasses import dataclass
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Header
 from starlette.responses import StreamingResponse
 from pydantic import BaseModel
 from pydantic_ai import Agent
@@ -16,9 +17,78 @@ from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.result import RunContext
 from pydantic_ai.ag_ui import StateDeps
 
+# Zep for user memory
+from zep_cloud.client import Zep
+from zep_cloud import NotFoundError
+
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv()
+
+# Initialize Zep client
+ZEP_API_KEY = os.environ.get("ZEP_API_KEY")
+zep_client = Zep(api_key=ZEP_API_KEY) if ZEP_API_KEY else None
+
+# ============================================================================
+# ZEP USER MEMORY HELPERS
+# ============================================================================
+
+async def get_or_create_zep_user(user_id: str, email: str = None, name: str = None):
+    """Get or create a Zep user for memory tracking."""
+    if not zep_client:
+        return None
+
+    try:
+        user = zep_client.user.get(user_id)
+        return user
+    except NotFoundError:
+        # Create new user
+        first_name = name.split()[0] if name else None
+        last_name = " ".join(name.split()[1:]) if name and len(name.split()) > 1 else None
+        zep_client.user.add(
+            user_id=user_id,
+            email=email,
+            first_name=first_name,
+            last_name=last_name
+        )
+        return zep_client.user.get(user_id)
+    except Exception as e:
+        print(f"Zep user error: {e}")
+        return None
+
+
+async def get_user_context(user_id: str) -> str:
+    """Get relevant context about a user from Zep knowledge graph."""
+    if not zep_client:
+        return ""
+
+    try:
+        # Get user facts from knowledge graph
+        context = zep_client.user.get_context(user_id, min_score=0.5)
+        if context and context.facts:
+            facts = [f.fact for f in context.facts[:5]]  # Top 5 facts
+            return "Known about this user: " + "; ".join(facts)
+        return ""
+    except Exception as e:
+        print(f"Zep context error: {e}")
+        return ""
+
+
+async def add_conversation_to_zep(user_id: str, user_msg: str, assistant_msg: str):
+    """Store conversation in Zep for memory."""
+    if not zep_client:
+        return
+
+    try:
+        # Add as episode to user's graph
+        zep_client.graph.add(
+            user_id=user_id,
+            type="message",
+            data=f"User said: {user_msg}\nAssistant replied: {assistant_msg}"
+        )
+    except Exception as e:
+        print(f"Zep add error: {e}")
+
 
 # ============================================================================
 # STAMP DUTY CALCULATION LOGIC
@@ -294,8 +364,35 @@ async def health():
     return {
         "status": "ok",
         "service": "stamp-duty-calculator-agent",
-        "endpoints": ["/agui/", "/chat/completions"]
+        "endpoints": ["/agui/", "/chat/completions", "/user"],
+        "zep_enabled": zep_client is not None
     }
+
+
+# User registration endpoint for frontend
+@main_app.post("/user")
+async def register_user(request: Request):
+    """Register or update a user in Zep for memory tracking."""
+    if not zep_client:
+        return {"status": "zep_not_configured"}
+
+    try:
+        body = await request.json()
+        user_id = body.get("user_id")
+        email = body.get("email")
+        name = body.get("name")
+
+        if not user_id:
+            return {"error": "user_id required"}, 400
+
+        user = await get_or_create_zep_user(user_id, email, name)
+        return {
+            "status": "ok",
+            "user_id": user_id,
+            "zep_user": user is not None
+        }
+    except Exception as e:
+        return {"error": str(e)}
 
 
 # ============================================================================
@@ -323,8 +420,13 @@ async def stream_sse_response(content: str, msg_id: str):
 
 
 @main_app.post("/chat/completions")
-async def clm_endpoint(request: Request):
-    """OpenAI-compatible endpoint for Hume EVI voice interface."""
+async def clm_endpoint(
+    request: Request,
+    x_user_id: str = Header(None),
+    x_user_email: str = Header(None),
+    x_user_name: str = Header(None)
+):
+    """OpenAI-compatible endpoint for Hume EVI voice interface with Zep memory."""
     try:
         body = await request.json()
         messages = body.get("messages", [])
@@ -339,20 +441,41 @@ async def clm_endpoint(request: Request):
         if not user_msg:
             user_msg = "Hello"
 
-        # Parse any context from system message (session ID format: "firstName|sessionId|context")
-        # For simplicity, we'll give a helpful response about stamp duty
+        # Get user context from Zep if we have a user ID
+        user_context = ""
+        user_name = x_user_name or ""
+        if x_user_id and zep_client:
+            await get_or_create_zep_user(x_user_id, x_user_email, x_user_name)
+            user_context = await get_user_context(x_user_id)
+
+        # Extract name from system message if sent by Hume
+        for msg in messages:
+            if msg.get("role") == "system":
+                content = msg.get("content", "")
+                if "Name:" in content:
+                    try:
+                        user_name = content.split("Name:")[1].split("\n")[0].strip()
+                    except:
+                        pass
 
         # Simple response logic for voice
         user_lower = user_msg.lower()
 
+        # Build personalized greeting
+        greeting_name = f" {user_name}" if user_name else ""
+        context_hint = f" {user_context}" if user_context else ""
+
         if any(word in user_lower for word in ['stamp duty', 'calculate', 'how much', 'what would', 'property']):
-            response_text = "I can help you calculate stamp duty! Just tell me the property price, location (England, Scotland, or Wales), and whether you're a first-time buyer, and I'll work out exactly what you'll pay."
+            response_text = f"I can help you calculate stamp duty{greeting_name}! Just tell me the property price, location (England, Scotland, or Wales), and whether you're a first-time buyer, and I'll work out exactly what you'll pay."
         elif any(word in user_lower for word in ['first-time', 'first time']):
             response_text = "First-time buyers can save significantly! In England, you pay no stamp duty on the first £425,000. In Scotland, it's the first £175,000. Wales unfortunately doesn't have first-time buyer relief."
         elif any(word in user_lower for word in ['additional', 'second home', 'buy to let']):
             response_text = "Additional properties attract surcharges - 5% in England and Northern Ireland, 6% in Scotland, and 4% in Wales. These apply on top of the standard rates from pound zero."
         elif any(word in user_lower for word in ['hello', 'hi', 'hey']):
-            response_text = "Hello! I'm your UK stamp duty calculator assistant. I can help you work out stamp duty for England, Scotland, or Wales. What property are you looking at?"
+            if user_name:
+                response_text = f"Hello {user_name}! Great to chat with you. I'm your UK stamp duty calculator assistant. What property are you looking at?"
+            else:
+                response_text = "Hello! I'm your UK stamp duty calculator assistant. I can help you work out stamp duty for England, Scotland, or Wales. What property are you looking at?"
         elif '£' in user_msg or any(char.isdigit() for char in user_msg):
             # Try to extract a number
             import re
@@ -368,6 +491,11 @@ async def clm_endpoint(request: Request):
             response_text = "I'm here to help with UK stamp duty calculations. Tell me about the property you're interested in - the price and location - and I'll work out what you'll pay."
 
         msg_id = f"clm-{hash(user_msg) % 100000}"
+
+        # Store conversation in Zep for memory (fire and forget)
+        if x_user_id and zep_client:
+            import asyncio
+            asyncio.create_task(add_conversation_to_zep(x_user_id, user_msg, response_text))
 
         return StreamingResponse(
             stream_sse_response(response_text, msg_id),
