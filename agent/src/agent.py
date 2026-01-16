@@ -10,6 +10,7 @@ from typing import Optional
 from dataclasses import dataclass
 
 from fastapi import FastAPI, Request, Header
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import StreamingResponse
 from pydantic import BaseModel
 from pydantic_ai import Agent
@@ -355,6 +356,15 @@ async def compare_buyer_types(
 
 # Create main FastAPI app
 main_app = FastAPI(title="Stamp Duty Calculator Agent")
+
+# Add CORS middleware
+main_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Create AG-UI app from agent
 ag_ui_app = agent.to_ag_ui(deps=StateDeps(AppState()))
