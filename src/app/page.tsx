@@ -1,8 +1,12 @@
 "use client";
 
 import { CopilotSidebar } from "@copilotkit/react-ui";
+import { useCopilotChat } from "@copilotkit/react-core";
+import { Role, TextMessage } from "@copilotkit/runtime-client-gql";
+import { UserButton, SignedIn, SignedOut } from "@neondatabase/auth/react/ui";
+import { authClient } from "@/lib/auth/client";
 import StampDutyCalculator from "@/components/StampDutyCalculator";
-import VoiceButton from "@/components/VoiceButton";
+import { VoiceInput } from "@/components/VoiceInput";
 import { useCallback, useState } from "react";
 
 const SYSTEM_PROMPT = `You are an expert UK stamp duty assistant. You help users understand their stamp duty obligations when buying property in the UK.
@@ -32,26 +36,56 @@ Always be helpful, accurate, and explain things in plain English. If you're unsu
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [voiceMessage, setVoiceMessage] = useState("");
+  const { appendMessage } = useCopilotChat();
+  const { data: session } = authClient.useSession();
 
-  const handleVoiceTranscript = useCallback((text: string) => {
-    // Open the sidebar and show the transcribed text as a message
+  // Get user from session
+  const user = session?.user;
+  const firstName = user?.name?.split(' ')[0] || user?.email?.split('@')[0] || null;
+
+  const handleVoiceMessage = useCallback((text: string, role: "user" | "assistant") => {
+    // Open the sidebar
     setSidebarOpen(true);
     setVoiceMessage(text);
-    // Clear after a delay
+
+    // Forward message to CopilotKit
+    const messageRole = role === "user" ? Role.User : Role.Assistant;
+    appendMessage(new TextMessage({ content: text, role: messageRole }));
+
+    // Clear notification after a delay
     setTimeout(() => setVoiceMessage(""), 5000);
-  }, []);
+  }, [appendMessage]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900">
       {/* Header */}
       <header className="w-full py-6 px-4">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white text-center">
-            UK Stamp Duty Calculator
-          </h1>
-          <p className="text-zinc-600 dark:text-zinc-400 text-center mt-2">
-            Calculate SDLT, LBTT & LTT with AI assistance
-          </p>
+        <div className="max-w-4xl mx-auto flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white">
+              UK Stamp Duty Calculator
+            </h1>
+            <p className="text-zinc-600 dark:text-zinc-400 mt-1">
+              Calculate SDLT, LBTT & LTT with AI assistance
+            </p>
+          </div>
+          {/* Auth status indicator */}
+          <div className="flex items-center gap-3">
+            <SignedIn>
+              <span className="text-sm text-green-600 dark:text-green-400">
+                {firstName || user?.email || 'Signed in'}
+              </span>
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              <button
+                onClick={() => window.location.href = '/auth/sign-in'}
+                className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400"
+              >
+                Sign in
+              </button>
+            </SignedOut>
+          </div>
         </div>
       </header>
 
@@ -90,14 +124,15 @@ export default function Home() {
       {/* Voice transcript notification */}
       {voiceMessage && (
         <div className="fixed bottom-40 right-6 z-50 max-w-xs bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-4 border border-zinc-200 dark:border-zinc-700">
-          <p className="text-xs text-zinc-400 mb-1">Voice input received:</p>
+          <p className="text-xs text-zinc-400 mb-1">Voice:</p>
           <p className="text-sm text-zinc-700 dark:text-zinc-300">{voiceMessage}</p>
-          <p className="text-xs text-zinc-400 mt-2">Type this in the chat or ask the assistant directly.</p>
         </div>
       )}
 
-      {/* Voice Button for speech input */}
-      <VoiceButton onTranscript={handleVoiceTranscript} />
+      {/* Voice Input - positioned fixed */}
+      <div className="fixed bottom-24 right-6 z-40">
+        <VoiceInput onMessage={handleVoiceMessage} userName={firstName} />
+      </div>
 
       {/* CopilotSidebar */}
       <CopilotSidebar

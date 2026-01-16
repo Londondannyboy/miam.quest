@@ -1,32 +1,27 @@
 import {
   CopilotRuntime,
-  GoogleGenerativeAIAdapter,
+  ExperimentalEmptyAdapter,
   copilotRuntimeNextJSAppRouterEndpoint,
 } from "@copilotkit/runtime";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { HttpAgent } from "@ag-ui/client";
 import { NextRequest } from "next/server";
 
-// Lazy initialization to avoid build-time errors
-let genAI: GoogleGenerativeAI | null = null;
-let serviceAdapter: GoogleGenerativeAIAdapter | null = null;
-let runtime: CopilotRuntime | null = null;
+// Use empty adapter since we're only using one agent
+const serviceAdapter = new ExperimentalEmptyAdapter();
 
-function getRuntime() {
-  if (!genAI) {
-    genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
-  }
-  if (!serviceAdapter) {
-    serviceAdapter = new GoogleGenerativeAIAdapter({ model: "gemini-1.5-flash" });
-  }
-  if (!runtime) {
-    runtime = new CopilotRuntime();
-  }
-  return { runtime, serviceAdapter };
-}
+// Create CopilotRuntime with HttpAgent pointing to our Pydantic AI agent
+const runtime = new CopilotRuntime({
+  agents: {
+    stamp_duty_agent: new HttpAgent({
+      url: process.env.AGENT_URL
+        ? `${process.env.AGENT_URL}/agui/`
+        : "http://localhost:8000/agui/",
+    }),
+  },
+});
 
+// Next.js API route handler
 export const POST = async (req: NextRequest) => {
-  const { runtime, serviceAdapter } = getRuntime();
-
   const { handleRequest } = copilotRuntimeNextJSAppRouterEndpoint({
     runtime,
     serviceAdapter,
