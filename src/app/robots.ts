@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/auth/", "/account/", "/profile/"],
       },
     ],
-    sitemap: "https://stampdutycalculator.quest/sitemap.xml",
+    sitemap: "https://miam.quest/sitemap.xml",
   };
 }

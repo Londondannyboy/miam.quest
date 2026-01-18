@@ -8,8 +8,8 @@ export interface PageSEO {
   ogImage?: string;
 }
 
-const SITE_URL = "https://stampdutycalculator.quest";
-const SITE_NAME = "UK Stamp Duty Calculator";
+const SITE_URL = "https://miam.quest";
+const SITE_NAME = "MIAM.quest - AI Mediation Preparation";
 
 export function generateMetadata(page: PageSEO): Metadata {
   const fullTitle = `${page.title} | ${SITE_NAME}`;
@@ -69,9 +69,9 @@ export function generateWebsiteSchema() {
     "@type": "WebSite",
     "@id": `${SITE_URL}/#website`,
     name: SITE_NAME,
-    alternateName: ["SDLT Calculator", "Stamp Duty Calculator UK", "LBTT Calculator"],
+    alternateName: ["MIAM Preparation", "AI Mediation", "Family Mediation Preparation"],
     url: SITE_URL,
-    description: "Free UK stamp duty calculator for England, Scotland and Wales. Calculate SDLT, LBTT and LTT instantly.",
+    description: "Free AI-powered mediation preparation for UK family disputes. Prepare for your MIAM meeting with Miam, your compassionate AI guide.",
     inLanguage: "en-GB",
     publisher: {
       "@type": "Organization",
@@ -82,7 +82,7 @@ export function generateWebsiteSchema() {
   };
 }
 
-export function generateCalculatorSchema(page: {
+export function generateServiceSchema(page: {
   name: string;
   description: string;
   url: string;
@@ -93,7 +93,7 @@ export function generateCalculatorSchema(page: {
     "@id": `${page.url}/#app`,
     name: page.name,
     description: page.description,
-    applicationCategory: "FinanceApplication",
+    applicationCategory: "HealthApplication",
     operatingSystem: "Any",
     offers: {
       "@type": "Offer",
@@ -101,12 +101,12 @@ export function generateCalculatorSchema(page: {
       priceCurrency: "GBP",
     },
     featureList: [
-      "Instant SDLT calculation",
-      "First-time buyer relief",
-      "Additional property surcharge",
-      "Scotland LBTT rates",
-      "Wales LTT rates",
-      "AI-powered assistance",
+      "AI-powered mediation preparation",
+      "Voice conversations with Miam",
+      "Position capture and summary",
+      "Find FMC-accredited mediators",
+      "Child-focused approach",
+      "MIAM information and guidance",
     ],
   };
 }
@@ -142,126 +142,88 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
 // Page-specific SEO configs
 export const PAGE_SEO = {
   home: {
-    title: "UK Stamp Duty Calculator 2025 | SDLT, LBTT & LTT",
-    description: "Free UK stamp duty calculator for 2025. Calculate SDLT for England, LBTT for Scotland, and LTT for Wales. Includes first-time buyer relief and additional property surcharges.",
+    title: "MIAM.quest | Free AI Mediation Preparation for UK Families",
+    description: "Free AI-powered mediation preparation for UK family disputes. Chat with Miam, your compassionate AI guide, to prepare for your MIAM meeting. Child-focused, neutral support.",
     keywords: [
-      "stamp duty calculator",
-      "stamp duty calculator uk",
-      "sdlt calculator",
-      "uk stamp duty calculator",
-      "stamp duty 2025",
-      "lbtt calculator",
-      "stamp calculator uk",
+      "miam",
+      "miam mediation",
+      "mediation preparation",
+      "family mediation",
+      "child arrangements",
+      "separation support",
+      "divorce mediation",
     ],
     canonical: SITE_URL,
   },
-  buyToLet: {
-    title: "Buy-to-Let Stamp Duty Calculator 2025 | BTL SDLT Rates",
-    description: "Calculate stamp duty on buy-to-let property purchases. Includes 5% additional rate surcharge. Compare BTL vs residential rates and company purchase options.",
+  whatIsMiam: {
+    title: "What is a MIAM? | Mediation Information Assessment Meeting Explained",
+    description: "Learn what a MIAM is, why it's required before court, what happens at a MIAM meeting, and how to prepare. Free guidance from MIAM.quest.",
     keywords: [
-      "buy to let stamp duty calculator",
-      "btl stamp duty calculator",
-      "buy to let stamp duty",
-      "btl sdlt calculator",
-      "buy to let sdlt",
-      "stamp duty buy to let",
-      "investment property stamp duty",
+      "what is a miam",
+      "miam meaning",
+      "mediation information assessment meeting",
+      "miam explained",
+      "miam meeting",
     ],
-    canonical: `${SITE_URL}/buy-to-let`,
+    canonical: `${SITE_URL}/miam/what-is-a-miam`,
   },
-  secondHome: {
-    title: "Second Home Stamp Duty Calculator 2025 | Additional Property SDLT",
-    description: "Calculate stamp duty on second homes and additional properties. Includes 5% surcharge for England, 6% ADS for Scotland. Free instant calculation.",
+  certificate: {
+    title: "MIAM Certificate | What It Is & How to Get One",
+    description: "Everything you need to know about MIAM certificates. Who can issue them, what they contain, and why you need one for family court applications.",
     keywords: [
-      "second home stamp duty calculator",
-      "stamp duty calculator second home",
-      "additional property stamp duty",
-      "second property stamp duty",
-      "stamp duty surcharge calculator",
-      "additional dwelling supplement calculator",
+      "miam certificate",
+      "miam form",
+      "fm1 form",
+      "mediation certificate",
+      "miam evidence",
     ],
-    canonical: `${SITE_URL}/second-home`,
+    canonical: `${SITE_URL}/miam/certificate`,
   },
-  firstTimeBuyer: {
-    title: "First-Time Buyer Stamp Duty Calculator 2025 | FTB Relief",
-    description: "Calculate stamp duty as a first-time buyer. Pay £0 on properties up to £425,000. Check eligibility and see how much you save with first-time buyer relief.",
+  c100: {
+    title: "C100 Form Guide | Child Arrangements Order Application",
+    description: "Complete guide to the C100 form for child arrangements orders. Learn what it is, how to fill it in, and the MIAM requirements. Free help from MIAM.quest.",
     keywords: [
-      "first time buyer stamp duty calculator",
-      "ftb stamp duty calculator",
-      "stamp duty first time buyer",
-      "first time buyer relief",
-      "stamp duty calculator first time buyer",
+      "c100 form",
+      "c100 application",
+      "child arrangements order",
+      "c100 how to fill in",
+      "c100 example",
     ],
-    canonical: `${SITE_URL}/first-time-buyer`,
+    canonical: `${SITE_URL}/forms/c100`,
   },
-  scotland: {
-    title: "Scotland LBTT Calculator 2025 | Land and Buildings Transaction Tax",
-    description: "Calculate LBTT for property purchases in Scotland. Includes Additional Dwelling Supplement (ADS) and first-time buyer relief. Current 2025 rates.",
+  exemption: {
+    title: "MIAM Exemption Guide | When You Don't Need Mediation",
+    description: "Find out if you qualify for a MIAM exemption. Covers domestic abuse, urgency, and other valid reasons to skip mediation. Free guidance.",
     keywords: [
-      "lbtt calculator",
-      "scotland stamp duty calculator",
-      "land and buildings transaction tax calculator",
-      "scottish stamp duty",
-      "lbtt rates",
-      "ads scotland",
+      "miam exemption",
+      "miam exemption domestic abuse",
+      "exempt from miam",
+      "miam not required",
     ],
-    canonical: `${SITE_URL}/scotland`,
+    canonical: `${SITE_URL}/miam/exemption`,
   },
-  wales: {
-    title: "Wales LTT Calculator 2025 | Land Transaction Tax",
-    description: "Calculate Land Transaction Tax (LTT) for property purchases in Wales. Current 2025 rates and higher rates for additional properties.",
+  cost: {
+    title: "MIAM Cost Guide | How Much Does Mediation Cost?",
+    description: "Understand MIAM and mediation costs, legal aid eligibility, and ways to reduce expenses. Many people qualify for free mediation.",
     keywords: [
-      "ltt calculator",
-      "wales stamp duty calculator",
-      "land transaction tax calculator",
-      "welsh stamp duty",
-      "ltt rates wales",
+      "miam cost",
+      "mediation cost",
+      "free mediation",
+      "miam legal aid",
+      "family mediation voucher scheme",
     ],
-    canonical: `${SITE_URL}/wales`,
+    canonical: `${SITE_URL}/mediation/cost`,
   },
-  commercial: {
-    title: "Commercial Property Stamp Duty Calculator | Non-Residential SDLT",
-    description: "Calculate SDLT on commercial and non-residential property purchases. Different rates apply to business premises, mixed-use properties, and land.",
+  mediators: {
+    title: "Find FMC-Accredited Mediators | MIAM.quest Directory",
+    description: "Search our directory of FMC-accredited family mediators. Find qualified mediators near you for MIAM meetings and ongoing mediation.",
     keywords: [
-      "commercial stamp duty calculator",
-      "commercial property sdlt",
-      "non residential stamp duty",
-      "business property stamp duty",
-      "sdlt commercial calculator",
+      "family mediator",
+      "fmc accredited mediator",
+      "find mediator",
+      "miam mediator",
+      "local family mediation",
     ],
-    canonical: `${SITE_URL}/commercial`,
-  },
-  london: {
-    title: "London Stamp Duty Calculator 2025 | SDLT for London Properties",
-    description: "Calculate stamp duty on London property purchases. See typical SDLT amounts for London house prices with our free calculator.",
-    keywords: [
-      "london stamp duty calculator",
-      "stamp duty calculator london",
-      "sdlt london",
-      "stamp duty london property",
-    ],
-    canonical: `${SITE_URL}/london`,
-  },
-  holidayLet: {
-    title: "Holiday Let Stamp Duty Calculator 2025 | Furnished Holiday Let SDLT",
-    description: "Calculate stamp duty on holiday let property purchases. Understand when the 5% surcharge applies and compare with buy-to-let options.",
-    keywords: [
-      "holiday let stamp duty calculator",
-      "stamp duty holiday let",
-      "furnished holiday let stamp duty",
-      "holiday property stamp duty",
-    ],
-    canonical: `${SITE_URL}/holiday-let`,
-  },
-  refund: {
-    title: "Stamp Duty Refund Calculator | Claim Back SDLT",
-    description: "Check if you can claim a stamp duty refund. Calculate potential refund amount when selling your previous main residence within 3 years.",
-    keywords: [
-      "stamp duty refund calculator",
-      "sdlt refund",
-      "stamp duty refund claim",
-      "claim back stamp duty",
-    ],
-    canonical: `${SITE_URL}/refund`,
+    canonical: `${SITE_URL}/mediators`,
   },
 } as const;
