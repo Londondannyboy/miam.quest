@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-const BETTING_RESOURCES = [
-  { href: "https://www.begambleaware.org", label: "BeGambleAware", description: "Help with problem gambling" },
-  { href: "https://www.gamcare.org.uk", label: "GamCare", description: "Support and counselling" },
-  { href: "https://www.gamstop.co.uk", label: "GAMSTOP", description: "Self-exclusion service" },
+const SUPPORT_RESOURCES = [
+  { href: "https://www.familymediationcouncil.org.uk/", label: "Family Mediation Council", description: "Find accredited mediators" },
+  { href: "https://www.nationaldahelpline.org.uk/", label: "National DA Helpline", description: "24hr support: 0808 2000 247" },
+  { href: "https://www.citizensadvice.org.uk/family/", label: "Citizens Advice", description: "Free family law guidance" },
 ];
 
 const LEGAL_LINKS = [
@@ -22,22 +22,22 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Each-Way Calculator</h3>
+            <h3 className="text-white font-semibold mb-4">MIAM.quest</h3>
             <p className="text-sm mb-4">
-              Free each-way bet calculator for horse racing, golf, and sports betting.
-              Calculate your potential returns instantly with AI-powered assistance.
+              Free AI-powered mediation preparation for UK family disputes.
+              Helping separating couples prepare for their MIAM meeting.
             </p>
             <p className="text-xs text-zinc-500">
-              This calculator provides estimates only. Always check your bookmaker's
-              specific terms and conditions before placing bets.
+              Miam is an AI assistant and cannot provide legal advice.
+              Only FMC-accredited mediators can issue valid MIAM certificates.
             </p>
           </div>
 
           {/* Resources */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Responsible Gambling</h3>
+            <h3 className="text-white font-semibold mb-4">Support Resources</h3>
             <ul className="space-y-3">
-              {BETTING_RESOURCES.map((link) => (
+              {SUPPORT_RESOURCES.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -63,16 +63,16 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-4">Important Information</h3>
             <div className="space-y-3 text-sm">
               <p>
-                <span className="text-amber-400 font-medium">18+ Only</span> - Gambling is
-                for adults only. You must be 18 or over to bet in the UK.
+                <span className="text-emerald-400 font-medium">What is a MIAM?</span> - A Mediation
+                Information Assessment Meeting is required before most family court applications.
               </p>
               <p>
-                <span className="text-emerald-400 font-medium">Gamble Responsibly</span> - Only
-                bet what you can afford to lose. Never chase losses.
+                <span className="text-blue-400 font-medium">Child-Focused</span> - Mediation helps
+                parents focus on what&apos;s best for their children.
               </p>
               <p>
-                <span className="text-blue-400 font-medium">Need Help?</span> - If gambling
-                is affecting you or someone you know, please seek support.
+                <span className="text-amber-400 font-medium">Exemptions Apply</span> - If you&apos;re
+                experiencing domestic abuse, you may be exempt from MIAM requirements.
               </p>
             </div>
           </div>
@@ -81,11 +81,11 @@ export function Footer() {
         {/* Trust Signals */}
         <div className="mt-8 pt-8 border-t border-zinc-800">
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-500">
-            <span>Standard UK betting terms used</span>
-            <span>•</span>
-            <span>Calculations based on industry standards</span>
-            <span>•</span>
-            <span>Always check your bookmaker&apos;s terms</span>
+            <span>Free AI mediation preparation</span>
+            <span>-</span>
+            <span>Connects you to FMC-accredited mediators</span>
+            <span>-</span>
+            <span>Child-focused approach</span>
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@ export function Footer() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-xs">
-              © {currentYear} Each-Way Calculator. All rights reserved.
+              © {currentYear} MIAM.quest. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               {LEGAL_LINKS.map((link) => (

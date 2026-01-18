@@ -10,17 +10,17 @@ export function BetaBanner() {
               BETA
             </span>
             <span className="text-amber-300/90">
-              This calculator is for informational purposes only and is not financial advice.
-              Always consult{" "}
+              Miam is an AI assistant and cannot provide legal advice.
+              Only{" "}
               <a
-                href="https://www.gov.uk/stamp-duty-land-tax"
+                href="https://www.familymediationcouncil.org.uk/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-amber-400 hover:text-amber-300 underline"
               >
-                HMRC
+                FMC-accredited mediators
               </a>
-              {" "}or a qualified professional before making financial decisions.
+              {" "}can issue valid MIAM certificates.
             </span>
           </span>
         </p>
