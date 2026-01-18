@@ -589,9 +589,9 @@ export default function Home() {
         </div>
       )}
 
-      {/* Floating action buttons */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
-        {!sidebarOpen && (
+      {/* Floating chat button - only when sidebar closed */}
+      {!sidebarOpen && (
+        <div className="fixed bottom-6 right-6 z-40">
           <button
             onClick={() => setSidebarOpen(true)}
             className="w-14 h-14 bg-emerald-600 hover:bg-emerald-500 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-105"
@@ -612,17 +612,10 @@ export default function Home() {
               />
             </svg>
           </button>
-        )}
+        </div>
+      )}
 
-        <VoiceInput
-          onMessage={handleVoiceMessage}
-          userName={firstName}
-          userId={user?.id}
-          userEmail={user?.email}
-        />
-      </div>
-
-      {/* CopilotSidebar */}
+      {/* CopilotSidebar with Voice Input inside */}
       <CopilotSidebar
         instructions={SYSTEM_PROMPT}
         labels={{
@@ -634,6 +627,22 @@ export default function Home() {
         defaultOpen={false}
         clickOutsideToClose={true}
         onSetOpen={setSidebarOpen}
+        Footer={() => (
+          <div className="shrink-0 bg-slate-800 border-t border-slate-700 px-4 py-3">
+            <div className="flex items-center gap-4">
+              <VoiceInput
+                onMessage={handleVoiceMessage}
+                userName={firstName}
+                userId={user?.id}
+                userEmail={user?.email}
+              />
+              <div className="flex-1">
+                <p className="text-white text-sm font-medium">Talk to your AI assistant</p>
+                <p className="text-slate-400 text-xs">Ask about each-way bets or get calculations</p>
+              </div>
+            </div>
+          </div>
+        )}
       />
     </div>
   );
