@@ -703,15 +703,24 @@ async def register_user(request: Request):
 # ============================================================================
 
 def extract_session_id(request: Request, body: dict) -> Optional[str]:
+    # 1. Check URL query params first (Hume passes it here)
+    session_id = request.query_params.get("custom_session_id")
+    if session_id:
+        print(f"[CLM] Found session_id in query params: {session_id}", file=sys.stderr)
+        return session_id
+
+    # 2. Check body fields
     session_id = body.get("custom_session_id") or body.get("customSessionId") or body.get("session_id")
     if session_id:
         return session_id
 
+    # 3. Check metadata in body
     metadata = body.get("metadata", {})
     session_id = metadata.get("custom_session_id") or metadata.get("session_id")
     if session_id:
         return session_id
 
+    # 4. Check headers
     for header in ["x-hume-session-id", "x-custom-session-id", "x-session-id"]:
         session_id = request.headers.get(header)
         if session_id:
@@ -834,6 +843,7 @@ async def clm_endpoint(request: Request):
 
         # DEBUG: Log all session ID sources
         print(f"[CLM] === SESSION ID DEBUG ===", file=sys.stderr)
+        print(f"[CLM] query_params: {dict(request.query_params)}", file=sys.stderr)
         print(f"[CLM] body.custom_session_id: {body.get('custom_session_id')}", file=sys.stderr)
         print(f"[CLM] body.session_id: {body.get('session_id')}", file=sys.stderr)
         print(f"[CLM] metadata: {body.get('metadata', {})}", file=sys.stderr)
