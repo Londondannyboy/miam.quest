@@ -1,21 +1,91 @@
 "use client";
 
-import { CopilotSidebar } from "@copilotkit/react-ui";
-import { useCopilotChat } from "@copilotkit/react-core";
-import { Role, TextMessage } from "@copilotkit/runtime-client-gql";
+import dynamic from "next/dynamic";
+import { useCallback, useState, useEffect, useMemo } from "react";
 import { UserButton, SignedIn, SignedOut } from "@neondatabase/auth/react/ui";
 import { authClient } from "@/lib/auth/client";
-import EachWayCalculator from "@/components/EachWayCalculator";
-import { VoiceInput } from "@/components/VoiceInput";
-import {
-  ReturnsBreakdown,
-  OddsComparison,
-  EachWayExplainer,
-} from "@/components/charts";
-import { useCallback, useState, useEffect, useMemo } from "react";
 import { calculateEachWay, formatCurrency, HORSE_RACING_PLACE_RULES } from "@/lib/calculations";
 import { BetDetails, EachWayTerms, OddsInput } from "@/lib/types";
 import Image from "next/image";
+
+// Lazy load heavy components to improve initial page load
+const CopilotSidebar = dynamic(
+  () => import("@copilotkit/react-ui").then((mod) => mod.CopilotSidebar),
+  { ssr: false, loading: () => null }
+);
+
+const EachWayCalculator = dynamic(
+  () => import("@/components/EachWayCalculator"),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="animate-pulse bg-slate-800/50 rounded-xl h-64 flex items-center justify-center">
+        <span className="text-slate-500">Loading calculator...</span>
+      </div>
+    )
+  }
+);
+
+const VoiceInput = dynamic(
+  () => import("@/components/VoiceInput").then((mod) => mod.VoiceInput),
+  { ssr: false, loading: () => null }
+);
+
+const ReturnsBreakdown = dynamic(
+  () => import("@/components/charts").then((mod) => mod.ReturnsBreakdown),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="animate-pulse bg-slate-800/50 rounded-xl h-80"></div>
+    )
+  }
+);
+
+const OddsComparison = dynamic(
+  () => import("@/components/charts").then((mod) => mod.OddsComparison),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="animate-pulse bg-slate-800/50 rounded-xl h-80"></div>
+    )
+  }
+);
+
+const EachWayExplainer = dynamic(
+  () => import("@/components/charts").then((mod) => mod.EachWayExplainer),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="animate-pulse bg-slate-800/50 rounded-xl h-96"></div>
+    )
+  }
+);
+
+// Lazy load CopilotKit hooks - only used when sidebar is open
+const useCopilotChatLazy = () => {
+  const [chatModule, setChatModule] = useState<any>(null);
+
+  useEffect(() => {
+    import("@copilotkit/react-core").then((mod) => {
+      setChatModule(mod);
+    });
+  }, []);
+
+  return chatModule?.useCopilotChat?.() || { appendMessage: () => {} };
+};
+
+// Lazy load message types
+const useMessageTypes = () => {
+  const [types, setTypes] = useState<any>({ Role: { User: "user", Assistant: "assistant" }, TextMessage: class {} });
+
+  useEffect(() => {
+    import("@copilotkit/runtime-client-gql").then((mod) => {
+      setTypes({ Role: mod.Role, TextMessage: mod.TextMessage });
+    });
+  }, []);
+
+  return types;
+};
 
 const SYSTEM_PROMPT = `You are an expert each-way betting assistant. You help users understand each-way betting and calculate their potential returns.
 
@@ -110,7 +180,8 @@ const BET_EXAMPLES = [
 export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [voiceMessage, setVoiceMessage] = useState("");
-  const { appendMessage } = useCopilotChat();
+  const { appendMessage } = useCopilotChatLazy();
+  const { Role, TextMessage } = useMessageTypes();
   const { data: session } = authClient.useSession();
 
   // State for interactive returns breakdown
@@ -167,11 +238,14 @@ export default function Home() {
     (text: string, role?: "user" | "assistant") => {
       setSidebarOpen(true);
       setVoiceMessage(text);
-      const messageRole = role === "assistant" ? Role.Assistant : Role.User;
-      appendMessage(new TextMessage({ content: text, role: messageRole }));
+      // Only send to CopilotKit if modules are loaded
+      if (Role && TextMessage && appendMessage) {
+        const messageRole = role === "assistant" ? Role.Assistant : Role.User;
+        appendMessage(new TextMessage({ content: text, role: messageRole }));
+      }
       setTimeout(() => setVoiceMessage(""), 5000);
     },
-    [appendMessage]
+    [appendMessage, Role, TextMessage]
   );
 
   return (
@@ -233,7 +307,7 @@ export default function Home() {
               alt="Each Way Calculator - Free UK betting calculator for horse racing and sports"
               fill
               className="object-cover"
-              priority
+              loading="lazy"
             />
             <div className="absolute inset-0 z-20 flex items-center justify-center">
               <div className="text-center">
