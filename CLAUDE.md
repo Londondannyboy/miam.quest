@@ -6,12 +6,13 @@
 
 ### Core Value Proposition
 - Free AI-powered mediation preparation
-- Voice-first interaction with Miam
+- Voice-first interaction with Miam (via Hume EVI)
 - Document generation (parenting plans, financial summaries)
 - Connection to accredited human mediators for legally-binding outcomes
+- SEO content targeting 60k+ monthly searches
 
 ### Legal Context
-> A MIAM is legally required in England & Wales before applying to court for child arrangements (C100 form). Only FMC-accredited mediators can issue valid MIAM certificates. Miam (the AI) helps users **prepare** for mediation - she cannot issue certificates.
+> A MIAM is legally required in England & Wales before applying to court for child arrangements (C100 form). Only FMC-accredited mediators can issue valid MIAM certificates. Miam (the AI) helps users **prepare** for mediation - she cannot issue certificates or provide legal advice.
 
 ---
 
@@ -31,6 +32,17 @@
 
 ---
 
+## Live URLs
+
+| Service | URL |
+|---------|-----|
+| Frontend | https://miam.quest |
+| Agent API | https://miam-quest-agent-production.up.railway.app |
+| CLM Endpoint (Hume) | https://miam-quest-agent-production.up.railway.app/chat/completions |
+| AG-UI Endpoint (CopilotKit) | https://miam-quest-agent-production.up.railway.app/agui/ |
+
+---
+
 ## Project Structure
 
 ```
@@ -38,33 +50,63 @@ miam.quest/
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── page.tsx            # Landing page (SEO optimized)
-│   │   ├── layout.tsx          # Root layout
+│   │   ├── layout.tsx          # Root layout with JSON-LD
 │   │   ├── api/
 │   │   │   ├── copilotkit/     # CopilotKit runtime
 │   │   │   ├── hume-token/     # Hume voice tokens
 │   │   │   └── auth/           # Neon auth routes
-│   │   ├── prepare/            # Preparation flow pages
-│   │   ├── case/[id]/          # Case management
-│   │   └── mediators/          # Mediator directory
+│   │   ├── miam/               # MIAM content cluster
+│   │   │   ├── what-is-a-miam/ # What is a MIAM
+│   │   │   ├── certificate/    # MIAM certificate guide
+│   │   │   └── exemptions/     # MIAM exemptions guide
+│   │   ├── mediation/          # Mediation content cluster
+│   │   │   ├── what-is-mediation/
+│   │   │   ├── cost/
+│   │   │   └── workplace/
+│   │   ├── forms/
+│   │   │   └── c100/           # C100 form guide
+│   │   ├── privacy/            # Privacy policy
+│   │   ├── terms/              # Terms of service
+│   │   └── contact/            # Contact page
 │   ├── components/
+│   │   ├── Navigation.tsx      # Global nav with dropdowns
+│   │   ├── Footer.tsx          # Global footer with clusters
+│   │   ├── BetaBanner.tsx      # Beta disclaimer banner
+│   │   ├── CookieConsent.tsx   # Cookie consent
 │   │   ├── VoiceInput.tsx      # Hume voice component
-│   │   ├── MiamChat.tsx        # CopilotKit sidebar
-│   │   ├── PositionSummary.tsx # Position display
-│   │   ├── DocumentEditor.tsx  # CopilotKit document editing
-│   │   └── ...
+│   │   └── providers.tsx       # Context providers
 │   └── lib/
 │       ├── auth/               # Neon auth client/server
 │       ├── types.ts            # TypeScript interfaces
-│       └── prompts.ts          # System prompts
+│       ├── prompts.ts          # System prompts
+│       └── seo.ts              # SEO utilities
 ├── agent/                      # Python backend
 │   ├── src/
-│   │   ├── main.py             # FastAPI entry
 │   │   └── agent.py            # Pydantic AI agent
 │   ├── pyproject.toml
-│   └── Procfile                # Railway deployment
+│   ├── requirements.txt
+│   ├── nixpacks.toml           # Railway build config
+│   └── Procfile                # Railway start command
 ├── migrations/                 # SQL migrations
 └── public/                     # Static assets
 ```
+
+---
+
+## SEO Content Pages (Live)
+
+| Page | URL | Target Keywords | Est. Volume |
+|------|-----|-----------------|-------------|
+| Homepage | / | mediation, miam | 17,700 |
+| What is a MIAM | /miam/what-is-a-miam | what is a miam | 210 |
+| MIAM Certificate | /miam/certificate | miam certificate | 480 |
+| MIAM Exemptions | /miam/exemptions | miam exemption | 210 |
+| What is Mediation | /mediation/what-is-mediation | mediation meaning, definition | 11,000 |
+| Mediation Costs | /mediation/cost | mediation costs uk | 390 |
+| Workplace Mediation | /mediation/workplace | workplace mediation | 880 |
+| C100 Form | /forms/c100 | c100 form | 12,100 |
+
+**Total estimated search volume: ~43,000/month**
 
 ---
 
@@ -77,7 +119,8 @@ miam.quest/
 - **Tone**: Warm, compassionate, professional, non-judgmental
 - **Approach**: Child-focused, solution-oriented, emotionally intelligent
 
-### Voice Characteristics (Hume Config)
+### Hume Voice Configuration
+- **Config ID**: 8351d978-f1a9-4263-89df-af62f45fccf6
 - Calm, measured pace
 - Empathetic inflection
 - British English accent
@@ -91,162 +134,62 @@ miam.quest/
 5. **Know limitations**: Be clear that only human mediators can issue MIAM certificates
 6. **Detect distress**: If domestic abuse or high conflict detected, handle sensitively
 
-### Sample Miam Responses
-```
-"I hear that this is really difficult for you. Let's take this one step at a time."
-
-"What matters most here is what works best for your children. Can you tell me about their routine?"
-
-"Both of you wanting the best for your children is actually common ground - that's a good starting point."
-
-"I can help you prepare for mediation, but for a legally valid MIAM certificate, you'll need to meet with an accredited mediator. Would you like me to help you find one?"
-```
-
----
-
-## Core User Flows
-
-### Flow 1: Solo Preparation
-```
-Landing → Start Voice/Chat → Miam explains MIAM →
-Capture situation → Identify priorities → Generate summary →
-Offer: Invite other party OR Find mediator
-```
-
-### Flow 2: Position Capture
-```
-User starts session → Miam asks structured questions →
-Extract: Must-haves, Priorities, Nice-to-haves, Red lines →
-Store in database → Generate position summary document
-```
-
-### Flow 3: Mediator Connection
-```
-User requests mediator → Show directory →
-User selects mediator → Provide contact/booking link →
-(Future: In-app booking)
-```
-
----
-
-## Database Schema
-
-### Core Tables
-```sql
--- Users (via Neon Auth)
--- Extended with profile data
-
--- Cases
-CREATE TABLE cases (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  party_a_id UUID REFERENCES auth.users(id),
-  party_b_id UUID REFERENCES auth.users(id),
-  case_type TEXT, -- 'child_arrangements', 'financial', 'both'
-  status TEXT DEFAULT 'preparation',
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Positions
-CREATE TABLE positions (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  case_id UUID REFERENCES cases(id),
-  user_id UUID REFERENCES auth.users(id),
-  must_haves JSONB,
-  priorities JSONB,
-  nice_to_haves JSONB,
-  red_lines JSONB,
-  raw_transcript TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Documents
-CREATE TABLE documents (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  case_id UUID REFERENCES cases(id),
-  doc_type TEXT, -- 'preparation_summary', 'parenting_plan', 'financial_summary'
-  content TEXT,
-  status TEXT DEFAULT 'draft',
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Mediators (directory)
-CREATE TABLE mediators (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  fmc_accredited BOOLEAN DEFAULT true,
-  specializations TEXT[],
-  location TEXT,
-  remote_available BOOLEAN DEFAULT true,
-  contact_email TEXT,
-  website TEXT,
-  bio TEXT
-);
-```
-
 ---
 
 ## Agent Tools (Pydantic AI)
 
 ```python
 @agent.tool
-async def capture_position(
-    user_id: str,
-    case_id: str,
-    category: Literal["must_have", "priority", "nice_to_have", "red_line"],
-    item: str,
-    context: str
-) -> str:
+async def capture_position(category, item, context) -> str:
     """Record a position item from the user's mediation preparation."""
 
 @agent.tool
-async def get_position_summary(user_id: str, case_id: str) -> dict:
+async def get_position_summary(user_id, case_id) -> dict:
     """Retrieve the user's current position summary."""
 
 @agent.tool
-async def generate_preparation_document(case_id: str, user_id: str) -> str:
-    """Generate a preparation summary document for the user."""
-
-@agent.tool
-async def search_mediators(
-    location: str = None,
-    specialization: str = None,
-    remote_only: bool = False
-) -> list[dict]:
-    """Search the mediator directory."""
-
-@agent.tool
-async def get_miam_info(topic: str) -> str:
+async def get_miam_info(topic) -> str:
     """Retrieve information about MIAM process, exemptions, costs, etc."""
 
 @agent.tool
-async def detect_exemption_eligibility(situation: str) -> dict:
-    """Check if user might qualify for MIAM exemption (domestic abuse, urgency, etc.)."""
+async def check_exemption_eligibility(situation) -> dict:
+    """Check if user might qualify for MIAM exemption."""
+
+@agent.tool
+async def search_mediators(location, specialization) -> list[dict]:
+    """Search the mediator directory."""
+
+@agent.tool
+async def generate_preparation_summary(case_id, user_id) -> str:
+    """Generate a preparation summary document for the user."""
 ```
 
 ---
 
 ## Environment Variables
 
+### Frontend (Vercel)
 ```bash
-# Neon Database + Auth
 DATABASE_URL=postgresql://...
 NEON_AUTH_BASE_URL=https://...
 
-# Hume Voice
 HUME_API_KEY=...
 HUME_SECRET_KEY=...
 NEXT_PUBLIC_HUME_API_KEY=...
-NEXT_PUBLIC_HUME_CONFIG_ID=...  # Miam voice config
+NEXT_PUBLIC_HUME_CONFIG_ID=8351d978-f1a9-4263-89df-af62f45fccf6
 
-# LLM
 GOOGLE_API_KEY=...
 
-# Agent
-AGENT_URL=https://miam-quest-agent.up.railway.app
-NEXT_PUBLIC_AGENT_URL=...
+AGENT_URL=https://miam-quest-agent-production.up.railway.app
+NEXT_PUBLIC_AGENT_URL=https://miam-quest-agent-production.up.railway.app
 
-# Zep Memory
+ZEP_API_KEY=...
+```
+
+### Agent (Railway)
+```bash
+DATABASE_URL=postgresql://...
+GOOGLE_API_KEY=...
 ZEP_API_KEY=...
 ```
 
@@ -256,7 +199,6 @@ ZEP_API_KEY=...
 
 ```bash
 # Frontend
-cd miam.quest
 npm install
 npm run dev          # http://localhost:3000
 
@@ -265,41 +207,32 @@ cd agent
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python src/main.py   # http://localhost:8000
-
-# Database migrations
-psql $DATABASE_URL -f migrations/001_create_cases.sql
+python -m uvicorn src.agent:app --reload   # http://localhost:8000
 ```
 
 ---
 
-## SEO Target Keywords
+## Deployment
 
-| Keyword | Volume | Difficulty | Priority |
-|---------|--------|------------|----------|
-| miam | 2,900 | 20 | HIGH |
-| miam certificate | 480 | 9 | HIGH |
-| what is a miam | 210 | 16 | HIGH |
-| miam mediation | 880 | 40 | MEDIUM |
-| miam exemption | 210 | — | MEDIUM |
-| miam form | 170 | 17 | MEDIUM |
-| c100 form | 12,100 | 25 | HIGH (related) |
+### Frontend (Vercel)
+- Auto-deploys from `main` branch
+- Environment variables in Vercel dashboard
+- URL: https://miam.quest
+
+### Agent (Railway)
+- Deploy: `cd agent && railway up /Users/dankeegan/miam.quest/agent --path-as-root --detach`
+- URL: https://miam-quest-agent-production.up.railway.app
+- Environment variables in Railway dashboard
 
 ---
 
 ## Content Guidelines
 
-### Tone
-- Compassionate and supportive
-- Professional but accessible
-- Non-legal jargon where possible
-- Always child-focused
-
-### Legal Disclaimers
-Always include:
+### Legal Disclaimers (Required on all pages)
 - "Miam is an AI assistant and cannot provide legal advice"
 - "Only FMC-accredited mediators can issue valid MIAM certificates"
 - "If you're experiencing domestic abuse, you may be exempt from MIAM requirements"
+- "This is a beta service - always consult a qualified professional"
 
 ### Sensitive Topics
 Handle with care:
@@ -310,47 +243,6 @@ Handle with care:
 
 ---
 
-## Testing Checklist
+## Repository
 
-- [ ] Voice conversation flows naturally
-- [ ] Position capture stores correctly
-- [ ] Document generation works
-- [ ] Auth flow (sign up, sign in, profile)
-- [ ] Mediator directory displays
-- [ ] Mobile responsive
-- [ ] SEO meta tags correct
-- [ ] Accessibility (screen readers, keyboard nav)
-
----
-
-## Deployment
-
-### Frontend (Vercel)
-- Auto-deploys from `main` branch
-- Environment variables in Vercel dashboard
-
-### Agent (Railway)
-- Deploys via Procfile
-- `web: uvicorn src.agent:app --host 0.0.0.0 --port $PORT`
-- Environment variables in Railway dashboard
-
----
-
-## Future Roadmap
-
-### Phase 2
-- [ ] Invite other party flow
-- [ ] Async position capture for Party B
-- [ ] Common ground analysis
-- [ ] Draft parenting plan generator
-
-### Phase 3
-- [ ] Live two-party session with AI
-- [ ] CopilotKit document collaboration
-- [ ] Mediator marketplace with booking
-- [ ] In-app video calls
-
-### Phase 4
-- [ ] Integration with FMC mediator systems
-- [ ] MIAM certificate workflow (human-issued through platform)
-- [ ] Analytics dashboard for mediators
+GitHub: https://github.com/Londondannyboy/miam.quest

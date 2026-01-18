@@ -1,8 +1,21 @@
 # Product Requirements Document: MIAM.quest
 
+**Last Updated:** 18 January 2026
+**Status:** Phase 1 MVP - LIVE
+**Live URL:** https://miam.quest
+
 ## Executive Summary
 
 MIAM.quest is an AI-powered mediation preparation platform that helps separating couples in the UK prepare for their legally-required Mediation Information Assessment Meeting (MIAM). Through voice and chat conversations with "Miam" - a compassionate AI mediator - users can organize their thoughts, understand the process, capture their position, and connect with accredited human mediators.
+
+### Current Deployment
+
+| Service | URL | Status |
+|---------|-----|--------|
+| Frontend | https://miam.quest | LIVE |
+| Agent API | https://miam-quest-agent-production.up.railway.app | LIVE |
+| CLM Endpoint | https://miam-quest-agent-production.up.railway.app/chat/completions | LIVE |
+| GitHub | https://github.com/Londondannyboy/miam.quest | Active |
 
 ---
 
@@ -118,22 +131,30 @@ Users can chat with Miam via text as alternative to voice.
 
 #### F3: MIAM Education Content
 **Priority**: P0 (Must Have)
+**Status**: ✅ COMPLETE
 
 SEO-optimized content explaining MIAM process.
 
-**Pages**:
-- `/` - Landing page with MIAM overview
-- `/what-is-a-miam` - Detailed explanation
-- `/miam-certificate` - Certificate information
-- `/miam-exemptions` - Who is exempt and why
-- `/miam-cost` - Cost information and free options
-- `/c100-form` - Connection to court application
+**Pages (LIVE)**:
+- `/` - Landing page with MIAM overview ✅
+- `/miam/what-is-a-miam` - Detailed explanation ✅
+- `/miam/certificate` - Certificate information ✅
+- `/miam/exemptions` - Who is exempt and why ✅
+- `/mediation/cost` - Cost information and free options ✅
+- `/mediation/what-is-mediation` - What is mediation ✅
+- `/mediation/workplace` - Workplace mediation ✅
+- `/forms/c100` - C100 form guide ✅
+
+**Est. Total Search Volume**: ~43,000/month
 
 **Acceptance Criteria**:
-- [ ] Each page targets specific keyword
-- [ ] Proper meta tags and structured data
-- [ ] Clear CTAs to start conversation with Miam
-- [ ] Mobile responsive
+- [x] Each page targets specific keyword
+- [x] Proper meta tags and structured data (FAQ schema, breadcrumbs)
+- [x] Clear CTAs to start conversation with Miam
+- [x] Mobile responsive
+- [x] Global navigation with dropdown menus
+- [x] Footer with all topic clusters
+- [x] Legal disclaimers on all pages
 
 ---
 
