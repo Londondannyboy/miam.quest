@@ -1,6 +1,7 @@
 {
-  "name": "each-way-calculator",
+  "name": "miam-quest",
   "version": "0.1.0",
+  "description": "AI-powered mediation preparation platform for UK family disputes",
   "private": true,
   "scripts": {
     "dev": "next dev",

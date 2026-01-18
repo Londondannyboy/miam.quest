@@ -5,14 +5,22 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 const NAV_PAGES = [
-  { href: "/", label: "Calculator", short: "Home" },
+  { href: "/", label: "Home", short: "Home" },
+  { href: "/miam/what-is-a-miam", label: "What is a MIAM?", short: "MIAM" },
+  { href: "/miam/certificate", label: "MIAM Certificate", short: "Certificate" },
+  { href: "/forms/c100", label: "C100 Form", short: "C100" },
+  { href: "/mediation/cost", label: "Costs", short: "Costs" },
+  { href: "/mediators", label: "Find a Mediator", short: "Mediators" },
 ];
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  const isActive = (href: string) => pathname === href;
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-200 dark:border-zinc-800">
@@ -20,11 +28,11 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">EW</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-rose-500 to-rose-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xs">M</span>
             </div>
             <span className="font-bold text-zinc-900 dark:text-white hidden sm:block">
-              Each-Way Calculator
+              MIAM.quest
             </span>
           </Link>
 
@@ -36,7 +44,7 @@ export function Navigation() {
                 href={page.href}
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive(page.href)
-                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                    ? "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300"
                     : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
                 }`}
               >
@@ -46,12 +54,12 @@ export function Navigation() {
 
             {/* External Resources */}
             <a
-              href="https://www.begambleaware.org"
+              href="https://www.familymediationcouncil.org.uk/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white transition-colors flex items-center gap-1"
             >
-              Gamble Responsibly
+              FMC
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
               </svg>
@@ -86,7 +94,7 @@ export function Navigation() {
                   onClick={() => setMobileMenuOpen(false)}
                   className={`px-3 py-2 rounded-lg text-sm font-medium ${
                     isActive(page.href)
-                      ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                      ? "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300"
                       : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                   }`}
                 >
@@ -94,13 +102,13 @@ export function Navigation() {
                 </Link>
               ))}
               <a
-                href="https://www.begambleaware.org"
+                href="https://www.familymediationcouncil.org.uk/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
                 className="px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center gap-1"
               >
-                Gamble Responsibly
+                Family Mediation Council
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>

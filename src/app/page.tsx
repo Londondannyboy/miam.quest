@@ -1,29 +1,15 @@
 "use client";
 
+import { useState, useCallback } from "react";
+import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useCallback, useState, useEffect, useMemo } from "react";
-import { UserButton, SignedIn, SignedOut } from "@neondatabase/auth/react/ui";
 import { authClient } from "@/lib/auth/client";
-import { calculateEachWay, formatCurrency, HORSE_RACING_PLACE_RULES } from "@/lib/calculations";
-import { BetDetails, EachWayTerms, OddsInput } from "@/lib/types";
-import Image from "next/image";
+import { HOME_PROMPT } from "@/lib/prompts";
 
-// Lazy load heavy components to improve initial page load
+// Lazy load heavy components
 const CopilotSidebar = dynamic(
   () => import("@copilotkit/react-ui").then((mod) => mod.CopilotSidebar),
   { ssr: false, loading: () => null }
-);
-
-const EachWayCalculator = dynamic(
-  () => import("@/components/EachWayCalculator"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="animate-pulse bg-slate-800/50 rounded-xl h-64 flex items-center justify-center">
-        <span className="text-slate-500">Loading calculator...</span>
-      </div>
-    )
-  }
 );
 
 const VoiceInput = dynamic(
@@ -31,1018 +17,399 @@ const VoiceInput = dynamic(
   { ssr: false, loading: () => null }
 );
 
-const ReturnsBreakdown = dynamic(
-  () => import("@/components/charts").then((mod) => mod.ReturnsBreakdown),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="animate-pulse bg-slate-800/50 rounded-xl h-80"></div>
-    )
-  }
-);
-
-const OddsComparison = dynamic(
-  () => import("@/components/charts").then((mod) => mod.OddsComparison),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="animate-pulse bg-slate-800/50 rounded-xl h-80"></div>
-    )
-  }
-);
-
-const EachWayExplainer = dynamic(
-  () => import("@/components/charts").then((mod) => mod.EachWayExplainer),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="animate-pulse bg-slate-800/50 rounded-xl h-96"></div>
-    )
-  }
-);
-
-// Lazy load CopilotKit hooks - only used when sidebar is open
-const useCopilotChatLazy = () => {
-  const [chatModule, setChatModule] = useState<any>(null);
-
-  useEffect(() => {
-    import("@copilotkit/react-core").then((mod) => {
-      setChatModule(mod);
-    });
-  }, []);
-
-  return chatModule?.useCopilotChat?.() || { appendMessage: () => {} };
-};
-
-// Lazy load message types
-const useMessageTypes = () => {
-  const [types, setTypes] = useState<any>({ Role: { User: "user", Assistant: "assistant" }, TextMessage: class {} });
-
-  useEffect(() => {
-    import("@copilotkit/runtime-client-gql").then((mod) => {
-      setTypes({ Role: mod.Role, TextMessage: mod.TextMessage });
-    });
-  }, []);
-
-  return types;
-};
-
-const SYSTEM_PROMPT = `You are an expert each-way betting assistant. You help users understand each-way betting and calculate their potential returns.
-
-Key information you know:
-- An each-way bet is TWO bets in one: a win bet and a place bet
-- The total stake is DOUBLED (e.g., £10 each-way = £20 total)
-- Place bets pay at a fraction of the win odds (1/4 or 1/5 typically)
-
-Standard horse racing terms:
-- 5-7 runners: 2 places at 1/4 odds
-- 8+ runners: 3 places at 1/5 odds
-- 12-15 handicap: 3 places at 1/4 odds
-- 16+ handicap: 4 places at 1/4 odds
-
-When helping users:
-1. Ask about their stake and odds if not provided
-2. Clarify the each-way terms (1/4 or 1/5 odds)
-3. Use the calculateEachWayBet action to compute returns
-4. Explain both win and place scenarios clearly
-5. Offer to compare different stakes or odds
-6. Use explainEachWayTerms if they need to understand how E/W works
-
-Always be helpful and explain things in plain English. Remember:
-- If they WIN: both win and place bets pay out
-- If they PLACE: only the place bet pays out (may still profit or lose overall)
-- If they LOSE: they lose the entire stake`;
-
-// FAQ Data
+// FAQ data for structured content
 const FAQS = [
   {
-    question: "What is an each-way bet?",
-    answer:
-      "An each-way bet is two bets in one: a WIN bet and a PLACE bet. You're betting on your selection to both win AND place (finish in the top positions). Your stake is doubled - so £10 each-way costs £20 total. If your selection wins, both bets pay out. If it places but doesn't win, only the place bet pays.",
+    question: "What is a MIAM?",
+    answer: "A MIAM (Mediation Information Assessment Meeting) is a mandatory meeting with an accredited family mediator that you must attend before applying to family court in England and Wales. It typically lasts 45-60 minutes and costs £90-150."
   },
   {
-    question: "How does an each way calculator work?",
-    answer:
-      "An each way calculator takes your stake, odds, place terms (1/4 or 1/5), and number of places to calculate three scenarios: returns if your selection wins, returns if it only places, and total loss if it loses. The calculator shows your total stake (doubled), win odds, place odds, and profit/loss for each outcome.",
+    question: "Do I need a MIAM before going to court?",
+    answer: "Yes, in most cases. Before submitting a C100 form to apply for a child arrangements order, you must have attended a MIAM or qualify for an exemption (such as domestic abuse or urgency)."
   },
   {
-    question: "What are the standard each-way terms for horse racing?",
-    answer:
-      "For horse racing: 5-7 runners pays 1st & 2nd at 1/4 odds. 8+ runners pays 1st, 2nd & 3rd at 1/5 odds. Handicaps with 12-15 runners pay 3 places at 1/4 odds. Handicaps with 16+ runners pay 4 places at 1/4 odds. These can vary by bookmaker and for enhanced each-way offers.",
+    question: "Can Miam (the AI) issue a MIAM certificate?",
+    answer: "No. Only FMC-accredited human mediators can issue valid MIAM certificates. Miam the AI helps you prepare for your MIAM meeting and mediation - making the process easier and more effective."
   },
   {
-    question: "Can I make a profit if my horse only places?",
-    answer:
-      "It depends on the odds. At shorter odds (like 2/1), you'll usually make a loss overall if your selection only places because the place return doesn't cover the lost win stake. At longer odds (like 8/1 or higher), you may still profit even if your selection only places, as the place return exceeds your total stake.",
+    question: "How much does a MIAM cost?",
+    answer: "A MIAM typically costs £90-150 per person. However, if you qualify for legal aid, it may be free. There's also the Family Mediation Voucher Scheme which provides £500 towards mediation costs."
   },
   {
-    question: "Is each-way betting good value?",
-    answer:
-      "Each-way can be good value at longer odds (5/1+) in competitive races with many runners. It provides insurance if your selection is competitive but doesn't win. However, at short odds or in small fields, you're often better off just backing to win. The value depends on the specific odds and terms offered.",
+    question: "What exemptions allow me to skip the MIAM?",
+    answer: "You may be exempt if there's evidence of domestic abuse, child protection concerns, urgency (risk of harm), the other party is overseas or in prison, you've had a MIAM in the last 4 months, or you have a disability preventing attendance."
   },
   {
-    question: "What does 'each-way' mean in golf betting?",
-    answer:
-      "In golf, each-way bets typically pay out if your player finishes in the top 5 or top 8 (depending on the tournament), at 1/4 or 1/5 of the odds. This makes each-way particularly attractive in golf due to the large fields and unpredictable nature of the sport.",
-  },
-  {
-    question: "How do I calculate my each-way returns manually?",
-    answer:
-      "For a £10 E/W at 5/1 (1/4 odds, 3 places): Win part: £10 x 6.0 = £60. Place part: £10 x 2.25 (5/4 +1) = £22.50. If WINS: £60 + £22.50 = £82.50 total (£62.50 profit). If PLACES: £22.50 return (£7.50 loss overall as you lose the £10 win stake). If LOSES: £0 (lose £20 total stake). Or use our free each way calculator above!",
-  },
-  {
-    question: "What's the difference between 1/4 and 1/5 odds?",
-    answer:
-      "1/4 odds means the place bet pays 25% of the win odds, while 1/5 pays 20%. For example, at 10/1: with 1/4 terms you get 10/4 (2.5/1) place odds; with 1/5 terms you get 10/5 (2/1) place odds. 1/4 is better for the bettor as you get higher place odds.",
-  },
-  {
-    question: "Why should I use an each way calculator before betting?",
-    answer:
-      "Using an each way calculator before placing your bet helps you understand exactly what you stand to win or lose. It shows whether you'll profit if your selection only places (not always the case at short odds), helps you compare different stakes and odds, and ensures you're making informed betting decisions.",
-  },
-  {
-    question: "Do all bookmakers offer the same each-way terms?",
-    answer:
-      "No, each-way terms can vary between bookmakers. Some offer enhanced each-way terms as promotions, such as extra places or better odds fractions (1/4 instead of 1/5). Always check the specific terms your bookmaker is offering before placing an each-way bet.",
-  },
+    question: "Is using MIAM.quest free?",
+    answer: "Yes! Preparing with Miam is completely free. We help you organize your thoughts and understand the process before your actual MIAM meeting with a human mediator."
+  }
 ];
 
-// Common bet examples
-const BET_EXAMPLES = [
-  { stake: 5, odds: "3/1", terms: "1/4" as EachWayTerms, places: 2 },
-  { stake: 10, odds: "5/1", terms: "1/4" as EachWayTerms, places: 3 },
-  { stake: 10, odds: "8/1", terms: "1/5" as EachWayTerms, places: 3 },
-  { stake: 20, odds: "10/1", terms: "1/4" as EachWayTerms, places: 4 },
-  { stake: 10, odds: "16/1", terms: "1/5" as EachWayTerms, places: 3 },
-  { stake: 25, odds: "20/1", terms: "1/4" as EachWayTerms, places: 4 },
+// Process steps
+const PROCESS_STEPS = [
+  {
+    number: "1",
+    title: "Talk to Miam",
+    description: "Have a conversation about your situation. Miam will help you understand the MIAM process and what to expect."
+  },
+  {
+    number: "2",
+    title: "Capture Your Position",
+    description: "Identify your must-haves, priorities, and red lines. Miam helps you organize your thoughts clearly."
+  },
+  {
+    number: "3",
+    title: "Get Your Summary",
+    description: "Receive a preparation document that helps you and your mediator focus on what matters most."
+  },
+  {
+    number: "4",
+    title: "Find a Mediator",
+    description: "Connect with an FMC-accredited mediator to get your official MIAM certificate."
+  }
 ];
 
-export default function Home() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [voiceMessage, setVoiceMessage] = useState("");
-  const { appendMessage } = useCopilotChatLazy();
-  const { Role, TextMessage } = useMessageTypes();
+// Topic areas
+const TOPIC_AREAS = [
+  { title: "Living Arrangements", desc: "Where children live and their routine" },
+  { title: "School & Education", desc: "School choices and educational decisions" },
+  { title: "Holidays & Occasions", desc: "Christmas, birthdays, school holidays" },
+  { title: "Communication", desc: "How parents share information" },
+  { title: "Decision Making", desc: "Who decides what about the children" },
+  { title: "Financial Support", desc: "Child maintenance and shared costs" }
+];
+
+export default function HomePage() {
   const { data: session } = authClient.useSession();
-
-  // State for interactive returns breakdown
-  const [demoStake, setDemoStake] = useState(10);
-  const [demoOddsNum, setDemoOddsNum] = useState(5);
-  const [demoOddsDen, setDemoOddsDen] = useState(1);
-  const [demoTerms, setDemoTerms] = useState<EachWayTerms>("1/4");
-  const [demoPlaces, setDemoPlaces] = useState(3);
-
   const user = session?.user;
-  const firstName =
-    user?.name?.split(" ")[0] || user?.email?.split("@")[0] || null;
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
-  // Calculate demo result
-  const demoResult = useMemo(() => {
-    const odds: OddsInput = {
-      format: "fractional",
-      fractionalNumerator: demoOddsNum,
-      fractionalDenominator: demoOddsDen,
-    };
-    const bet: BetDetails = {
-      stake: demoStake,
-      odds,
-      eachWayTerms: demoTerms,
-      numberOfPlaces: demoPlaces,
-      outcome: "won",
-      raceType: "horse-racing",
-    };
-    return calculateEachWay(bet);
-  }, [demoStake, demoOddsNum, demoOddsDen, demoTerms, demoPlaces]);
-
-  // Register user with agent for Zep memory
-  useEffect(() => {
-    if (user?.id) {
-      const agentUrl =
-        process.env.NEXT_PUBLIC_AGENT_URL ||
-        "https://each-way-agent-production.up.railway.app";
-      fetch(`${agentUrl}/user`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_id: user.id,
-          email: user.email,
-          name: user.name,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log("User registered with agent:", data))
-        .catch((err) => console.log("Agent registration skipped:", err.message));
-    }
-  }, [user?.id, user?.email, user?.name]);
-
-  const handleVoiceMessage = useCallback(
-    (text: string, role?: "user" | "assistant") => {
-      setSidebarOpen(true);
-      setVoiceMessage(text);
-      // Only send to CopilotKit if modules are loaded
-      if (Role && TextMessage && appendMessage) {
-        const messageRole = role === "assistant" ? Role.Assistant : Role.User;
-        appendMessage(new TextMessage({ content: text, role: messageRole }));
-      }
-      setTimeout(() => setVoiceMessage(""), 5000);
-    },
-    [appendMessage, Role, TextMessage]
-  );
+  // Voice messages are forwarded to the sidebar via this callback
+  const handleVoiceMessage = useCallback((text: string, role?: "user" | "assistant") => {
+    // Messages from voice are displayed in the sidebar
+    console.log(`[Voice] ${role}: ${text.slice(0, 50)}...`);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-rose-50 to-white dark:from-zinc-900 dark:to-zinc-950">
       {/* Hero Section */}
-      <section className="relative w-full py-16 px-4 gradient-hero border-b border-slate-700/50">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-transparent to-transparent"></div>
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="flex justify-between items-start mb-8">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm mb-4">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                Free Online Tool
-              </div>
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-                Each Way Calculator
-                <span className="text-emerald-400"> UK</span>
-              </h1>
-              <p className="text-xl text-slate-300 max-w-2xl mb-6">
-                The most comprehensive free <strong className="text-white">each way calculator</strong> for UK betting.
-                Calculate your potential returns for horse racing, golf, football outrights, and other sports instantly.
-                Powered by AI to help you understand win and place payouts.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a href="#calculator" className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors inline-flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                  </svg>
-                  Use Calculator Now
-                </a>
-                <a href="#guide" className="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors">
-                  Learn Each-Way Betting
-                </a>
-              </div>
+      <section className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-rose-100 dark:bg-rose-900/30 rounded-full text-rose-700 dark:text-rose-300 text-sm font-medium mb-6">
+              <span className="w-2 h-2 bg-rose-500 rounded-full animate-pulse"></span>
+              Free AI-Powered Mediation Preparation
             </div>
-            <div className="flex items-center gap-3">
-              <SignedIn>
-                <span className="text-sm text-emerald-400 hidden sm:block">
-                  {firstName || user?.email || "Signed in"}
-                </span>
-                <UserButton />
-              </SignedIn>
-              <SignedOut>
-                <button
-                  onClick={() => (window.location.href = "/auth/sign-in")}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors"
-                >
-                  Sign in
-                </button>
-              </SignedOut>
-            </div>
-          </div>
 
-          {/* Hero Image */}
-          <div className="relative w-full h-48 md:h-64 rounded-2xl overflow-hidden mb-8 border border-slate-700/50">
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-slate-800/80 to-slate-900/90 z-10"></div>
-            <Image
-              src="/images/each-way-calculator-hero.svg"
-              alt="Each Way Calculator - Free UK betting calculator for horse racing and sports"
-              fill
-              className="object-cover"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 z-20 flex items-center justify-center">
-              <div className="text-center">
-                <div className="flex items-center justify-center gap-8 text-white">
-                  <div className="text-center">
-                    <p className="text-4xl font-bold text-emerald-400">£10</p>
-                    <p className="text-sm text-slate-300">E/W Stake</p>
-                  </div>
-                  <div className="text-4xl text-slate-500">×</div>
-                  <div className="text-center">
-                    <p className="text-4xl font-bold text-amber-400">5/1</p>
-                    <p className="text-sm text-slate-300">Odds</p>
-                  </div>
-                  <div className="text-4xl text-slate-500">=</div>
-                  <div className="text-center">
-                    <p className="text-4xl font-bold text-green-400">£82.50</p>
-                    <p className="text-sm text-slate-300">If Wins</p>
-                  </div>
-                </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-zinc-900 dark:text-white mb-6">
+              Prepare for Your{" "}
+              <span className="text-rose-600 dark:text-rose-400">MIAM</span>{" "}
+              with Confidence
+            </h1>
+
+            <p className="text-xl text-zinc-600 dark:text-zinc-400 mb-8 max-w-2xl mx-auto">
+              Meet <strong>Miam</strong> - your AI mediation preparation assistant.
+              Understand the process, organize your priorities, and go into mediation ready.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+              <button
+                onClick={() => setIsChatOpen(true)}
+                className="inline-flex items-center gap-2 px-8 py-4 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                Chat with Miam
+              </button>
+
+              <Link
+                href="/miam/what-is-a-miam"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 hover:border-rose-300 dark:hover:border-rose-700 text-zinc-900 dark:text-white rounded-xl font-semibold text-lg transition-all"
+              >
+                Learn About MIAM
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+
+            {/* Trust indicators */}
+            <div className="flex flex-wrap justify-center gap-8 text-sm text-zinc-500 dark:text-zinc-400">
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Free to use
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Voice or chat
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                Confidential
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                UK Family Law
               </div>
             </div>
-          </div>
-
-          {/* Trust badges */}
-          <div className="flex flex-wrap gap-6 text-sm">
-            <span className="flex items-center gap-2 text-slate-300">
-              <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              Accurate Calculations
-            </span>
-            <span className="flex items-center gap-2 text-slate-300">
-              <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              Fractional &amp; Decimal Odds
-            </span>
-            <span className="flex items-center gap-2 text-slate-300">
-              <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              100% Free Forever
-            </span>
-            <span className="flex items-center gap-2 text-slate-300">
-              <svg className="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
-                <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
-              </svg>
-              AI Voice Assistant
-            </span>
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <main className="px-4 py-12 pb-32">
-        <div className="max-w-5xl mx-auto">
-
-          {/* Introduction Section */}
-          <section className="mb-16">
-            <div className="gradient-card rounded-2xl p-8">
-              <h2 className="text-3xl font-bold text-white mb-6">
-                Why Use Our Each Way Calculator?
-              </h2>
-              <div className="prose prose-invert max-w-none">
-                <p className="text-lg text-slate-300 leading-relaxed mb-4">
-                  Our <strong className="text-white">each way calculator</strong> is the most trusted tool for UK punters who want to understand exactly what they stand to win or lose before placing a bet. Whether you're betting on the Grand National, The Open Championship, or a midweek race at Kempton, knowing your potential returns is essential for smart betting.
-                </p>
-                <p className="text-slate-400 leading-relaxed mb-4">
-                  Each-way betting is one of the most popular bet types in British horse racing, offering a safety net if your selection doesn't quite manage to win but still runs well enough to place. However, calculating your returns manually can be confusing - that's where our each way calculator comes in. Simply enter your stake, odds, and the each-way terms, and we'll show you exactly what you'll receive if your selection wins, places, or loses.
-                </p>
-                <p className="text-slate-400 leading-relaxed">
-                  Unlike basic calculators, our tool is powered by AI and includes a voice assistant that can answer your questions about each-way betting in real-time. Ask about anything from how place odds are calculated to whether each-way betting is worth it at certain odds.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Calculator Section */}
-          <section id="calculator" className="mb-16 scroll-mt-8">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Free Each Way Calculator Tool
+      {/* What is MIAM Section */}
+      <section className="py-16 bg-white dark:bg-zinc-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
+              What is a <span className="text-rose-600">MIAM</span>?
             </h2>
-            <p className="text-slate-400 mb-6">
-              Enter your stake and odds below to instantly calculate your each-way bet returns. Our each way calculator supports fractional odds (like 5/1) and decimal odds (like 6.0), and allows you to adjust the place terms and number of places to match your bookmaker's offer.
+            <p className="text-lg text-zinc-600 dark:text-zinc-400">
+              A <strong>MIAM</strong> (Mediation Information Assessment Meeting) is a mandatory meeting
+              you must attend before applying to family court in England and Wales. It&apos;s your first
+              step toward resolving family disputes without the stress and cost of court.
             </p>
-            <div className="gradient-card rounded-2xl p-8 glow-emerald">
-              <EachWayCalculator />
-            </div>
-          </section>
+          </div>
 
-          {/* How to Use Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              How to Use This Each Way Calculator
-            </h2>
-            <div className="gradient-card rounded-2xl p-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-                    <span className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold">1</span>
-                    Enter Your Stake
-                  </h3>
-                  <p className="text-slate-400 mb-6">
-                    Input the amount you want to stake each-way. Remember, this amount is placed on BOTH the win and place parts, so a £10 each-way bet costs £20 total. The each way calculator will show your total outlay clearly.
-                  </p>
-
-                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-                    <span className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold">2</span>
-                    Enter the Odds
-                  </h3>
-                  <p className="text-slate-400 mb-6">
-                    Enter the odds offered by your bookmaker. You can use fractional odds (5/1, 11/4, etc.) or decimal odds (6.0, 3.75, etc.). The calculator will convert between formats automatically.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-                    <span className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold">3</span>
-                    Select Each-Way Terms
-                  </h3>
-                  <p className="text-slate-400 mb-6">
-                    Choose the place odds fraction (usually 1/4 or 1/5) and number of places that pay out. These depend on the race type and number of runners. Check your bookmaker's terms if unsure.
-                  </p>
-
-                  <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-                    <span className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold">4</span>
-                    View Your Returns
-                  </h3>
-                  <p className="text-slate-400">
-                    Instantly see your potential returns for all three outcomes: if your selection wins (both parts pay), if it only places (just place part pays), and if it loses (total stake lost).
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Interactive Returns Breakdown */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Each Way Calculator Visual Breakdown
-            </h2>
-            <p className="text-slate-400 mb-6">
-              See how your returns change based on stake and odds with our interactive charts. Adjust the values below to see the impact on your potential winnings. This visual each way calculator helps you understand the relationship between odds and returns.
-            </p>
-
-            {/* Controls */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Stake (E/W)</label>
-                <select
-                  value={demoStake}
-                  onChange={(e) => setDemoStake(Number(e.target.value))}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white"
-                >
-                  <option value={5}>£5</option>
-                  <option value={10}>£10</option>
-                  <option value={20}>£20</option>
-                  <option value={50}>£50</option>
-                  <option value={100}>£100</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Odds</label>
-                <div className="flex items-center gap-1">
-                  <input
-                    type="number"
-                    value={demoOddsNum}
-                    onChange={(e) => setDemoOddsNum(Number(e.target.value) || 1)}
-                    min={1}
-                    className="w-16 bg-slate-800 border border-slate-700 rounded-lg px-2 py-2 text-white text-center"
-                  />
-                  <span className="text-slate-400">/</span>
-                  <input
-                    type="number"
-                    value={demoOddsDen}
-                    onChange={(e) => setDemoOddsDen(Number(e.target.value) || 1)}
-                    min={1}
-                    className="w-16 bg-slate-800 border border-slate-700 rounded-lg px-2 py-2 text-white text-center"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Terms</label>
-                <select
-                  value={demoTerms}
-                  onChange={(e) => setDemoTerms(e.target.value as EachWayTerms)}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white"
-                >
-                  <option value="1/4">1/4 odds</option>
-                  <option value="1/5">1/5 odds</option>
-                  <option value="1/6">1/6 odds</option>
-                  <option value="1/8">1/8 odds</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm text-slate-400 mb-2">Places</label>
-                <select
-                  value={demoPlaces}
-                  onChange={(e) => setDemoPlaces(Number(e.target.value))}
-                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white"
-                >
-                  <option value={2}>2 places</option>
-                  <option value={3}>3 places</option>
-                  <option value={4}>4 places</option>
-                  <option value={5}>5 places</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ReturnsBreakdown
-                stake={demoStake}
-                winOdds={`${demoOddsNum}/${demoOddsDen}`}
-                placeOdds={demoResult.placeOddsFractional}
-                returnIfWon={demoResult.totalReturnIfWon}
-                returnIfPlaced={demoResult.totalReturnIfPlaced}
-                profitIfWon={demoResult.totalProfitIfWon}
-                profitIfPlaced={demoResult.totalProfitIfPlaced}
-                totalLoss={demoResult.totalLoss}
-              />
-              <OddsComparison
-                stake={demoStake}
-                eachWayTerms={demoTerms}
-                numberOfPlaces={demoPlaces}
-              />
-            </div>
-          </section>
-
-          {/* What is Each-Way Section */}
-          <section id="guide" className="mb-16 scroll-mt-8">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Each Way Calculator: Understanding Each-Way Betting
-            </h2>
-            <div className="gradient-card rounded-2xl p-8">
-              <p className="text-lg text-slate-300 leading-relaxed mb-6">
-                An each-way bet is one of the most popular bet types in UK horse racing, golf, and other sports with outright markets. It's essentially <strong className="text-white">two bets in one</strong>: a WIN bet and a PLACE bet. This gives you a safety net - even if your selection doesn't win, you can still get a return if it finishes in the places.
-              </p>
-
-              <h3 className="text-xl font-semibold text-white mb-4">How Each-Way Betting Works</h3>
-              <p className="text-slate-400 leading-relaxed mb-4">
-                When you place an each-way bet, you're making two separate bets of equal value. The first bet is on your selection to WIN the race or tournament outright. The second bet is on your selection to PLACE - meaning it finishes in one of the paying positions (usually top 2, 3, or 4 depending on the field size and race type).
-              </p>
-              <p className="text-slate-400 leading-relaxed mb-6">
-                The catch? Your stake is doubled. A £10 each-way bet costs £20 total (£10 on win, £10 on place). The place bet pays at a fraction of the win odds (typically 1/4 or 1/5), and the number of places that pay out depends on the number of runners in the race. That's why using an each way calculator before you bet is so important - it helps you understand exactly what you're getting into.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-5">
-                  <p className="text-green-400 font-bold text-2xl mb-2">IF IT WINS</p>
-                  <p className="text-slate-300 text-sm mb-2">Both win and place bets pay out</p>
-                  <p className="text-xs text-slate-500">Win bet pays at full odds + Place bet pays at fractional odds</p>
-                </div>
-                <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-5">
-                  <p className="text-amber-400 font-bold text-2xl mb-2">IF IT PLACES</p>
-                  <p className="text-slate-300 text-sm mb-2">Only place bet pays out</p>
-                  <p className="text-xs text-slate-500">You lose the win stake but collect place returns</p>
-                </div>
-                <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-5">
-                  <p className="text-red-400 font-bold text-2xl mb-2">IF IT LOSES</p>
-                  <p className="text-slate-300 text-sm mb-2">Lose entire stake (both parts)</p>
-                  <p className="text-xs text-slate-500">No return - total stake is lost</p>
-                </div>
-              </div>
-
-              <h3 className="text-xl font-semibold text-white mb-4">The Mathematics Behind Each-Way Betting</h3>
-              <p className="text-slate-400 leading-relaxed mb-4">
-                Let's break down a real example to show exactly how each-way betting works. Say you place £10 each-way on a horse at 5/1 with 1/4 place odds and 3 places:
-              </p>
-              <div className="bg-slate-800/50 rounded-xl p-6 mb-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="text-emerald-400 font-semibold mb-3">Your Bet Details:</h4>
-                    <ul className="space-y-2 text-slate-300 text-sm">
-                      <li>• Stake per part: £10</li>
-                      <li>• Total stake: £20 (£10 win + £10 place)</li>
-                      <li>• Win odds: 5/1 (decimal: 6.0)</li>
-                      <li>• Place odds: 5/4 (5÷4=1.25, decimal: 2.25)</li>
-                      <li>• Places paying: 1st, 2nd, 3rd</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h4 className="text-emerald-400 font-semibold mb-3">Potential Returns:</h4>
-                    <ul className="space-y-2 text-slate-300 text-sm">
-                      <li className="text-green-400">• If WINS: £60 + £22.50 = £82.50 (profit £62.50)</li>
-                      <li className="text-amber-400">• If PLACES: £22.50 (loss £7.50 overall)</li>
-                      <li className="text-red-400">• If LOSES: £0 (loss £20)</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <p className="text-slate-400 leading-relaxed">
-                Notice that at 5/1 odds, you actually make a small loss if your selection only places. This is because the place return (£22.50) doesn't quite cover your total stake (£20). At longer odds, you would profit even on a place finish. Our each way calculator shows you this breakdown instantly for any combination of stake and odds.
-              </p>
-            </div>
-          </section>
-
-          {/* Quick Examples Table */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Each Way Calculator: Quick Reference Examples
-            </h2>
-            <p className="text-slate-400 mb-8">
-              Quick reference showing returns at common stakes and odds. All examples use standard horse racing each-way terms. Use our each way calculator above for custom calculations with your specific bet details.
-            </p>
-
-            <div className="overflow-x-auto rounded-2xl border border-slate-700/50">
-              <table className="w-full text-sm table-dark">
-                <thead>
-                  <tr className="bg-slate-800/50">
-                    <th className="text-left p-4 font-semibold text-slate-300">Bet</th>
-                    <th className="text-right p-4 font-semibold text-slate-300">Total Stake</th>
-                    <th className="text-right p-4 font-semibold text-green-400">If Wins</th>
-                    <th className="text-right p-4 font-semibold text-amber-400">If Places</th>
-                    <th className="text-right p-4 font-semibold text-red-400">If Loses</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {BET_EXAMPLES.map((example, index) => {
-                    const [num, den] = example.odds.split("/").map(Number);
-                    const odds: OddsInput = {
-                      format: "fractional",
-                      fractionalNumerator: num,
-                      fractionalDenominator: den,
-                    };
-                    const bet: BetDetails = {
-                      stake: example.stake,
-                      odds,
-                      eachWayTerms: example.terms,
-                      numberOfPlaces: example.places,
-                      outcome: "won",
-                      raceType: "horse-racing",
-                    };
-                    const result = calculateEachWay(bet);
-                    return (
-                      <tr
-                        key={index}
-                        className={`border-t border-slate-700/50 hover:bg-emerald-500/5 transition-colors ${
-                          index % 2 === 0 ? "bg-slate-800/20" : "bg-slate-800/10"
-                        }`}
-                      >
-                        <td className="p-4 font-medium text-white">
-                          £{example.stake} E/W @ {example.odds}
-                          <span className="text-slate-500 text-xs ml-2">
-                            ({example.terms}, {example.places} places)
-                          </span>
-                        </td>
-                        <td className="p-4 text-right font-mono text-slate-300">
-                          {formatCurrency(result.totalStake)}
-                        </td>
-                        <td className="p-4 text-right font-mono text-green-400">
-                          {formatCurrency(result.totalReturnIfWon)}
-                          <span className="text-green-500/60 text-xs block">
-                            +{formatCurrency(result.totalProfitIfWon)}
-                          </span>
-                        </td>
-                        <td className="p-4 text-right font-mono text-amber-400">
-                          {formatCurrency(result.totalReturnIfPlaced)}
-                          <span
-                            className={`text-xs block ${
-                              result.totalProfitIfPlaced >= 0
-                                ? "text-green-500/60"
-                                : "text-red-500/60"
-                            }`}
-                          >
-                            {result.totalProfitIfPlaced >= 0 ? "+" : ""}
-                            {formatCurrency(result.totalProfitIfPlaced)}
-                          </span>
-                        </td>
-                        <td className="p-4 text-right font-mono text-red-400">
-                          {formatCurrency(0)}
-                          <span className="text-red-500/60 text-xs block">
-                            -{formatCurrency(result.totalLoss)}
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          {/* Each-Way Terms by Runners */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Each Way Calculator: Standard UK Horse Racing Terms
-            </h2>
-            <div className="gradient-card rounded-2xl p-8">
-              <p className="text-slate-400 mb-6">
-                The number of places paid and the odds fraction depend on the type of race and number of runners. Here are the standard terms used by most UK bookmakers. Always check these when using your each way calculator to ensure accurate results:
-              </p>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-slate-700">
-                      <th className="text-left py-3 px-4 text-slate-400 font-medium">Runners</th>
-                      <th className="text-center py-3 px-4 text-slate-400 font-medium">Places Paid</th>
-                      <th className="text-center py-3 px-4 text-slate-400 font-medium">Odds Fraction</th>
-                      <th className="text-left py-3 px-4 text-slate-400 font-medium">Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {HORSE_RACING_PLACE_RULES.map((rule, index) => (
-                      <tr
-                        key={index}
-                        className={`border-b border-slate-700/50 ${
-                          index % 2 === 0 ? "bg-slate-800/30" : ""
-                        }`}
-                      >
-                        <td className="py-3 px-4 text-white font-mono">{rule.runners}</td>
-                        <td className="py-3 px-4 text-center">
-                          <span className="bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded text-xs font-medium">
-                            {rule.places} places
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          <span className="bg-amber-500/20 text-amber-400 px-2 py-1 rounded text-xs font-medium">
-                            {rule.terms}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-slate-300">{rule.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-xs text-slate-500 mt-4">
-                * Terms may vary between bookmakers and for special offers. Some bookies offer enhanced each-way terms as promotions - extra places or better odds fractions. Always check before betting.
-              </p>
-            </div>
-          </section>
-
-          {/* When to Bet Each-Way Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Each Way Calculator Strategy: When to Bet Each-Way
-            </h2>
-            <div className="gradient-card rounded-2xl p-8">
-              <p className="text-slate-400 leading-relaxed mb-6">
-                Knowing when to bet each-way versus win-only is crucial for profitable betting. Use our each way calculator to run the numbers, but here are some general guidelines:
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-6">
-                  <h3 className="text-emerald-400 font-bold text-lg mb-4">When Each-Way IS Worth It:</h3>
-                  <ul className="space-y-3 text-slate-300">
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>At <strong>longer odds (5/1+)</strong> where place returns can cover your stake</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>In <strong>large field races</strong> (8+ runners) with more places</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>In <strong>competitive handicaps</strong> where any of 10 horses could win</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>When bookies offer <strong>enhanced each-way terms</strong> (extra places)</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-emerald-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      <span>In <strong>golf majors</strong> with 150+ player fields</span>
-                    </li>
-                  </ul>
-                </div>
-                <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-6">
-                  <h3 className="text-red-400 font-bold text-lg mb-4">When Each-Way ISN'T Worth It:</h3>
-                  <ul className="space-y-3 text-slate-300">
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                      </svg>
-                      <span>At <strong>short odds (under 3/1)</strong> - you'll lose money on a place finish</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                      </svg>
-                      <span>In <strong>small field races</strong> (4-5 runners) with only 2 places</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                      </svg>
-                      <span>When betting on <strong>heavy favourites</strong> in weak races</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                      </svg>
-                      <span>If your selection has a <strong>poor place record</strong></span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <svg className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                      </svg>
-                      <span>In <strong>two-horse races</strong> where only 1 place pays</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <p className="text-slate-400 leading-relaxed">
-                The key insight is that each-way betting has diminishing value at shorter odds. At 2/1, your place odds are just 1/2 (1.5 decimal) at 1/4 terms - not enough to cover your doubled stake if your selection only places. Always run the numbers through an each way calculator before placing your bet.
-              </p>
-            </div>
-          </section>
-
-          {/* Full Explainer */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Complete Each Way Calculator Betting Guide
-            </h2>
-            <EachWayExplainer />
-          </section>
-
-          {/* FAQs Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Each Way Calculator FAQ
-            </h2>
-            <p className="text-slate-400 mb-6">
-              Got questions about each-way betting or how to use our each way calculator? Here are answers to the most common questions from UK punters:
-            </p>
-            <div className="space-y-3">
-              {FAQS.map((faq, index) => (
-                <details key={index} className="gradient-card rounded-xl group">
-                  <summary className="flex justify-between items-center cursor-pointer p-5 font-medium text-white">
-                    {faq.question}
-                    <span className="ml-2 transition-transform group-open:rotate-180 text-slate-400">
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
-                    </span>
-                  </summary>
-                  <div className="px-5 pb-5 text-slate-400 border-t border-slate-700/50 pt-4">
-                    {faq.answer}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </section>
-
-          {/* Sports-Specific Section */}
-          <section className="mb-16">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Each Way Calculator for Different Sports
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="gradient-card rounded-xl p-6">
-                <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Horse Racing</h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  The most common sport for each-way betting. Terms vary by field size: 2-3 places for smaller fields, up to 4 places for big handicaps. Use our each way calculator with the correct number of runners.
-                </p>
-                <p className="text-xs text-slate-500">
-                  Typical terms: 1/4 or 1/5 odds, 2-4 places
-                </p>
-              </div>
-              <div className="gradient-card rounded-xl p-6">
-                <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Golf</h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  Each-way betting shines in golf due to huge fields (150+ players). Bookies typically offer 5-8 places at 1/4 or 1/5 odds. Great for backing outsiders at big prices with decent place chances.
-                </p>
-                <p className="text-xs text-slate-500">
-                  Typical terms: 1/4 or 1/5 odds, 5-8 places
-                </p>
-              </div>
-              <div className="gradient-card rounded-xl p-6">
-                <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Football Outrights</h3>
-                <p className="text-slate-400 text-sm mb-4">
-                  League winner, top scorer, and other outright markets offer each-way options. Usually 2-3 places depending on the market. Perfect for backing teams you think will challenge but might not win.
-                </p>
-                <p className="text-xs text-slate-500">
-                  Typical terms: 1/4 odds, 2-3 places
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* AI Assistant Section */}
-          <section className="mb-16">
-            <div className="gradient-card rounded-2xl p-8 border-2 border-emerald-500/30">
-              <div className="flex items-start gap-6">
-                <div className="w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center flex-shrink-0">
-                  <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                </div>
-                <div>
-                  <h2 className="text-2xl font-bold text-white mb-3">
-                    Each Way Calculator AI Assistant
-                  </h2>
-                  <p className="text-slate-300 mb-4">
-                    Need help understanding each-way betting? Our AI assistant can answer your questions in real-time. Ask about odds calculations, when to bet each-way, or get personalized advice for your specific bet.
-                  </p>
-                  <p className="text-slate-400 mb-6">
-                    Click the chat button in the bottom right corner or use our voice assistant to speak your questions naturally. The AI knows everything about each-way betting and can use our calculator for you.
-                  </p>
-                  <button
-                    onClick={() => setSidebarOpen(true)}
-                    className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors inline-flex items-center gap-2"
-                  >
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                    </svg>
-                    Chat with AI Assistant
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Disclaimer */}
-          <section className="mb-16">
-            <div className="bg-slate-800/30 rounded-2xl p-6 border border-slate-700/50">
-              <h3 className="font-semibold text-slate-300 mb-3 flex items-center gap-2">
-                <svg
-                  className="w-5 h-5 text-slate-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-zinc-50 dark:bg-zinc-800 rounded-2xl p-6">
+              <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-xl flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Disclaimer
-              </h3>
-              <p className="text-sm text-slate-500">
-                This each way calculator provides estimates based on standard betting rules. Actual returns may vary depending on your bookmaker's specific terms and conditions. Each-way terms can vary between bookmakers - always check before placing your bet. Gambling involves risk - only bet what you can afford to lose. If you're concerned about your gambling, visit <a href="https://www.begambleaware.org" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">BeGambleAware.org</a>.
-              </p>
-              <p className="text-sm text-slate-600 mt-3">
-                18+ only. Please gamble responsibly.
-              </p>
+              </div>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">45-60 Minutes</h3>
+              <p className="text-zinc-600 dark:text-zinc-400">A MIAM is a single session where a mediator explains the process and assesses your situation.</p>
             </div>
-          </section>
-        </div>
-      </main>
 
-      {/* Voice transcript notification */}
-      {voiceMessage && (
-        <div className="fixed bottom-40 right-6 z-50 max-w-xs bg-slate-800 rounded-lg shadow-lg p-4 border border-slate-700">
-          <p className="text-xs text-slate-500 mb-1">Voice:</p>
-          <p className="text-sm text-slate-300">{voiceMessage}</p>
-        </div>
-      )}
+            <div className="bg-zinc-50 dark:bg-zinc-800 rounded-2xl p-6">
+              <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-xl flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">£90-150 Cost</h3>
+              <p className="text-zinc-600 dark:text-zinc-400">Typical MIAM fee per person. May be free with legal aid or the Family Mediation Voucher Scheme.</p>
+            </div>
 
-      {/* Floating action buttons - Voice and Chat */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
-        {/* Chat button - opens sidebar */}
-        {!sidebarOpen && (
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="w-14 h-14 bg-emerald-600 hover:bg-emerald-500 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-105"
-            title="Open AI Assistant"
-            aria-label="Open AI Assistant"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
+            <div className="bg-zinc-50 dark:bg-zinc-800 rounded-2xl p-6">
+              <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-xl flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Required for Court</h3>
+              <p className="text-zinc-600 dark:text-zinc-400">You need a MIAM certificate or exemption before submitting a C100 form to family court.</p>
+            </div>
+          </div>
+
+          <div className="text-center mt-8">
+            <Link href="/miam/what-is-a-miam" className="text-rose-600 hover:text-rose-700 font-medium inline-flex items-center gap-1">
+              Learn more about MIAMs
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* How Miam Helps Section */}
+      <section className="py-16 bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
+              How Miam Helps You Prepare
+            </h2>
+            <p className="text-lg text-zinc-600 dark:text-zinc-400">
+              Going into mediation prepared makes a real difference. Miam helps you organize your thoughts
+              so you can focus on what matters most - your children.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-6">
+            {PROCESS_STEPS.map((step, index) => (
+              <div key={index} className="relative">
+                <div className="bg-white dark:bg-zinc-800 rounded-2xl p-6 h-full">
+                  <div className="w-10 h-10 bg-rose-600 rounded-full flex items-center justify-center text-white font-bold mb-4">
+                    {step.number}
+                  </div>
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">{step.title}</h3>
+                  <p className="text-zinc-600 dark:text-zinc-400 text-sm">{step.description}</p>
+                </div>
+                {index < PROCESS_STEPS.length - 1 && (
+                  <div className="hidden md:block absolute top-1/2 -right-3 w-6 text-zinc-300 dark:text-zinc-700">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Topics We Cover */}
+      <section className="py-16 bg-white dark:bg-zinc-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
+              Topics We Help You Think Through
+            </h2>
+            <p className="text-lg text-zinc-600 dark:text-zinc-400">
+              Mediation covers many aspects of parenting after separation. Miam helps you consider
+              each area and identify your priorities.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {TOPIC_AREAS.map((topic, index) => (
+              <div key={index} className="flex items-start gap-4 p-4 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                <div className="w-10 h-10 bg-rose-100 dark:bg-rose-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-5 h-5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-zinc-900 dark:text-white">{topic.title}</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">{topic.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Important Disclaimer */}
+      <section className="py-12 bg-amber-50 dark:bg-amber-900/20 border-y border-amber-200 dark:border-amber-800">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <div className="flex justify-center mb-4">
+            <svg className="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-          </button>
-        )}
+          </div>
+          <h3 className="text-xl font-bold text-amber-900 dark:text-amber-100 mb-2">Important to Know</h3>
+          <p className="text-amber-800 dark:text-amber-200">
+            Miam is an AI assistant that helps you prepare for mediation. She cannot provide legal advice
+            and cannot issue MIAM certificates. Only <strong>FMC-accredited human mediators</strong> can
+            issue the certificates required for court. If you&apos;re experiencing domestic abuse, you may
+            be exempt from MIAM requirements.
+          </p>
+        </div>
+      </section>
 
-        {/* Voice button */}
+      {/* FAQs */}
+      <section className="py-16 bg-zinc-50 dark:bg-zinc-950">
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="text-3xl font-bold text-zinc-900 dark:text-white mb-8 text-center">
+            Frequently Asked Questions
+          </h2>
+
+          <div className="space-y-4">
+            {FAQS.map((faq, index) => (
+              <details key={index} className="group bg-white dark:bg-zinc-800 rounded-xl">
+                <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
+                  <h3 className="font-semibold text-zinc-900 dark:text-white pr-4">{faq.question}</h3>
+                  <svg className="w-5 h-5 text-zinc-500 group-open:rotate-180 transition-transform flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </summary>
+                <div className="px-6 pb-6 pt-0">
+                  <p className="text-zinc-600 dark:text-zinc-400">{faq.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-rose-600 dark:bg-rose-700">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Ready to Start Preparing?
+          </h2>
+          <p className="text-xl text-rose-100 mb-8">
+            Talk to Miam now and take the first step toward a smoother mediation experience.
+          </p>
+          <button
+            onClick={() => setIsChatOpen(true)}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white hover:bg-rose-50 text-rose-600 rounded-xl font-semibold text-lg transition-all shadow-lg"
+          >
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            Talk to Miam
+          </button>
+        </div>
+      </section>
+
+      {/* Related Links */}
+      <section className="py-12 bg-white dark:bg-zinc-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-6 text-center">
+            Helpful Resources
+          </h3>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/miam/what-is-a-miam" className="text-rose-600 hover:text-rose-700 hover:underline">What is a MIAM?</Link>
+            <span className="text-zinc-300 dark:text-zinc-700">|</span>
+            <Link href="/miam/certificate" className="text-rose-600 hover:text-rose-700 hover:underline">MIAM Certificate</Link>
+            <span className="text-zinc-300 dark:text-zinc-700">|</span>
+            <Link href="/miam/exemptions" className="text-rose-600 hover:text-rose-700 hover:underline">MIAM Exemptions</Link>
+            <span className="text-zinc-300 dark:text-zinc-700">|</span>
+            <Link href="/forms/c100" className="text-rose-600 hover:text-rose-700 hover:underline">C100 Form Guide</Link>
+            <span className="text-zinc-300 dark:text-zinc-700">|</span>
+            <Link href="/mediation/cost" className="text-rose-600 hover:text-rose-700 hover:underline">Mediation Costs</Link>
+            <span className="text-zinc-300 dark:text-zinc-700">|</span>
+            <Link href="/mediators" className="text-rose-600 hover:text-rose-700 hover:underline">Find a Mediator</Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Floating Voice Button */}
+      <div className="fixed bottom-6 right-6 z-40">
         <VoiceInput
           onMessage={handleVoiceMessage}
-          userName={firstName}
+          userName={user?.name || user?.email?.split("@")[0]}
           userId={user?.id}
           userEmail={user?.email}
         />
       </div>
 
-      {/* CopilotSidebar */}
+      {/* Floating Chat Button (when sidebar closed) */}
+      {!isChatOpen && (
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="fixed bottom-6 right-24 z-40 w-14 h-14 bg-rose-600 hover:bg-rose-700 rounded-full flex items-center justify-center shadow-lg transition-all"
+          title="Chat with Miam"
+          aria-label="Chat with Miam"
+        >
+          <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </button>
+      )}
+
+      {/* CopilotKit Sidebar */}
       <CopilotSidebar
-        instructions={SYSTEM_PROMPT}
+        instructions={HOME_PROMPT}
         labels={{
-          title: "Each-Way Assistant",
-          initial: firstName
-            ? `Hi ${firstName}! I can help you calculate each-way bet returns. Tell me your stake and odds.`
-            : "Hi! I can help you calculate each-way bet returns. Tell me your stake and odds, and I'll work out your potential winnings.",
+          title: "Chat with Miam",
+          initial: "Hello! I'm Miam, your mediation preparation assistant. I'm here to help you understand the MIAM process and prepare for mediation. How can I help you today?",
+          placeholder: "Ask about MIAMs, mediation, or share your situation...",
         }}
-        defaultOpen={false}
+        defaultOpen={isChatOpen}
+        onSetOpen={setIsChatOpen}
         clickOutsideToClose={true}
-        onSetOpen={setSidebarOpen}
       />
     </div>
   );

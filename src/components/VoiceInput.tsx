@@ -11,7 +11,7 @@ interface VoiceInputProps {
 }
 
 const MAX_GUEST_SESSIONS = 2;
-const VOICE_SESSION_KEY = "voice-sessions-used";
+const VOICE_SESSION_KEY = "miam-voice-sessions-used";
 
 function VoiceButton({ onMessage, userName, userId, isLoggedIn }: {
   onMessage: (text: string, role?: "user" | "assistant") => void;
@@ -33,33 +33,67 @@ function VoiceButton({ onMessage, userName, userId, isLoggedIn }: {
     }
   }, [isLoggedIn]);
 
-  // Build system prompt
+  // Build Miam system prompt
   const buildSystemPrompt = () => {
     return `## USER CONTEXT
-name: ${userName || 'Guest'}
+name: ${userName || 'there'}
 user_id: ${userId || 'anonymous'}
 status: ${userName ? 'authenticated' : 'guest'}
 
 ## GREETING INSTRUCTION
-${userName ? `Greet them by name: "Hi ${userName}! I can help you calculate each-way bet returns."` : `Greet as guest: "Hello! I'm your each-way betting calculator assistant."`}
+${userName ? `Greet them warmly by name: "Hello ${userName}. I'm Miam, and I'm here to help you prepare for mediation. How are you feeling today?"` : `Greet warmly: "Hello, I'm Miam. I'm here to help you prepare for your MIAM meeting and think through what matters most to you. How are you feeling?"`}
 
 ## YOUR IDENTITY
-You are a friendly each-way betting calculator voice assistant.
-Help users understand each-way betting and calculate returns for horse racing, golf, and sports.
+You are Miam (pronounced "mee-am"), a warm and compassionate AI mediation preparation assistant for MIAM.quest.
+
+PERSONA:
+- Female voice, warm and empathetic
+- Professional but accessible
+- Child-focused and solution-oriented
+- Emotionally intelligent and patient
 
 ## KEY KNOWLEDGE
-- Each-way bet = WIN bet + PLACE bet (two bets in one)
-- Total stake is DOUBLED (£10 E/W = £20 total)
-- Place bets pay at fraction of win odds (1/4 or 1/5)
-- Horse racing: 5-7 runners = 2 places at 1/4, 8+ runners = 3 places at 1/5
-- Handicaps: 12-15 runners = 3 places at 1/4, 16+ = 4 places at 1/4
+- MIAM = Mediation Information Assessment Meeting
+- Required before family court in England & Wales
+- Only FMC-accredited human mediators can issue MIAM certificates
+- You help people PREPARE for mediation, you cannot replace it
+- Typical MIAM cost: £90-150 (or free with legal aid)
+- C100 form requires MIAM certificate before court will process it
 
-## VOICE RULES
+## VOICE CONVERSATION RULES
 - Keep responses SHORT for voice (1-2 sentences max)
-- Ask about stake and odds if not provided
-- Calculate and explain both WIN and PLACE scenarios
-- Be conversational and helpful
-- Remind users to gamble responsibly`;
+- Validate feelings first: "I hear that this is difficult..."
+- Ask ONE question at a time
+- Be child-focused: "What works best for the children..."
+- Never take sides or criticize the other parent
+- Never give legal advice
+
+## POSITION CAPTURE CATEGORIES
+Help users identify:
+- Must-haves (non-negotiable)
+- Priorities (important but flexible)
+- Nice-to-haves (would be good)
+- Red lines (deal-breakers)
+
+## KEY TOPICS TO EXPLORE
+- Living arrangements
+- School and education
+- Holidays and special occasions
+- Communication between households
+- Decision-making responsibilities
+
+## SENSITIVE TOPICS
+If domestic abuse or child safety is mentioned:
+- Be supportive, not probing
+- Mention that exemptions may apply
+- Suggest professional support
+- Never pressure to continue
+
+## SAMPLE RESPONSES
+"I hear that this is really difficult for you. Let's take this one step at a time."
+"What matters most here is what works best for your children."
+"Would you say that's a must-have for you, or something you'd be flexible on?"
+"I can help you prepare, but for a legally valid certificate you'll need an accredited mediator."`;
   };
 
   // Forward conversation messages to parent
@@ -74,7 +108,7 @@ Help users understand each-way betting and calculate returns for horse racing, g
 
       if (lastMsg?.message?.content && msgId !== lastSentMsgId.current) {
         const isUser = lastMsg.type === "user_message";
-        console.log(`🎤 ${isUser ? 'User' : 'Assistant'}:`, lastMsg.message.content.slice(0, 80));
+        console.log(`🎤 ${isUser ? 'User' : 'Miam'}:`, lastMsg.message.content.slice(0, 80));
         lastSentMsgId.current = msgId;
         onMessage(lastMsg.message.content, isUser ? "user" : "assistant");
       }
@@ -112,10 +146,10 @@ Help users understand each-way betting and calculate returns for horse racing, g
         console.log("🎤 Got access token");
 
         const systemPrompt = buildSystemPrompt();
-        const configId = process.env.NEXT_PUBLIC_HUME_CONFIG_ID || "c55914d1-c5ce-4571-b170-576293d2548d";
-        const sessionId = userName ? `${userName}|${userId || Date.now()}` : `anon_${Date.now()}`;
+        const configId = process.env.NEXT_PUBLIC_HUME_CONFIG_ID || "8351d978-f1a9-4263-89df-af62f45fccf6";
+        const sessionId = userName ? `miam_${userName}|${userId || Date.now()}` : `miam_anon_${Date.now()}`;
 
-        console.log("🎤 Connecting with configId:", configId);
+        console.log("🎤 Connecting Miam with configId:", configId);
         console.log("🎤 Session:", sessionId);
 
         await connect({
@@ -128,14 +162,14 @@ Help users understand each-way betting and calculate returns for horse racing, g
           }
         });
 
-        console.log("🎤 Connected successfully");
+        console.log("🎤 Miam connected successfully");
 
-        // Send greeting with user name so CLM knows who they are
+        // Send greeting with user name so Miam knows who they are
         setTimeout(() => {
           if (userName) {
-            sendUserInput(`Hello, my name is ${userName}`);
+            sendUserInput(`Hello Miam, my name is ${userName}`);
           } else {
-            sendUserInput("Hello, I'd like to calculate an each-way bet");
+            sendUserInput("Hello Miam, I need help preparing for mediation");
           }
         }, 500);
 
@@ -155,9 +189,9 @@ Help users understand each-way betting and calculate returns for horse racing, g
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
         <div className="bg-slate-800 rounded-2xl p-6 max-w-sm w-full border border-slate-700 shadow-xl">
-          <h3 className="text-xl font-bold text-white mb-3">Sign In for Unlimited Voice</h3>
+          <h3 className="text-xl font-bold text-white mb-3">Sign In to Continue with Miam</h3>
           <p className="text-slate-400 mb-6">
-            You&apos;ve used your {MAX_GUEST_SESSIONS} free voice sessions. Sign in for unlimited access to our voice assistant.
+            You&apos;ve used your {MAX_GUEST_SESSIONS} free voice sessions. Sign in for unlimited conversations with Miam.
           </p>
           <div className="flex gap-3">
             <button
@@ -168,7 +202,7 @@ Help users understand each-way betting and calculate returns for horse racing, g
             </button>
             <button
               onClick={() => window.location.href = "/auth/sign-in"}
-              className="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-medium transition-colors"
+              className="flex-1 px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg font-medium transition-colors"
             >
               Sign In
             </button>
@@ -188,10 +222,10 @@ Help users understand each-way betting and calculate returns for horse racing, g
             ? "bg-red-500 hover:bg-red-600 animate-pulse"
             : isPending
             ? "bg-gray-400 cursor-not-allowed"
-            : "bg-emerald-600 hover:bg-emerald-700"
+            : "bg-rose-600 hover:bg-rose-700"
         }`}
-        title={isConnected ? "Stop listening" : "Start voice input"}
-        aria-label={isConnected ? "Stop listening" : "Start voice input"}
+        title={isConnected ? "Stop listening" : "Talk to Miam"}
+        aria-label={isConnected ? "Stop listening" : "Talk to Miam"}
       >
         {isPending ? (
           <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -237,8 +271,8 @@ export function VoiceInput({ onMessage, userName, userId }: VoiceInputProps) {
   return (
     <VoiceProvider
       onError={(err) => console.error("🔴 Hume Error:", err)}
-      onOpen={() => console.log("🟢 Hume WebSocket connected")}
-      onClose={(e) => console.log("🟡 Hume closed:", e?.code, e?.reason)}
+      onOpen={() => console.log("🟢 Miam Voice connected")}
+      onClose={(e) => console.log("🟡 Miam Voice closed:", e?.code, e?.reason)}
     >
       <VoiceButton
         onMessage={onMessage}

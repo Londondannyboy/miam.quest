@@ -20,44 +20,47 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Each-Way Calculator | Free Betting Returns Calculator",
-    template: "%s | Each-Way Calculator",
+    default: "MIAM.quest | Free AI-Powered Mediation Preparation for UK Families",
+    template: "%s | MIAM.quest",
   },
   description:
-    "Each way calculator for UK betting - free tool to calculate your potential returns for horse racing, golf, and sports. Instant win and place payouts with AI assistant.",
+    "Prepare for your MIAM (Mediation Information Assessment Meeting) with Miam, our free AI assistant. Understand the process, organize your priorities, and get ready for family mediation in England & Wales.",
   keywords: [
-    "each way calculator",
-    "each-way bet calculator",
-    "horse racing calculator",
-    "betting calculator",
-    "place bet calculator",
-    "each way returns",
-    "betting odds calculator",
-    "golf betting calculator",
-    "sports betting calculator",
-    "each way betting explained",
+    "miam",
+    "miam certificate",
+    "what is a miam",
+    "miam mediation",
+    "miam exemption",
+    "c100 form",
+    "family mediation",
+    "mediation uk",
+    "child arrangements",
+    "divorce mediation",
+    "mediation costs uk",
+    "mediation preparation",
+    "family court",
   ],
-  authors: [{ name: "Each-Way Calculator" }],
-  creator: "Each-Way Calculator",
-  publisher: "Each-Way Calculator",
-  metadataBase: new URL("https://eachwaycalculator.quest"),
+  authors: [{ name: "MIAM.quest" }],
+  creator: "MIAM.quest",
+  publisher: "MIAM.quest",
+  metadataBase: new URL("https://miam.quest"),
   alternates: {
-    canonical: "https://eachwaycalculator.quest",
+    canonical: "https://miam.quest",
   },
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: "https://eachwaycalculator.quest",
-    siteName: "Each-Way Calculator",
-    title: "Each Way Calculator | Free UK Betting Returns Calculator",
+    url: "https://miam.quest",
+    siteName: "MIAM.quest",
+    title: "MIAM.quest | Free AI-Powered Mediation Preparation",
     description:
-      "Each way calculator for UK betting - calculate your potential returns for horse racing, golf, and sports. Free tool with AI-powered assistance for win and place payouts.",
+      "Prepare for your MIAM with Miam, our free AI assistant. Understand mediation, organize your priorities, and connect with accredited mediators in England & Wales.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Each Way Calculator | Free UK Betting Returns",
+    title: "MIAM.quest | Free AI Mediation Preparation",
     description:
-      "Each way calculator for horse racing, golf, and sports. Free UK betting tool to calculate win and place returns with AI assistance.",
+      "Prepare for your MIAM with free AI assistance. Understand the mediation process and organize your priorities for family court.",
   },
   robots: {
     index: true,
@@ -76,29 +79,44 @@ export const metadata: Metadata = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://eachwaycalculator.quest/#website",
-  name: "Each-Way Calculator",
-  alternateName: ["Each Way Bet Calculator", "E/W Calculator", "Betting Returns Calculator"],
-  url: "https://eachwaycalculator.quest",
+  "@id": "https://miam.quest/#website",
+  name: "MIAM.quest",
+  alternateName: ["MIAM Quest", "MIAM Mediation Preparation"],
+  url: "https://miam.quest",
   description:
-    "Free each-way bet calculator for horse racing, golf, and sports betting. Calculate win and place returns instantly.",
+    "Free AI-powered mediation preparation platform for UK families. Prepare for your MIAM, understand the process, and connect with accredited mediators.",
   inLanguage: "en-GB",
   publisher: {
     "@type": "Organization",
-    "@id": "https://eachwaycalculator.quest/#organization",
-    name: "Each-Way Calculator",
-    url: "https://eachwaycalculator.quest",
+    "@id": "https://miam.quest/#organization",
+    name: "MIAM.quest",
+    url: "https://miam.quest",
   },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://miam.quest/#organization",
+  name: "MIAM.quest",
+  url: "https://miam.quest",
+  description:
+    "AI-powered mediation preparation platform helping UK families prepare for their legally-required MIAM meetings.",
+  areaServed: {
+    "@type": "Country",
+    name: "United Kingdom",
+  },
+  serviceType: ["Mediation Preparation", "Family Dispute Resolution Support"],
 };
 
 const softwareJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "@id": "https://eachwaycalculator.quest/#app",
-  name: "Each-Way Calculator",
+  "@id": "https://miam.quest/#app",
+  name: "MIAM.quest",
   description:
-    "Free online each-way bet calculator for horse racing, golf, and sports betting. Calculate potential returns instantly.",
-  applicationCategory: "FinanceApplication",
+    "Free AI-powered mediation preparation assistant for UK families going through separation or divorce.",
+  applicationCategory: "LifestyleApplication",
   operatingSystem: "Any",
   offers: {
     "@type": "Offer",
@@ -106,14 +124,13 @@ const softwareJsonLd = {
     priceCurrency: "GBP",
   },
   featureList: [
-    "Each-way bet calculation",
-    "Win and place returns",
-    "Multiple odds formats (fractional, decimal)",
-    "Standard horse racing terms",
-    "Golf and sports betting support",
-    "AI-powered assistance",
-    "Visual returns breakdown",
-    "Odds comparison charts",
+    "Voice-first AI conversation with Miam",
+    "MIAM process education",
+    "Position capture and organization",
+    "Preparation document generation",
+    "Accredited mediator directory",
+    "Exemption eligibility checking",
+    "C100 form guidance",
   ],
 };
 
@@ -124,8 +141,8 @@ const breadcrumbJsonLd = {
     {
       "@type": "ListItem",
       position: 1,
-      name: "Each-Way Calculator",
-      item: "https://eachwaycalculator.quest",
+      name: "MIAM.quest",
+      item: "https://miam.quest",
     },
   ],
 };
@@ -143,13 +160,17 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Each-Way Calculator" />
+        <meta name="apple-mobile-web-app-title" content="MIAM.quest" />
         <link rel="manifest" href="/site.webmanifest" />
 
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <script
           type="application/ld+json"
