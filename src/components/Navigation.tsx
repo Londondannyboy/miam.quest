@@ -4,22 +4,35 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
-const NAV_PAGES = [
-  { href: "/", label: "Home", short: "Home" },
-  { href: "/miam/what-is-a-miam", label: "What is a MIAM?", short: "MIAM" },
-  { href: "/miam/certificate", label: "MIAM Certificate", short: "Certificate" },
-  { href: "/forms/c100", label: "C100 Form", short: "C100" },
-  { href: "/mediation/cost", label: "Costs", short: "Costs" },
-  { href: "/mediators", label: "Find a Mediator", short: "Mediators" },
+const MIAM_PAGES = [
+  { href: "/miam/what-is-a-miam", label: "What is a MIAM?" },
+  { href: "/miam/certificate", label: "MIAM Certificate" },
+  { href: "/miam/exemptions", label: "MIAM Exemptions" },
+];
+
+const MEDIATION_PAGES = [
+  { href: "/mediation/what-is-mediation", label: "What is Mediation?" },
+  { href: "/mediation/cost", label: "Mediation Costs" },
+  { href: "/mediation/workplace", label: "Workplace Mediation" },
+];
+
+const OTHER_PAGES = [
+  { href: "/forms/c100", label: "C100 Form Guide" },
 ];
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [miamDropdownOpen, setMiamDropdownOpen] = useState(false);
+  const [mediationDropdownOpen, setMediationDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
+  };
+
+  const isSectionActive = (pages: { href: string }[]) => {
+    return pages.some(page => pathname.startsWith(page.href));
   };
 
   return (
@@ -28,7 +41,7 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-rose-500 to-rose-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xs">M</span>
             </div>
             <span className="font-bold text-zinc-900 dark:text-white hidden sm:block">
@@ -38,13 +51,103 @@ export function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
-            {NAV_PAGES.map((page) => (
+            <Link
+              href="/"
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                pathname === "/"
+                  ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                  : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
+              }`}
+            >
+              Home
+            </Link>
+
+            {/* MIAM Dropdown */}
+            <div className="relative">
+              <button
+                onMouseEnter={() => setMiamDropdownOpen(true)}
+                onMouseLeave={() => setMiamDropdownOpen(false)}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${
+                  isSectionActive(MIAM_PAGES)
+                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
+                }`}
+              >
+                MIAM
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {miamDropdownOpen && (
+                <div
+                  onMouseEnter={() => setMiamDropdownOpen(true)}
+                  onMouseLeave={() => setMiamDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 py-2"
+                >
+                  {MIAM_PAGES.map((page) => (
+                    <Link
+                      key={page.href}
+                      href={page.href}
+                      className={`block px-4 py-2 text-sm ${
+                        isActive(page.href)
+                          ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
+                          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                      }`}
+                    >
+                      {page.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mediation Dropdown */}
+            <div className="relative">
+              <button
+                onMouseEnter={() => setMediationDropdownOpen(true)}
+                onMouseLeave={() => setMediationDropdownOpen(false)}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${
+                  isSectionActive(MEDIATION_PAGES)
+                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
+                }`}
+              >
+                Mediation
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {mediationDropdownOpen && (
+                <div
+                  onMouseEnter={() => setMediationDropdownOpen(true)}
+                  onMouseLeave={() => setMediationDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-1 w-52 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 py-2"
+                >
+                  {MEDIATION_PAGES.map((page) => (
+                    <Link
+                      key={page.href}
+                      href={page.href}
+                      className={`block px-4 py-2 text-sm ${
+                        isActive(page.href)
+                          ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
+                          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                      }`}
+                    >
+                      {page.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Other Pages */}
+            {OTHER_PAGES.map((page) => (
               <Link
                 key={page.href}
                 href={page.href}
                 className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   isActive(page.href)
-                    ? "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300"
+                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
                     : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
                 }`}
               >
@@ -86,27 +189,83 @@ export function Navigation() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="flex flex-col gap-2">
-              {NAV_PAGES.map((page) => (
+            <div className="flex flex-col gap-1">
+              <Link
+                href="/"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-3 py-2 rounded-lg text-sm font-medium ${
+                  pathname === "/"
+                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                }`}
+              >
+                Home
+              </Link>
+
+              {/* MIAM Section */}
+              <div className="px-3 py-2 text-xs font-semibold text-zinc-500 dark:text-zinc-500 uppercase tracking-wider">
+                MIAM
+              </div>
+              {MIAM_PAGES.map((page) => (
                 <Link
                   key={page.href}
                   href={page.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium ${
+                  className={`px-3 py-2 pl-6 rounded-lg text-sm font-medium ${
                     isActive(page.href)
-                      ? "bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300"
+                      ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
                       : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                   }`}
                 >
                   {page.label}
                 </Link>
               ))}
+
+              {/* Mediation Section */}
+              <div className="px-3 py-2 text-xs font-semibold text-zinc-500 dark:text-zinc-500 uppercase tracking-wider mt-2">
+                Mediation
+              </div>
+              {MEDIATION_PAGES.map((page) => (
+                <Link
+                  key={page.href}
+                  href={page.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-3 py-2 pl-6 rounded-lg text-sm font-medium ${
+                    isActive(page.href)
+                      ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                      : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }`}
+                >
+                  {page.label}
+                </Link>
+              ))}
+
+              {/* Forms Section */}
+              <div className="px-3 py-2 text-xs font-semibold text-zinc-500 dark:text-zinc-500 uppercase tracking-wider mt-2">
+                Forms
+              </div>
+              {OTHER_PAGES.map((page) => (
+                <Link
+                  key={page.href}
+                  href={page.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-3 py-2 pl-6 rounded-lg text-sm font-medium ${
+                    isActive(page.href)
+                      ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                      : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }`}
+                >
+                  {page.label}
+                </Link>
+              ))}
+
+              {/* External Link */}
               <a
                 href="https://www.familymediationcouncil.org.uk/"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center gap-1"
+                className="px-3 py-2 mt-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center gap-1"
               >
                 Family Mediation Council
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

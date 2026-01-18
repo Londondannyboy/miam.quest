@@ -1,14 +1,30 @@
 import Link from "next/link";
 
-const SUPPORT_RESOURCES = [
-  { href: "https://www.familymediationcouncil.org.uk/", label: "Family Mediation Council", description: "Find accredited mediators" },
-  { href: "https://www.nationaldahelpline.org.uk/", label: "National DA Helpline", description: "24hr support: 0808 2000 247" },
-  { href: "https://www.citizensadvice.org.uk/family/", label: "Citizens Advice", description: "Free family law guidance" },
+const MIAM_LINKS = [
+  { href: "/miam/what-is-a-miam", label: "What is a MIAM?" },
+  { href: "/miam/certificate", label: "MIAM Certificate" },
+  { href: "/miam/exemptions", label: "MIAM Exemptions" },
+];
+
+const MEDIATION_LINKS = [
+  { href: "/mediation/what-is-mediation", label: "What is Mediation?" },
+  { href: "/mediation/cost", label: "Mediation Costs" },
+  { href: "/mediation/workplace", label: "Workplace Mediation" },
+];
+
+const FORMS_LINKS = [
+  { href: "/forms/c100", label: "C100 Form Guide" },
+];
+
+const SUPPORT_LINKS = [
+  { href: "https://www.familymediationcouncil.org.uk/", label: "Family Mediation Council", external: true },
+  { href: "https://www.nationaldahelpline.org.uk/", label: "National DA Helpline", external: true },
+  { href: "https://www.citizensadvice.org.uk/family/", label: "Citizens Advice", external: true },
 ];
 
 const LEGAL_LINKS = [
   { href: "/privacy", label: "Privacy Policy" },
-  { href: "/terms", label: "Terms of Use" },
+  { href: "/terms", label: "Terms of Service" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -19,13 +35,17 @@ export function Footer() {
     <footer className="bg-zinc-900 text-zinc-400 mt-auto">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
           {/* About */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">MIAM.quest</h3>
+          <div className="col-span-2 lg:col-span-1">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xs">M</span>
+              </div>
+              <span className="font-bold text-white">MIAM.quest</span>
+            </div>
             <p className="text-sm mb-4">
               Free AI-powered mediation preparation for UK family disputes.
-              Helping separating couples prepare for their MIAM meeting.
             </p>
             <p className="text-xs text-zinc-500">
               Miam is an AI assistant and cannot provide legal advice.
@@ -33,60 +53,95 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Resources */}
+          {/* MIAM */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Support Resources</h3>
-            <ul className="space-y-3">
-              {SUPPORT_RESOURCES.map((link) => (
+            <h3 className="text-white font-semibold mb-4 text-sm">MIAM</h3>
+            <ul className="space-y-2">
+              {MIAM_LINKS.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-white transition-colors text-sm flex items-start gap-2"
+                    className="text-sm hover:text-white transition-colors"
                   >
-                    <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                    <div>
-                      <span className="block">{link.label}</span>
-                      <span className="text-xs text-zinc-500">{link.description}</span>
-                    </div>
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Info */}
+          {/* Mediation */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Important Information</h3>
-            <div className="space-y-3 text-sm">
-              <p>
-                <span className="text-emerald-400 font-medium">What is a MIAM?</span> - A Mediation
-                Information Assessment Meeting is required before most family court applications.
-              </p>
-              <p>
-                <span className="text-blue-400 font-medium">Child-Focused</span> - Mediation helps
-                parents focus on what&apos;s best for their children.
-              </p>
-              <p>
-                <span className="text-amber-400 font-medium">Exemptions Apply</span> - If you&apos;re
-                experiencing domestic abuse, you may be exempt from MIAM requirements.
-              </p>
-            </div>
+            <h3 className="text-white font-semibold mb-4 text-sm">Mediation</h3>
+            <ul className="space-y-2">
+              {MEDIATION_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Forms & Resources */}
+          <div>
+            <h3 className="text-white font-semibold mb-4 text-sm">Forms</h3>
+            <ul className="space-y-2">
+              {FORMS_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <h3 className="text-white font-semibold mb-4 mt-6 text-sm">Support</h3>
+            <ul className="space-y-2">
+              {SUPPORT_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm hover:text-white transition-colors flex items-center gap-1"
+                  >
+                    {link.label}
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Disclaimer */}
+        <div className="mt-8 pt-8 border-t border-zinc-800">
+          <div className="bg-amber-900/20 border border-amber-700/30 rounded-lg p-4 mb-6">
+            <p className="text-amber-300/90 text-xs">
+              <strong className="text-amber-400">Important:</strong> MIAM.quest is a beta service providing AI-powered mediation preparation guidance.
+              We do not provide mediation services or legal advice. Always consult a qualified professional before making decisions.
+              Only FMC-accredited mediators can conduct MIAMs and issue certificates.
+            </p>
           </div>
         </div>
 
         {/* Trust Signals */}
-        <div className="mt-8 pt-8 border-t border-zinc-800">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-500">
-            <span>Free AI mediation preparation</span>
-            <span>-</span>
-            <span>Connects you to FMC-accredited mediators</span>
-            <span>-</span>
-            <span>Child-focused approach</span>
-          </div>
+        <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-500 mb-8">
+          <span>Free AI mediation preparation</span>
+          <span>-</span>
+          <span>Connects you to FMC-accredited mediators</span>
+          <span>-</span>
+          <span>Child-focused approach</span>
         </div>
       </div>
 
