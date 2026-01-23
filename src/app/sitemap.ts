@@ -1,81 +1,68 @@
 import { MetadataRoute } from "next";
+import { getAllPublishedPages } from "@/lib/db";
 
 const BASE_URL = "https://miam.quest";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const currentDate = new Date().toISOString();
-
-  return [
-    // Homepage
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // Static pages
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
-      lastModified: currentDate,
+      lastModified: new Date().toISOString(),
       changeFrequency: "weekly",
       priority: 1.0,
     },
-    // MIAM Section
-    {
-      url: `${BASE_URL}/miam/what-is-a-miam`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/miam/certificate`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
     {
       url: `${BASE_URL}/miam/exemptions`,
-      lastModified: currentDate,
+      lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
-    // Mediation Section
     {
       url: `${BASE_URL}/mediation/what-is-mediation`,
-      lastModified: currentDate,
+      lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${BASE_URL}/mediation/cost`,
-      lastModified: currentDate,
+      lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${BASE_URL}/mediation/workplace`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    // Forms
-    {
-      url: `${BASE_URL}/forms/c100`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    // Legal pages
-    {
       url: `${BASE_URL}/privacy`,
-      lastModified: currentDate,
+      lastModified: new Date().toISOString(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/terms`,
-      lastModified: currentDate,
+      lastModified: new Date().toISOString(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/contact`,
-      lastModified: currentDate,
+      lastModified: new Date().toISOString(),
       changeFrequency: "yearly",
       priority: 0.3,
     },
   ];
+
+  // Dynamic pages from database
+  let dbPages: MetadataRoute.Sitemap = [];
+  try {
+    const pages = await getAllPublishedPages();
+    dbPages = pages.map((page) => ({
+      url: `${BASE_URL}/${page.slug}`,
+      lastModified: page.updated_at,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }));
+  } catch {
+    // If DB is unavailable, return static pages only
+  }
+
+  return [...staticPages, ...dbPages];
 }

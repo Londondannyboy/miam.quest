@@ -8,22 +8,38 @@ const MIAM_PAGES = [
   { href: "/miam/what-is-a-miam", label: "What is a MIAM?" },
   { href: "/miam/certificate", label: "MIAM Certificate" },
   { href: "/miam/exemptions", label: "MIAM Exemptions" },
+  { href: "/miam/form-fm1", label: "FM1 Form Guide" },
 ];
 
 const MEDIATION_PAGES = [
   { href: "/mediation/what-is-mediation", label: "What is Mediation?" },
   { href: "/mediation/cost", label: "Mediation Costs" },
-  { href: "/mediation/workplace", label: "Workplace Mediation" },
+  { href: "/mediation/divorce-mediation", label: "Divorce Mediation" },
+  { href: "/mediation/family-mediation-voucher-scheme", label: "Voucher Scheme" },
+  { href: "/mediation/shuttle-mediation", label: "Shuttle Mediation" },
+  { href: "/mediation/how-long-does-mediation-take", label: "How Long Does It Take?" },
+  { href: "/mediation/benefits-of-mediation", label: "Benefits of Mediation" },
 ];
 
-const OTHER_PAGES = [
+const COURT_ORDERS_PAGES = [
   { href: "/forms/c100", label: "C100 Form Guide" },
+  { href: "/court-orders/prohibited-steps-order", label: "Prohibited Steps Order" },
+  { href: "/court-orders/specific-issue-order", label: "Specific Issue Order" },
+  { href: "/court-orders/consent-order", label: "Consent Order" },
+];
+
+const GUIDES_PAGES = [
+  { href: "/guides/parenting-plan", label: "Parenting Plan" },
+  { href: "/guides/parallel-parenting", label: "Parallel Parenting" },
+  { href: "/guides/supervised-contact", label: "Supervised Contact" },
 ];
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [miamDropdownOpen, setMiamDropdownOpen] = useState(false);
   const [mediationDropdownOpen, setMediationDropdownOpen] = useState(false);
+  const [courtOrdersDropdownOpen, setCourtOrdersDropdownOpen] = useState(false);
+  const [guidesDropdownOpen, setGuidesDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   const isActive = (href: string) => {
@@ -140,20 +156,83 @@ export function Navigation() {
               )}
             </div>
 
-            {/* Other Pages */}
-            {OTHER_PAGES.map((page) => (
-              <Link
-                key={page.href}
-                href={page.href}
-                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive(page.href)
+            {/* Court Orders Dropdown */}
+            <div className="relative">
+              <button
+                onMouseEnter={() => setCourtOrdersDropdownOpen(true)}
+                onMouseLeave={() => setCourtOrdersDropdownOpen(false)}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${
+                  isSectionActive(COURT_ORDERS_PAGES)
                     ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
                     : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
                 }`}
               >
-                {page.label}
-              </Link>
-            ))}
+                Court Orders
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {courtOrdersDropdownOpen && (
+                <div
+                  onMouseEnter={() => setCourtOrdersDropdownOpen(true)}
+                  onMouseLeave={() => setCourtOrdersDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-1 w-52 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 py-2"
+                >
+                  {COURT_ORDERS_PAGES.map((page) => (
+                    <Link
+                      key={page.href}
+                      href={page.href}
+                      className={`block px-4 py-2 text-sm ${
+                        isActive(page.href)
+                          ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
+                          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                      }`}
+                    >
+                      {page.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Guides Dropdown */}
+            <div className="relative">
+              <button
+                onMouseEnter={() => setGuidesDropdownOpen(true)}
+                onMouseLeave={() => setGuidesDropdownOpen(false)}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1 ${
+                  isSectionActive(GUIDES_PAGES)
+                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                    : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white"
+                }`}
+              >
+                Guides
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {guidesDropdownOpen && (
+                <div
+                  onMouseEnter={() => setGuidesDropdownOpen(true)}
+                  onMouseLeave={() => setGuidesDropdownOpen(false)}
+                  className="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-zinc-900 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 py-2"
+                >
+                  {GUIDES_PAGES.map((page) => (
+                    <Link
+                      key={page.href}
+                      href={page.href}
+                      className={`block px-4 py-2 text-sm ${
+                        isActive(page.href)
+                          ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
+                          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                      }`}
+                    >
+                      {page.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {/* External Resources */}
             <a
@@ -240,11 +319,30 @@ export function Navigation() {
                 </Link>
               ))}
 
-              {/* Forms Section */}
+              {/* Court Orders Section */}
               <div className="px-3 py-2 text-xs font-semibold text-zinc-500 dark:text-zinc-500 uppercase tracking-wider mt-2">
-                Forms
+                Court Orders
               </div>
-              {OTHER_PAGES.map((page) => (
+              {COURT_ORDERS_PAGES.map((page) => (
+                <Link
+                  key={page.href}
+                  href={page.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`px-3 py-2 pl-6 rounded-lg text-sm font-medium ${
+                    isActive(page.href)
+                      ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                      : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  }`}
+                >
+                  {page.label}
+                </Link>
+              ))}
+
+              {/* Guides Section */}
+              <div className="px-3 py-2 text-xs font-semibold text-zinc-500 dark:text-zinc-500 uppercase tracking-wider mt-2">
+                Guides
+              </div>
+              {GUIDES_PAGES.map((page) => (
                 <Link
                   key={page.href}
                   href={page.href}

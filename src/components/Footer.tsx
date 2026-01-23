@@ -4,16 +4,30 @@ const MIAM_LINKS = [
   { href: "/miam/what-is-a-miam", label: "What is a MIAM?" },
   { href: "/miam/certificate", label: "MIAM Certificate" },
   { href: "/miam/exemptions", label: "MIAM Exemptions" },
+  { href: "/miam/form-fm1", label: "FM1 Form Guide" },
 ];
 
 const MEDIATION_LINKS = [
   { href: "/mediation/what-is-mediation", label: "What is Mediation?" },
   { href: "/mediation/cost", label: "Mediation Costs" },
-  { href: "/mediation/workplace", label: "Workplace Mediation" },
+  { href: "/mediation/divorce-mediation", label: "Divorce Mediation" },
+  { href: "/mediation/family-mediation-voucher-scheme", label: "Voucher Scheme" },
+  { href: "/mediation/shuttle-mediation", label: "Shuttle Mediation" },
+  { href: "/mediation/how-long-does-mediation-take", label: "How Long Does It Take?" },
+  { href: "/mediation/benefits-of-mediation", label: "Benefits of Mediation" },
 ];
 
-const FORMS_LINKS = [
+const COURT_ORDERS_LINKS = [
   { href: "/forms/c100", label: "C100 Form Guide" },
+  { href: "/court-orders/prohibited-steps-order", label: "Prohibited Steps Order" },
+  { href: "/court-orders/specific-issue-order", label: "Specific Issue Order" },
+  { href: "/court-orders/consent-order", label: "Consent Order" },
+];
+
+const GUIDES_LINKS = [
+  { href: "/guides/parenting-plan", label: "Parenting Plan" },
+  { href: "/guides/parallel-parenting", label: "Parallel Parenting" },
+  { href: "/guides/supervised-contact", label: "Supervised Contact" },
 ];
 
 const SUPPORT_LINKS = [
@@ -35,7 +49,7 @@ export function Footer() {
     <footer className="bg-zinc-900 text-zinc-400 mt-auto">
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           {/* About */}
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
@@ -87,11 +101,28 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Forms & Resources */}
+          {/* Court Orders */}
           <div>
-            <h3 className="text-white font-semibold mb-4 text-sm">Forms</h3>
+            <h3 className="text-white font-semibold mb-4 text-sm">Court Orders</h3>
             <ul className="space-y-2">
-              {FORMS_LINKS.map((link) => (
+              {COURT_ORDERS_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Guides & Support */}
+          <div>
+            <h3 className="text-white font-semibold mb-4 text-sm">Guides</h3>
+            <ul className="space-y-2">
+              {GUIDES_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
