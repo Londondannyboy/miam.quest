@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { authClient } from "@/lib/auth/client";
 import { HOME_PROMPT } from "@/lib/prompts";
@@ -79,6 +80,46 @@ const TOPIC_AREAS = [
   { title: "Financial Support", desc: "Child maintenance and shared costs" }
 ];
 
+// Table of contents sections
+const TOC_SECTIONS = [
+  { id: "what-is-miam", label: "What is a MIAM?" },
+  { id: "how-miam-helps", label: "How Miam Helps" },
+  { id: "topics", label: "Topics We Cover" },
+  { id: "video-guide", label: "Video Guide" },
+  { id: "faqs", label: "FAQs" },
+];
+
+// FAQ Schema for JSON-LD (SEO)
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": FAQS.map((faq) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer,
+    },
+  })),
+};
+
+// Video Schema for JSON-LD (SEO)
+const videoSchema = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "What is a MIAM? - Mediation Information Assessment Meeting Explained",
+  "description": "Learn what a MIAM (Mediation Information Assessment Meeting) is, why it's required before family court in England and Wales, and how to prepare for your meeting with an accredited mediator.",
+  "thumbnailUrl": "https://img.youtube.com/vi/715gjNV5ffE/maxresdefault.jpg",
+  "uploadDate": "2024-01-01",
+  "contentUrl": "https://www.youtube.com/watch?v=715gjNV5ffE",
+  "embedUrl": "https://www.youtube.com/embed/715gjNV5ffE",
+  "publisher": {
+    "@type": "Organization",
+    "name": "MIAM.quest",
+    "url": "https://miam.quest"
+  }
+};
+
 export default function HomePage() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
@@ -92,6 +133,16 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50 to-white dark:from-zinc-900 dark:to-zinc-950">
+      {/* JSON-LD Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
@@ -107,9 +158,13 @@ export default function HomePage() {
               with Confidence
             </h1>
 
-            <p className="text-xl text-zinc-600 dark:text-zinc-400 mb-8 max-w-2xl mx-auto">
-              Meet <strong>Miam</strong> - your AI mediation preparation assistant.
-              Understand the process, organize your priorities, and go into mediation ready.
+            <p className="text-xl text-zinc-600 dark:text-zinc-400 mb-4 max-w-2xl mx-auto">
+              Meet <strong>Miam</strong> - your free AI family mediation preparation assistant for England & Wales.
+              Understand the MIAM process, organize your priorities for child arrangements, and go into mediation ready.
+            </p>
+
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-8 max-w-xl mx-auto">
+              Required before submitting a <Link href="/forms/c100" className="text-rose-600 hover:underline">C100 form</Link> to family court. Check if you qualify for a <Link href="/miam/exemptions" className="text-rose-600 hover:underline">MIAM exemption</Link>.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
@@ -161,22 +216,60 @@ export default function HomePage() {
                 UK Family Law
               </div>
             </div>
+
+            {/* Table of Contents */}
+            <nav aria-label="Page contents" className="mt-10 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+              <p className="text-xs uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-3">On this page</p>
+              <ul className="flex flex-wrap justify-center gap-4 text-sm">
+                {TOC_SECTIONS.map((section) => (
+                  <li key={section.id}>
+                    <a
+                      href={`#${section.id}`}
+                      className="text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 hover:underline"
+                    >
+                      {section.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </div>
       </section>
 
       {/* What is MIAM Section */}
-      <section className="py-16 bg-white dark:bg-zinc-900">
+      <section id="what-is-miam" className="py-16 bg-white dark:bg-zinc-900 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
-              What is a <span className="text-rose-600">MIAM</span>?
-            </h2>
-            <p className="text-lg text-zinc-600 dark:text-zinc-400">
-              A <strong>MIAM</strong> (Mediation Information Assessment Meeting) is a mandatory meeting
-              you must attend before applying to family court in England and Wales. It&apos;s your first
-              step toward resolving family disputes without the stress and cost of court.
-            </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
+                What is a <span className="text-rose-600">MIAM</span>?
+              </h2>
+              <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-4">
+                A <strong>MIAM</strong> (Mediation Information Assessment Meeting) is a mandatory meeting
+                with an <a href="https://www.familymediationcouncil.org.uk/" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:underline">FMC-accredited family mediator</a> that you must attend before applying to family court in England and Wales. It&apos;s your first
+                step toward resolving family disputes about <Link href="/topics/child-arrangements" className="text-rose-600 hover:underline">child arrangements</Link> without the stress and cost of court.
+              </p>
+              <p className="text-zinc-600 dark:text-zinc-400 mb-4">
+                Under the <a href="https://www.gov.uk/looking-after-children-divorce" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:underline">Children and Families Act 2014</a>,
+                you must attend a MIAM or qualify for a <Link href="/miam/exemptions" className="text-rose-600 hover:underline">MIAM exemption</Link> before
+                submitting a <Link href="/forms/c100" className="text-rose-600 hover:underline">C100 form</Link> to court.
+              </p>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                Family mediation in the UK helps separating parents agree on arrangements for their children without going through expensive court proceedings.
+              </p>
+            </div>
+            <div className="relative">
+              <Image
+                src="/Miam consultation.jpg"
+                alt="Family mediation consultation - parents discussing child arrangements with a mediator in the UK"
+                width={600}
+                height={400}
+                className="rounded-2xl shadow-lg"
+                priority
+              />
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-2 text-center">A typical family mediation session in England & Wales</p>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -187,7 +280,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">45-60 Minutes</h3>
-              <p className="text-zinc-600 dark:text-zinc-400">A MIAM is a single session where a mediator explains the process and assesses your situation.</p>
+              <p className="text-zinc-600 dark:text-zinc-400">A MIAM is a single session where a mediator explains the mediation process and assesses your situation.</p>
             </div>
 
             <div className="bg-zinc-50 dark:bg-zinc-800 rounded-2xl p-6">
@@ -197,7 +290,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">£90-150 Cost</h3>
-              <p className="text-zinc-600 dark:text-zinc-400">Typical MIAM fee per person. May be free with legal aid or the Family Mediation Voucher Scheme.</p>
+              <p className="text-zinc-600 dark:text-zinc-400">Typical MIAM fee per person. May be free with <a href="https://www.gov.uk/legal-aid" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:underline">legal aid</a> or the <Link href="/mediation/cost" className="text-rose-600 hover:underline">Family Mediation Voucher Scheme</Link>.</p>
             </div>
 
             <div className="bg-zinc-50 dark:bg-zinc-800 rounded-2xl p-6">
@@ -207,7 +300,7 @@ export default function HomePage() {
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">Required for Court</h3>
-              <p className="text-zinc-600 dark:text-zinc-400">You need a MIAM certificate or exemption before submitting a C100 form to family court.</p>
+              <p className="text-zinc-600 dark:text-zinc-400">You need a <Link href="/miam/certificate" className="text-rose-600 hover:underline">MIAM certificate</Link> or exemption before submitting a <Link href="/forms/c100" className="text-rose-600 hover:underline">C100 form</Link> to family court.</p>
             </div>
           </div>
 
@@ -223,15 +316,15 @@ export default function HomePage() {
       </section>
 
       {/* How Miam Helps Section */}
-      <section className="py-16 bg-zinc-50 dark:bg-zinc-950">
+      <section id="how-miam-helps" className="py-16 bg-zinc-50 dark:bg-zinc-950 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
               How Miam Helps You Prepare
             </h2>
             <p className="text-lg text-zinc-600 dark:text-zinc-400">
-              Going into mediation prepared makes a real difference. Miam helps you organize your thoughts
-              so you can focus on what matters most - your children.
+              Going into family mediation prepared makes a real difference. Miam helps you organize your thoughts
+              so you can focus on what matters most - your children and reaching an agreement about <Link href="/topics/child-arrangements" className="text-rose-600 hover:underline">child arrangements</Link>.
             </p>
           </div>
 
@@ -259,15 +352,15 @@ export default function HomePage() {
       </section>
 
       {/* Topics We Cover */}
-      <section className="py-16 bg-white dark:bg-zinc-900">
+      <section id="topics" className="py-16 bg-white dark:bg-zinc-900 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
               Topics We Help You Think Through
             </h2>
             <p className="text-lg text-zinc-600 dark:text-zinc-400">
-              Mediation covers many aspects of parenting after separation. Miam helps you consider
-              each area and identify your priorities.
+              Family mediation UK covers many aspects of parenting after separation or divorce. Miam helps you consider
+              each area and identify your priorities before your MIAM meeting.
             </p>
           </div>
 
@@ -289,6 +382,33 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Video Guide Section */}
+      <section id="video-guide" className="py-16 bg-zinc-50 dark:bg-zinc-950 scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
+              Watch: Understanding the MIAM Process
+            </h2>
+            <p className="text-lg text-zinc-600 dark:text-zinc-400">
+              Learn what to expect from a MIAM and how family mediation works in England and Wales.
+            </p>
+          </div>
+          <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg bg-zinc-900">
+            <iframe
+              src="https://www.youtube.com/embed/715gjNV5ffE"
+              title="What is a MIAM? - Mediation Information Assessment Meeting Explained"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="absolute inset-0 w-full h-full"
+              loading="lazy"
+            />
+          </div>
+          <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-4">
+            This video explains the MIAM process and what happens during a mediation information assessment meeting.
+          </p>
+        </div>
+      </section>
+
       {/* Important Disclaimer */}
       <section className="py-12 bg-amber-50 dark:bg-amber-900/20 border-y border-amber-200 dark:border-amber-800">
         <div className="max-w-4xl mx-auto px-4 text-center">
@@ -299,16 +419,16 @@ export default function HomePage() {
           </div>
           <h3 className="text-xl font-bold text-amber-900 dark:text-amber-100 mb-2">Important to Know</h3>
           <p className="text-amber-800 dark:text-amber-200">
-            Miam is an AI assistant that helps you prepare for mediation. She cannot provide legal advice
-            and cannot issue MIAM certificates. Only <strong>FMC-accredited human mediators</strong> can
+            Miam is an AI assistant that helps you prepare for family mediation. She cannot provide legal advice
+            and cannot issue <Link href="/miam/certificate" className="underline hover:text-amber-900">MIAM certificates</Link>. Only <a href="https://www.familymediationcouncil.org.uk/" target="_blank" rel="noopener noreferrer" className="underline hover:text-amber-900">FMC-accredited human mediators</a> can
             issue the certificates required for court. If you&apos;re experiencing domestic abuse, you may
-            be exempt from MIAM requirements.
+            qualify for a <Link href="/miam/exemptions" className="underline hover:text-amber-900">MIAM exemption</Link>.
           </p>
         </div>
       </section>
 
       {/* FAQs */}
-      <section className="py-16 bg-zinc-50 dark:bg-zinc-950">
+      <section id="faqs" className="py-16 bg-zinc-50 dark:bg-zinc-950 scroll-mt-20">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-zinc-900 dark:text-white mb-8 text-center">
             Frequently Asked Questions
