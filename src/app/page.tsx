@@ -372,6 +372,9 @@ export default function HomePage() {
             <span className="text-zinc-300 dark:text-zinc-700">|</span>
             <Link href="/mediators" className="text-rose-600 hover:text-rose-700 hover:underline">Find a Mediator</Link>
           </div>
+          <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 mt-6 max-w-2xl mx-auto">
+            If you or your family are considering moving as part of your separation, our partners at <a href="https://relocation.quest" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 hover:underline">Relocation Quest</a> provide AI-powered relocation advice for international and domestic moves.
+          </p>
         </div>
       </section>
 
