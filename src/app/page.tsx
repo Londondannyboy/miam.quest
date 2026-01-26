@@ -20,6 +20,7 @@ const VoiceInput = dynamic(
 
 // Unsplash images - warm, friendly, professional
 const IMAGES = {
+  // Hero & general
   hero: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&q=80",
   consultation: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
   family: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=1200&q=80",
@@ -29,6 +30,22 @@ const IMAGES = {
   couple: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1200&q=80",
   child: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80",
   office: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80",
+
+  // Key facts cards
+  clock: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=800&q=80",
+  money: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+  courthouse: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80",
+
+  // Who needs MIAM
+  coupleTalking: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=800&q=80",
+  divorce: "https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=800&q=80",
+  grandparents: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=800&q=80",
+  legal: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&q=80",
+
+  // Exemptions & Cost
+  helpSupport: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&q=80",
+  calculator: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1200&q=80",
+  piggyBank: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1200&q=80",
 };
 
 // Expanded FAQ data targeting ranking keywords
@@ -430,35 +447,44 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Key facts grid */}
+          {/* Key facts grid with images */}
           <div className="grid md:grid-cols-3 gap-8 mt-20">
             {[
               {
-                icon: "🕐",
+                image: IMAGES.clock,
                 title: "Single Session",
                 desc: "A MIAM is one meeting lasting 45-60 minutes where a mediator explains the process and assesses your situation.",
-                gradient: "from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20",
-                border: "border-rose-100 dark:border-rose-800"
+                color: "rose"
               },
               {
-                icon: "💷",
+                image: IMAGES.money,
                 title: "Affordable Options",
                 desc: "Typical fee is £90-150. May be free with legal aid or the Family Mediation Voucher Scheme (£500 available).",
-                gradient: "from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20",
-                border: "border-amber-100 dark:border-amber-800"
+                color: "amber"
               },
               {
-                icon: "📋",
+                image: IMAGES.courthouse,
                 title: "Required for Court",
                 desc: "You need a MIAM certificate or valid exemption before submitting a C100 form to family court.",
-                gradient: "from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20",
-                border: "border-emerald-100 dark:border-emerald-800"
+                color: "emerald"
               }
             ].map((item, index) => (
-              <div key={index} className={`bg-gradient-to-br ${item.gradient} rounded-3xl p-8 border ${item.border}`}>
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-3">{item.title}</h3>
-                <p className="text-zinc-600 dark:text-zinc-400">{item.desc}</p>
+              <div key={index} className="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all">
+                {/* Background image */}
+                <div className="absolute inset-0">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t from-${item.color}-900/90 via-${item.color}-900/60 to-${item.color}-900/30`} />
+                </div>
+                {/* Content */}
+                <div className="relative p-8 min-h-[280px] flex flex-col justify-end">
+                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
+                  <p className="text-white/90">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -492,12 +518,30 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {WHO_NEEDS_MIAM.map((item, index) => (
+            {[
+              { ...WHO_NEEDS_MIAM[0], image: IMAGES.coupleTalking },
+              { ...WHO_NEEDS_MIAM[1], image: IMAGES.divorce },
+              { ...WHO_NEEDS_MIAM[2], image: IMAGES.grandparents },
+              { ...WHO_NEEDS_MIAM[3], image: IMAGES.legal },
+            ].map((item, index) => (
               <div key={index} className="group">
-                <div className="bg-white dark:bg-zinc-800 rounded-3xl p-8 h-full shadow-sm hover:shadow-xl transition-all border border-zinc-100 dark:border-zinc-700 hover:border-rose-200 dark:hover:border-rose-800 group-hover:-translate-y-1">
-                  <div className="text-5xl mb-5">{item.icon}</div>
-                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-3">{item.title}</h3>
-                  <p className="text-zinc-600 dark:text-zinc-400">{item.desc}</p>
+                <div className="bg-white dark:bg-zinc-800 rounded-3xl overflow-hidden h-full shadow-sm hover:shadow-xl transition-all border border-zinc-100 dark:border-zinc-700 hover:border-rose-200 dark:hover:border-rose-800 group-hover:-translate-y-1">
+                  {/* Image thumbnail */}
+                  <div className="relative h-40 overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                    <div className="absolute bottom-3 left-3 text-3xl">{item.icon}</div>
+                  </div>
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">{item.title}</h3>
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400">{item.desc}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -754,13 +798,25 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* CTA Banner */}
-          <div className="bg-gradient-to-r from-rose-600 via-pink-600 to-rose-600 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden">
+          {/* CTA Banner with hero image */}
+          <div className="rounded-3xl overflow-hidden relative">
+            {/* Background image */}
+            <div className="absolute inset-0">
+              <Image
+                src={IMAGES.helpSupport}
+                alt="Supportive hands - help with MIAM exemptions"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-rose-900/90 via-pink-800/85 to-rose-900/90" />
+            </div>
+            {/* Decorative elements */}
             <div className="absolute inset-0 opacity-20">
               <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl" />
               <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/2 translate-y-1/2 blur-3xl" />
             </div>
-            <div className="relative">
+            {/* Content */}
+            <div className="relative p-10 md:p-14 text-center">
               <h3 className="text-3xl font-bold text-white mb-4">Need Help with Exemptions?</h3>
               <p className="text-rose-100 mb-8 max-w-2xl mx-auto text-lg">
                 If you think you might qualify for a MIAM exemption, we can help you understand your options. Our AI assistant can explain the requirements.
@@ -772,7 +828,7 @@ export default function HomePage() {
                 >
                   Ask Miam About Exemptions
                 </button>
-                <Link href="/miam/exemptions" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-rose-700/50 hover:bg-rose-700/70 backdrop-blur-sm text-white rounded-xl font-semibold transition-all border border-white/20">
+                <Link href="/miam/exemptions" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold transition-all border border-white/30">
                   View All Exemptions
                 </Link>
               </div>
@@ -781,9 +837,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========== COST SECTION ========== */}
-      <section id="miam-cost" className="py-24 scroll-mt-20 bg-white dark:bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-4">
+      {/* ========== COST SECTION with hero background ========== */}
+      <section id="miam-cost" className="py-24 scroll-mt-20 relative overflow-hidden">
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src={IMAGES.piggyBank}
+            alt="Savings and costs for family mediation"
+            fill
+            className="object-cover opacity-10 dark:opacity-5"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/98 to-white dark:from-zinc-950/95 dark:via-zinc-950/98 dark:to-zinc-950" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-block px-4 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-sm font-medium mb-4">
               Affordable Options
