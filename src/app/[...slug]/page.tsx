@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getPageBySlug, getRelatedPages } from "@/lib/db";
+import { Disclaimer } from "@/components/Disclaimer";
 
 interface PageProps {
   params: Promise<{ slug: string[] }>;
@@ -224,9 +225,12 @@ export default async function ContentPage({ params }: PageProps) {
             </section>
           )}
 
+          {/* Disclaimer */}
+          <Disclaimer variant="compact" className="mt-12" />
+
           {/* Related Pages */}
           {relatedPages.length > 0 && (
-            <section className="border-t border-zinc-200 dark:border-zinc-800 pt-8 mt-12">
+            <section className="border-t border-zinc-200 dark:border-zinc-800 pt-8 mt-8">
               <h2 className="text-lg font-bold text-zinc-900 dark:text-white mb-4">Related Guides</h2>
               <div className="grid md:grid-cols-3 gap-4">
                 {relatedPages.map((related) => (

@@ -139,27 +139,18 @@ const STATS = [
   { number: "Free", label: "preparation with Miam AI", icon: "🤖" }
 ];
 
-// Testimonials
-const TESTIMONIALS = [
-  {
-    quote: "Miam helped me feel prepared and confident going into my MIAM. I knew exactly what to expect and what I wanted to say.",
-    author: "Sarah T.",
-    location: "Manchester",
-    avatar: "S"
-  },
-  {
-    quote: "The AI assistant helped me organize my thoughts about child arrangements. It made a stressful process so much easier.",
-    author: "James M.",
-    location: "London",
-    avatar: "J"
-  },
-  {
-    quote: "I was nervous about mediation, but Miam explained everything clearly. I felt supported throughout the preparation.",
-    author: "Emma R.",
-    location: "Birmingham",
-    avatar: "E"
-  }
-];
+// About Us - Authentic content
+const ABOUT_US = {
+  title: "We're a New AI Startup",
+  subtitle: "Honest About Who We Are",
+  description: "MIAM.quest was created to help people navigate the stressful process of family mediation. We're a small team building AI tools to make legal processes more accessible.",
+  points: [
+    "We launched in 2024 - we're new and continuously improving",
+    "Our AI helps you prepare, but can't replace human mediators",
+    "We don't charge for our preparation service",
+    "We're transparent about what we can and cannot do"
+  ]
+};
 
 // Benefits
 const BENEFITS = [
@@ -179,7 +170,7 @@ const TOC_SECTIONS = [
   { id: "how-we-help", label: "How We Help" },
   { id: "miam-exemptions", label: "Exemptions" },
   { id: "miam-cost", label: "Costs" },
-  { id: "testimonials", label: "Stories" },
+  { id: "about-us", label: "About Us" },
   { id: "faqs", label: "FAQs" },
 ];
 
@@ -859,45 +850,94 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========== TESTIMONIALS SECTION ========== */}
-      <section id="testimonials" className="py-24 scroll-mt-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-50 to-white dark:from-zinc-900 dark:to-zinc-950" />
+      {/* ========== ABOUT US SECTION - Honest & Authentic ========== */}
+      <section id="about-us" className="py-24 scroll-mt-20 relative overflow-hidden">
+        {/* Background image with overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src={IMAGES.office}
+            alt="Modern office workspace"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/95 via-zinc-900/90 to-zinc-900/80" />
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-4">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="inline-block px-4 py-1 bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 rounded-full text-sm font-medium mb-4">
-              Real Stories
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-white mb-6">
-              What People Say
-            </h2>
-            <p className="text-xl text-zinc-600 dark:text-zinc-400">
-              Hear from others who used Miam to prepare for their mediation journey.
-            </p>
-          </div>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Content */}
+            <div>
+              <span className="inline-block px-4 py-1 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium mb-4 border border-white/20">
+                {ABOUT_US.subtitle}
+              </span>
+              <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+                {ABOUT_US.title}
+              </h2>
+              <p className="text-xl text-zinc-300 mb-8 leading-relaxed">
+                {ABOUT_US.description}
+              </p>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {TESTIMONIALS.map((testimonial, index) => (
-              <div key={index} className="bg-white dark:bg-zinc-800 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all border border-zinc-100 dark:border-zinc-700">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <svg key={i} className="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
-                </div>
-                <p className="text-zinc-600 dark:text-zinc-300 mb-6 text-lg leading-relaxed">&quot;{testimonial.quote}&quot;</p>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-rose-500 to-pink-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                    {testimonial.avatar}
-                  </div>
-                  <div>
-                    <div className="font-bold text-zinc-900 dark:text-white">{testimonial.author}</div>
-                    <div className="text-sm text-zinc-500">{testimonial.location}</div>
-                  </div>
-                </div>
+              <ul className="space-y-4 mb-8">
+                {ABOUT_US.points.map((point, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <div className="w-6 h-6 bg-rose-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-4 h-4 text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span className="text-zinc-300">{point}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="flex flex-wrap gap-4">
+                <button
+                  onClick={() => setIsChatOpen(true)}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-rose-50 text-rose-700 rounded-xl font-semibold transition-all"
+                >
+                  Try Miam Free
+                </button>
+                <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold transition-all border border-white/20">
+                  Contact Us
+                </Link>
               </div>
-            ))}
+            </div>
+
+            {/* Honest values cards */}
+            <div className="grid gap-6">
+              {[
+                {
+                  icon: "🤖",
+                  title: "AI-Powered, Human-Focused",
+                  desc: "Our AI helps you prepare, but we always recommend working with accredited human mediators for your actual MIAM."
+                },
+                {
+                  icon: "🆓",
+                  title: "Free & No Hidden Costs",
+                  desc: "Our preparation service is completely free. We believe everyone deserves access to support during difficult times."
+                },
+                {
+                  icon: "🔒",
+                  title: "Privacy First",
+                  desc: "Your conversations are private. We don't sell your data or share it with third parties."
+                },
+                {
+                  icon: "📈",
+                  title: "Always Improving",
+                  desc: "We're a new startup, continuously learning and improving our service based on feedback."
+                }
+              ].map((item, index) => (
+                <div key={index} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all">
+                  <div className="flex items-start gap-4">
+                    <div className="text-3xl">{item.icon}</div>
+                    <div>
+                      <h3 className="font-bold text-white mb-1">{item.title}</h3>
+                      <p className="text-sm text-zinc-400">{item.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
