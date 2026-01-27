@@ -46,22 +46,22 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-900 text-zinc-400 mt-auto">
+    <footer className="bg-black text-zinc-300 mt-auto">
       {/* Main Footer */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10">
           {/* About */}
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xs">M</span>
               </div>
-              <span className="font-bold text-white">MIAM.quest</span>
+              <span className="font-bold text-white">Miam Certificate Quest</span>
             </div>
-            <p className="text-sm mb-4">
-              Free AI-powered mediation preparation for UK family disputes.
+            <p className="text-sm mb-4 text-white">
+              Free AI-powered MIAM certificate preparation for UK family disputes.
             </p>
-            <p className="text-xs text-zinc-500">
+            <p className="text-sm text-zinc-300">
               Miam is an AI assistant and cannot provide legal advice.
               Only FMC-accredited mediators can issue valid MIAM certificates.
             </p>
@@ -167,28 +167,28 @@ export function Footer() {
         </div>
 
         {/* Trust Signals */}
-        <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-500 mb-8">
-          <span>Free AI mediation preparation</span>
-          <span>-</span>
+        <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white mb-8">
+          <span>Free AI MIAM certificate preparation</span>
+          <span className="text-zinc-500">|</span>
           <span>Connects you to FMC-accredited mediators</span>
-          <span>-</span>
+          <span className="text-zinc-500">|</span>
           <span>Child-focused approach</span>
         </div>
       </div>
 
       {/* Bottom Bar */}
       <div className="border-t border-zinc-800">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs">
-              © {currentYear} MIAM.quest. All rights reserved.
+            <p className="text-sm text-white">
+              © {currentYear} Miam Certificate Quest. All rights reserved.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
               {LEGAL_LINKS.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs hover:text-white transition-colors"
+                  className="text-sm text-zinc-300 hover:text-white transition-colors underline underline-offset-2"
                 >
                   {link.label}
                 </Link>

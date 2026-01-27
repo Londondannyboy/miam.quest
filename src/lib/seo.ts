@@ -9,7 +9,7 @@ export interface PageSEO {
 }
 
 const SITE_URL = "https://miam.quest";
-const SITE_NAME = "MIAM.quest - AI Mediation Preparation";
+const SITE_NAME = "Miam Certificate Quest";
 
 export function generateMetadata(page: PageSEO): Metadata {
   const fullTitle = `${page.title} | ${SITE_NAME}`;
@@ -142,9 +142,10 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
 // Page-specific SEO configs
 export const PAGE_SEO = {
   home: {
-    title: "MIAM.quest | Free AI Mediation Preparation for UK Families",
-    description: "Free AI-powered mediation preparation for UK family disputes. Chat with Miam, your compassionate AI guide, to prepare for your MIAM meeting. Child-focused, neutral support.",
+    title: "Miam Certificate Quest | Free MIAM Certificate Help UK",
+    description: "Get your MIAM certificate with free AI help. Prepare for your Mediation Information Assessment Meeting and understand MIAM certificates for family court in England & Wales.",
     keywords: [
+      "miam certificate",
       "miam",
       "miam mediation",
       "mediation preparation",

@@ -61,7 +61,7 @@ export function Navigation() {
               <span className="text-white font-bold text-xs">M</span>
             </div>
             <span className="font-bold text-zinc-900 dark:text-white hidden sm:block">
-              MIAM.quest
+              Miam Certificate Quest
             </span>
           </Link>
 
@@ -252,6 +252,8 @@ export function Navigation() {
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? (
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

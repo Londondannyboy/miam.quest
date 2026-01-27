@@ -20,11 +20,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "MIAM.quest | Free AI-Powered Mediation Preparation for UK Families",
-    template: "%s | MIAM.quest",
+    default: "Miam Certificate Quest | Free MIAM Certificate Help UK",
+    template: "%s | Miam Certificate Quest",
   },
   description:
-    "Prepare for your MIAM (Mediation Information Assessment Meeting) with Miam, our free AI assistant. Understand the process, organize your priorities, and get ready for family mediation in England & Wales.",
+    "Get your MIAM certificate with free AI help. Prepare for your Mediation Information Assessment Meeting and understand MIAM certificates for family court in England & Wales.",
   keywords: [
     "miam",
     "miam certificate",
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     "mediation preparation",
     "family court",
   ],
-  authors: [{ name: "MIAM.quest" }],
-  creator: "MIAM.quest",
-  publisher: "MIAM.quest",
+  authors: [{ name: "Miam Certificate Quest" }],
+  creator: "Miam Certificate Quest",
+  publisher: "Miam Certificate Quest",
   metadataBase: new URL("https://miam.quest"),
   alternates: {
     canonical: "https://miam.quest",
@@ -51,16 +51,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GB",
     url: "https://miam.quest",
-    siteName: "MIAM.quest",
-    title: "MIAM.quest | Free AI-Powered Mediation Preparation",
+    siteName: "Miam Certificate Quest",
+    title: "Miam Certificate Quest | Free MIAM Certificate Preparation",
     description:
-      "Prepare for your MIAM with Miam, our free AI assistant. Understand mediation, organize your priorities, and connect with accredited mediators in England & Wales.",
+      "Get your MIAM certificate with free AI help. Understand MIAM certificates, prepare for mediation, and connect with accredited mediators in England & Wales.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MIAM.quest | Free AI Mediation Preparation",
+    title: "Miam Certificate Quest | Free MIAM Certificate Help",
     description:
-      "Prepare for your MIAM with free AI assistance. Understand the mediation process and organize your priorities for family court.",
+      "Get your MIAM certificate with free AI help. Understand MIAM certificates and prepare for family court in England & Wales.",
   },
   robots: {
     index: true,
@@ -80,16 +80,16 @@ const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": "https://miam.quest/#website",
-  name: "MIAM.quest",
-  alternateName: ["MIAM Quest", "MIAM Mediation Preparation"],
+  name: "Miam Certificate Quest",
+  alternateName: ["MIAM Certificate Help", "MIAM Quest", "MIAM Mediation Preparation"],
   url: "https://miam.quest",
   description:
-    "Free AI-powered mediation preparation platform for UK families. Prepare for your MIAM, understand the process, and connect with accredited mediators.",
+    "Free AI-powered MIAM certificate preparation platform for UK families. Get help with your MIAM certificate, understand the process, and connect with accredited mediators.",
   inLanguage: "en-GB",
   publisher: {
     "@type": "Organization",
     "@id": "https://miam.quest/#organization",
-    name: "MIAM.quest",
+    name: "Miam Certificate Quest",
     url: "https://miam.quest",
   },
 };
@@ -98,24 +98,24 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": "https://miam.quest/#organization",
-  name: "MIAM.quest",
+  name: "Miam Certificate Quest",
   url: "https://miam.quest",
   description:
-    "AI-powered mediation preparation platform helping UK families prepare for their legally-required MIAM meetings.",
+    "AI-powered MIAM certificate preparation platform helping UK families prepare for their legally-required MIAM meetings and obtain their MIAM certificate.",
   areaServed: {
     "@type": "Country",
     name: "United Kingdom",
   },
-  serviceType: ["Mediation Preparation", "Family Dispute Resolution Support"],
+  serviceType: ["MIAM Certificate Preparation", "Mediation Preparation", "Family Dispute Resolution Support"],
 };
 
 const softwareJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "@id": "https://miam.quest/#app",
-  name: "MIAM.quest",
+  name: "Miam Certificate Quest",
   description:
-    "Free AI-powered mediation preparation assistant for UK families going through separation or divorce.",
+    "Free AI-powered MIAM certificate preparation assistant for UK families going through separation or divorce.",
   applicationCategory: "LifestyleApplication",
   operatingSystem: "Any",
   offers: {
@@ -125,6 +125,7 @@ const softwareJsonLd = {
   },
   featureList: [
     "Voice-first AI conversation with Miam",
+    "MIAM certificate guidance",
     "MIAM process education",
     "Position capture and organization",
     "Preparation document generation",
@@ -141,7 +142,7 @@ const breadcrumbJsonLd = {
     {
       "@type": "ListItem",
       position: 1,
-      name: "MIAM.quest",
+      name: "Miam Certificate Quest",
       item: "https://miam.quest",
     },
   ],
@@ -160,7 +161,7 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="MIAM.quest" />
+        <meta name="apple-mobile-web-app-title" content="Miam Certificate Quest" />
         <link rel="manifest" href="/site.webmanifest" />
 
         {/* JSON-LD Structured Data */}

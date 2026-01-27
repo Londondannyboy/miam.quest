@@ -1,18 +1,35 @@
-# CLAUDE.md - MIAM.quest Development Guide
+# CLAUDE.md - Miam Certificate Quest Development Guide
 
 ## Project Overview
 
-**MIAM.quest** is an AI-powered mediation preparation and support platform for UK family disputes. It helps separating couples prepare for their legally-required MIAM (Mediation Information Assessment Meeting) through voice and chat conversations with "Miam" - an empathetic female AI mediator.
+**Miam Certificate Quest** (formerly MIAM.quest) is an AI-powered mediation preparation and support platform for UK family disputes. It helps separating couples prepare for their legally-required MIAM (Mediation Information Assessment Meeting) through voice and chat conversations with "Miam" - an empathetic female AI mediator.
+
+### Launch Status
+- **Status**: Beta Product
+- **Launch**: Q1 2026
+- **Live URL**: https://miam.quest
 
 ### Core Value Proposition
-- Free AI-powered mediation preparation
+- Free AI-powered MIAM certificate preparation
 - Voice-first interaction with Miam (via Hume EVI)
 - Document generation (parenting plans, financial summaries)
 - Connection to accredited human mediators for legally-binding outcomes
-- SEO content targeting 60k+ monthly searches
+- SEO content targeting "miam certificate" and related keywords (60k+ monthly searches)
 
 ### Legal Context
 > A MIAM is legally required in England & Wales before applying to court for child arrangements (C100 form). Only FMC-accredited mediators can issue valid MIAM certificates. Miam (the AI) helps users **prepare** for mediation - she cannot issue certificates or provide legal advice.
+
+---
+
+## Branding
+
+| Element | Value |
+|---------|-------|
+| Site Name | Miam Certificate Quest |
+| Domain | miam.quest |
+| Primary Keyword | "miam certificate" |
+| Meta Title | Miam Certificate Quest \| Free MIAM Certificate Help UK |
+| Tagline | Free AI-Powered MIAM Certificate Preparation |
 
 ---
 
@@ -70,8 +87,8 @@ miam.quest/
 │   │   └── contact/            # Contact page
 │   ├── components/
 │   │   ├── Navigation.tsx      # Global nav with dropdowns
-│   │   ├── Footer.tsx          # Global footer with clusters
-│   │   ├── BetaBanner.tsx      # Beta disclaimer banner
+│   │   ├── Footer.tsx          # Global footer (black bg, high contrast)
+│   │   ├── BetaBanner.tsx      # Beta + Q1 2026 launch banner
 │   │   ├── CookieConsent.tsx   # Cookie consent
 │   │   ├── VoiceInput.tsx      # Hume voice component
 │   │   └── providers.tsx       # Context providers
@@ -79,7 +96,7 @@ miam.quest/
 │       ├── auth/               # Neon auth client/server
 │       ├── types.ts            # TypeScript interfaces
 │       ├── prompts.ts          # System prompts
-│       └── seo.ts              # SEO utilities
+│       └── seo.ts              # SEO utilities (SITE_NAME = "Miam Certificate Quest")
 ├── agent/                      # Python backend
 │   ├── src/
 │   │   └── agent.py            # Pydantic AI agent
@@ -93,11 +110,32 @@ miam.quest/
 
 ---
 
-## SEO Content Pages (Live)
+## SEO Strategy
+
+### Target Keyword: "miam certificate"
+- Position 73.4 in Google (as of Jan 2026)
+- 9 impressions, 1 click, 11.1% CTR
+- Best performing keyword
+
+### On-Page SEO Optimizations (Jan 2026)
+- **Title**: "Miam Certificate Quest | Free MIAM Certificate Help UK" (55 chars)
+- **H1**: "Get Your MIAM Certificate with Confidence"
+- **Meta Description**: Includes "MIAM certificate" early
+- **JSON-LD Schemas**: Website, Organization, SoftwareApplication, FAQ, Video, Breadcrumb
+- **Keyword density**: 16+ mentions across headers and body
+
+### Authoritative Sources Referenced
+Homepage links to official sources for credibility:
+1. [Family Mediation Council](https://www.familymediationcouncil.org.uk/family-mediation/assessment-meeting-miam/) - Official MIAM info
+2. [National Family Mediation](https://www.nfm.org.uk/about-family-mediation-services/what-is-a-miam/) - NFM guidance
+3. [Gov.uk FM1 Form](https://assets.publishing.service.gov.uk/media/6628df55db4b9f0448a7e58e/FM1_0424.pdf) - Official form
+4. [Burnetts Solicitors](https://www.burnetts.co.uk/legal-news/family-law-faqs-what-is-a-miam-do-i-need-to-attend-one/) - Legal FAQ
+
+### SEO Content Pages (Live)
 
 | Page | URL | Target Keywords | Est. Volume |
 |------|-----|-----------------|-------------|
-| Homepage | / | mediation, miam | 17,700 |
+| Homepage | / | miam certificate, mediation, miam | 17,700 |
 | What is a MIAM | /miam/what-is-a-miam | what is a miam | 210 |
 | MIAM Certificate | /miam/certificate | miam certificate | 480 |
 | MIAM Exemptions | /miam/exemptions | miam exemption | 210 |
@@ -107,6 +145,23 @@ miam.quest/
 | C100 Form | /forms/c100 | c100 form | 12,100 |
 
 **Total estimated search volume: ~43,000/month**
+
+---
+
+## Accessibility (WCAG 2.1)
+
+### Fixes Applied (Jan 2026)
+- **Contrast**: Footer uses black background with white text (AAA compliance)
+- **Buttons**: Mobile hamburger has aria-label and aria-expanded
+- **Links**: Underlined for distinguishability
+- **Headings**: Proper semantic hierarchy (no skipped levels)
+- **Images**: Alt text on all images, fetchpriority on LCP image
+
+### Lighthouse Scores (Target)
+- Performance: 70+
+- Accessibility: 95+
+- Best Practices: 100
+- SEO: 100
 
 ---
 
@@ -232,7 +287,13 @@ python -m uvicorn src.agent:app --reload   # http://localhost:8000
 - "Miam is an AI assistant and cannot provide legal advice"
 - "Only FMC-accredited mediators can issue valid MIAM certificates"
 - "If you're experiencing domestic abuse, you may be exempt from MIAM requirements"
-- "This is a beta service - always consult a qualified professional"
+- "Beta product - Q1 2026 launch"
+
+### Key Facts (Aligned with Authoritative Sources)
+- MIAM duration: 45-60 minutes
+- MIAM cost: £100-£150 (without legal aid)
+- Certificate validity: 4 months
+- Only FMC-accredited mediators can sign court forms
 
 ### Sensitive Topics
 Handle with care:
@@ -246,3 +307,16 @@ Handle with care:
 ## Repository
 
 GitHub: https://github.com/Londondannyboy/miam.quest
+
+---
+
+## Changelog
+
+### January 2026
+- Rebranded from "MIAM.quest" to "Miam Certificate Quest"
+- SEO optimization for "miam certificate" keyword
+- Added authoritative source links (FMC, NFM, Gov.uk, Burnetts)
+- Accessibility improvements (contrast, aria labels, heading hierarchy)
+- Performance optimizations (LCP image priority, image sizing)
+- Updated beta banner with Q1 2026 launch
+- Updated all metadata and JSON-LD schemas

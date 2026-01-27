@@ -72,7 +72,7 @@ const FAQS = [
   },
   {
     question: "How much does a MIAM cost?",
-    answer: "A MIAM typically costs £90-150 per person for a single session. However, you may qualify for free mediation through legal aid if you're on a low income or receive certain benefits. The Family Mediation Voucher Scheme also provides up to £500 towards mediation costs for eligible families."
+    answer: "A MIAM typically costs £100-£150 per person for a single session. However, you may qualify for free mediation through legal aid if you're on a low income or receive certain benefits. The Family Mediation Voucher Scheme also provides up to £500 towards mediation costs for eligible families."
   },
   {
     question: "What exemptions allow me to skip the MIAM?",
@@ -83,7 +83,7 @@ const FAQS = [
     answer: "No. Only FMC-accredited human mediators can issue valid MIAM certificates. Miam the AI assistant helps you prepare for your MIAM meeting and mediation - making the process easier, less stressful, and more effective. We help you organize your thoughts and understand what to expect."
   },
   {
-    question: "Is using MIAM.quest free?",
+    question: "Is using Miam Certificate Quest free?",
     answer: "Yes! Preparing with Miam is completely free. We help you organize your thoughts, understand the MIAM process, and prepare for your actual MIAM meeting with a human mediator. There's no cost to chat with our AI assistant."
   },
   {
@@ -160,9 +160,9 @@ const STATS = [
 const ABOUT_US = {
   title: "We're a New AI Startup",
   subtitle: "Honest About Who We Are",
-  description: "MIAM.quest was created to help people navigate the stressful process of family mediation. We're a small team building AI tools to make legal processes more accessible.",
+  description: "Miam Certificate Quest was created to help people navigate the stressful process of family mediation. We're a small team building AI tools to make legal processes more accessible.",
   points: [
-    "We launched in 2024 - we're new and continuously improving",
+    "We launched in Q1 2026 - we're new and continuously improving",
     "Our AI helps you prepare, but can't replace human mediators",
     "We don't charge for our preparation service",
     "We're transparent about what we can and cannot do"
@@ -212,12 +212,12 @@ const videoSchema = {
   "name": "What is a MIAM? - Mediation Information Assessment Meeting Explained",
   "description": "Learn what a MIAM (Mediation Information Assessment Meeting) is, why it's required before family court in England and Wales, and how to prepare for your meeting with an accredited mediator.",
   "thumbnailUrl": "https://img.youtube.com/vi/715gjNV5ffE/maxresdefault.jpg",
-  "uploadDate": "2024-01-01",
+  "uploadDate": "2026-01-01",
   "contentUrl": "https://www.youtube.com/watch?v=715gjNV5ffE",
   "embedUrl": "https://www.youtube.com/embed/715gjNV5ffE",
   "publisher": {
     "@type": "Organization",
-    "name": "MIAM.quest",
+    "name": "Miam Certificate Quest",
     "url": "https://miam.quest"
   }
 };
@@ -253,6 +253,7 @@ export default function HomePage() {
             fill
             className="object-cover object-center"
             priority
+            fetchPriority="high"
             quality={90}
           />
           {/* Warm gradient overlay - less opaque to show image */}
@@ -278,8 +279,8 @@ export default function HomePage() {
 
             {/* Heading */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
-              Prepare for Your{" "}
-              <span className="bg-gradient-to-r from-rose-200 to-pink-200 bg-clip-text text-transparent">MIAM</span>{" "}
+              Get Your{" "}
+              <span className="bg-gradient-to-r from-rose-200 to-pink-200 bg-clip-text text-transparent">MIAM Certificate</span>{" "}
               with Confidence
             </h1>
 
@@ -384,20 +385,21 @@ export default function HomePage() {
               </span>
               <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-white mb-6 leading-tight">
                 What is a{" "}
-                <span className="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">MIAM</span>?
+                <span className="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">MIAM</span>{" "}
+                &amp; MIAM Certificate?
               </h2>
               <div className="prose prose-lg dark:prose-invert">
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
                   A <strong className="text-zinc-900 dark:text-white">MIAM</strong> (Mediation Information Assessment Meeting) is a mandatory meeting
-                  with an <a href="https://www.familymediationcouncil.org.uk/" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">FMC-accredited family mediator</a> that you must attend before applying to family court in England and Wales.
+                  with an <a href="https://www.familymediationcouncil.org.uk/family-mediation/assessment-meeting-miam/" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">FMC-accredited family mediator</a> that you must attend before applying to family court in England and Wales. After attending, you&apos;ll receive a <strong className="text-zinc-900 dark:text-white">MIAM certificate</strong> which is required for your court application.
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
-                  During this supportive meeting, the mediator will explain how mediation works, assess whether it&apos;s suitable for your situation, and discuss alternatives to court. It&apos;s your first step toward resolving family matters in a less stressful way.
+                  According to the <a href="https://www.nfm.org.uk/about-family-mediation-services/what-is-a-miam/" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">National Family Mediation</a>, during this 45-60 minute meeting, the mediator will explain how mediation works, assess whether it&apos;s suitable for your situation, and discuss your options including court alternatives.
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
                   Under the <a href="https://www.gov.uk/looking-after-children-divorce" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">Children and Families Act 2014</a>,
                   you must attend a MIAM or qualify for an <Link href="/miam/exemptions" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">exemption</Link> before
-                  submitting a <Link href="/forms/c100" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">C100 form</Link>.
+                  submitting a <Link href="/forms/c100" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">C100 form</Link> (see the official <a href="https://assets.publishing.service.gov.uk/media/6628df55db4b9f0448a7e58e/FM1_0424.pdf" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">FM1 form</a>).
                 </p>
               </div>
 
@@ -421,7 +423,8 @@ export default function HomePage() {
                   width={600}
                   height={450}
                   className="object-cover w-full"
-                  priority
+                  sizes="(max-width: 768px) 100vw, 600px"
+                  quality={75}
                 />
               </div>
 
@@ -441,7 +444,7 @@ export default function HomePage() {
               </div>
 
               <div className="absolute -top-6 -right-6 bg-gradient-to-br from-rose-500 to-pink-600 text-white p-5 rounded-2xl shadow-xl">
-                <div className="text-2xl font-bold">£90-150</div>
+                <div className="text-2xl font-bold">£100-£150</div>
                 <div className="text-sm text-rose-100">typical cost</div>
               </div>
             </div>
@@ -459,7 +462,7 @@ export default function HomePage() {
               {
                 image: IMAGES.money,
                 title: "Affordable Options",
-                desc: "Typical fee is £90-150. May be free with legal aid or the Family Mediation Voucher Scheme (£500 available).",
+                desc: "Typical fee is £100-£150. May be free with legal aid or the Family Mediation Voucher Scheme (£500 available).",
                 color: "amber"
               },
               {
@@ -595,10 +598,10 @@ export default function HomePage() {
               </h2>
               <div className="prose prose-lg dark:prose-invert">
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
-                  A <strong className="text-zinc-900 dark:text-white">MIAM certificate</strong> is the official document you receive after attending your Mediation Information Assessment Meeting. This certificate is essential — you cannot submit a C100 form to family court without it (unless you have an exemption).
+                  A <strong className="text-zinc-900 dark:text-white">MIAM certificate</strong> is the official document you receive after attending your Mediation Information Assessment Meeting. According to <a href="https://www.burnetts.co.uk/legal-news/family-law-faqs-what-is-a-miam-do-i-need-to-attend-one/" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline underline-offset-2">Burnetts Solicitors</a>, you cannot submit a C100 form to family court without it (unless you have an exemption).
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
-                  The certificate confirms you&apos;ve explored mediation as an alternative to court proceedings. Only <a href="https://www.familymediationcouncil.org.uk/" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline underline-offset-2">FMC-accredited mediators</a> can issue valid MIAM certificates.
+                  The <a href="https://www.familymediationcouncil.org.uk/family-mediation/assessment-meeting-miam/" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline underline-offset-2">Family Mediation Council</a> confirms that only FMC-accredited mediators can sign court forms, and your certificate remains valid for four months.
                 </p>
               </div>
 
@@ -606,9 +609,9 @@ export default function HomePage() {
                 <div className="flex gap-4">
                   <div className="text-3xl">💡</div>
                   <div>
-                    <h4 className="font-bold text-amber-900 dark:text-amber-100 mb-1">Important</h4>
+                    <p className="font-bold text-amber-900 dark:text-amber-100 mb-1">Important</p>
                     <p className="text-amber-800 dark:text-amber-200 text-sm">
-                      MIAM.quest helps you prepare for your MIAM, but only human mediators can issue the certificate. We make the process easier, not replace it.
+                      Miam Certificate Quest helps you prepare for your MIAM, but only human mediators can issue the certificate. We make the process easier, not replace it.
                     </p>
                   </div>
                 </div>
@@ -866,7 +869,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
               {
-                price: "£90-150",
+                price: "£100-£150",
                 title: "Standard MIAM Fee",
                 desc: "Typical cost per person for a single MIAM session with an accredited mediator.",
                 gradient: "from-zinc-100 to-zinc-50 dark:from-zinc-800 dark:to-zinc-900",
@@ -903,7 +906,7 @@ export default function HomePage() {
 
           <div className="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-3xl p-10 text-center border border-rose-100 dark:border-rose-800">
             <div className="text-5xl mb-4">🎉</div>
-            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-4">MIAM.quest Preparation is Always Free</h3>
+            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-4">Miam Certificate Quest Preparation is Always Free</h3>
             <p className="text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto text-lg">
               Our AI preparation assistant costs nothing. We help you get ready for your MIAM at no charge — you only pay when you meet with a real mediator.
             </p>
@@ -1058,6 +1061,93 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========== OFFICIAL RESOURCES SECTION ========== */}
+      <section className="py-16 bg-white dark:bg-zinc-950">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <span className="inline-block px-4 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium mb-4">
+              Authoritative Sources
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
+              Official MIAM Certificate Resources
+            </h2>
+            <p className="text-lg text-zinc-600 dark:text-zinc-400">
+              We recommend these trusted, authoritative sources for official information about MIAMs and MIAM certificates in England &amp; Wales.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <a
+              href="https://www.familymediationcouncil.org.uk/family-mediation/assessment-meeting-miam/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-6 bg-zinc-50 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 hover:border-rose-300 dark:hover:border-rose-700 transition-colors group"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-rose-100 dark:bg-rose-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">🏛️</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-zinc-900 dark:text-white mb-1 group-hover:text-rose-600 transition-colors">Family Mediation Council</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">The official body for family mediation standards. Information on MIAMs, accredited mediators, and certification.</p>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="https://www.nfm.org.uk/about-family-mediation-services/what-is-a-miam/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-6 bg-zinc-50 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 hover:border-rose-300 dark:hover:border-rose-700 transition-colors group"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">🤝</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-zinc-900 dark:text-white mb-1 group-hover:text-rose-600 transition-colors">National Family Mediation</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">Charity providing family mediation services. Helpful guidance on MIAM process, costs, and legal aid eligibility.</p>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="https://assets.publishing.service.gov.uk/media/6628df55db4b9f0448a7e58e/FM1_0424.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-6 bg-zinc-50 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 hover:border-rose-300 dark:hover:border-rose-700 transition-colors group"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">📄</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-zinc-900 dark:text-white mb-1 group-hover:text-rose-600 transition-colors">Official FM1 Form (Gov.uk)</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">The official government MIAM form (FM1) that mediators complete. Download the latest version directly.</p>
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="https://www.burnetts.co.uk/legal-news/family-law-faqs-what-is-a-miam-do-i-need-to-attend-one/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-6 bg-zinc-50 dark:bg-zinc-800 rounded-2xl border border-zinc-200 dark:border-zinc-700 hover:border-rose-300 dark:hover:border-rose-700 transition-colors group"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl">⚖️</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-zinc-900 dark:text-white mb-1 group-hover:text-rose-600 transition-colors">Burnetts Solicitors FAQ</h3>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400">Legal FAQ from established UK solicitors explaining MIAM requirements, exemptions, and the 4-month validity period.</p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ========== FAQs SECTION ========== */}
       <section id="faqs" className="py-24 scroll-mt-20 bg-zinc-50 dark:bg-zinc-900">
         <div className="max-w-4xl mx-auto px-4">
@@ -1165,13 +1255,13 @@ export default function HomePage() {
               { href: "/mediation/cost", label: "Mediation Costs" },
               { href: "/mediators", label: "Find a Mediator" },
             ].map((link, i) => (
-              <Link key={i} href={link.href} className="px-5 py-2.5 bg-zinc-100 dark:bg-zinc-800 rounded-full text-rose-600 hover:bg-rose-50 dark:hover:bg-zinc-700 transition-colors text-sm font-medium">
+              <Link key={i} href={link.href} className="px-5 py-2.5 bg-rose-700 dark:bg-rose-800 rounded-full text-white hover:bg-rose-800 dark:hover:bg-rose-700 transition-colors text-sm font-medium">
                 {link.label}
               </Link>
             ))}
           </div>
-          <p className="text-center text-sm text-zinc-500 dark:text-zinc-400 max-w-2xl mx-auto">
-            If you or your family are considering moving as part of your separation, our partners at <a href="https://relocation.quest" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:underline">Relocation Quest</a> provide AI-powered relocation advice.
+          <p className="text-center text-sm text-zinc-700 dark:text-zinc-300 max-w-2xl mx-auto">
+            If you or your family are considering moving as part of your separation, our partners at <a href="https://relocation.quest" target="_blank" rel="noopener noreferrer" className="text-rose-700 dark:text-rose-400 underline underline-offset-2 hover:text-rose-800 dark:hover:text-rose-300">Relocation Quest</a> provide AI-powered relocation advice.
           </p>
         </div>
       </section>

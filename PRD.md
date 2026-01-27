@@ -1,12 +1,13 @@
-# Product Requirements Document: MIAM.quest
+# Product Requirements Document: Miam Certificate Quest
 
-**Last Updated:** 18 January 2026
-**Status:** Phase 1 MVP - LIVE
+**Last Updated:** 27 January 2026
+**Status:** Beta Product - Q1 2026 Launch
 **Live URL:** https://miam.quest
+**Primary Keyword:** miam certificate
 
 ## Executive Summary
 
-MIAM.quest is an AI-powered mediation preparation platform that helps separating couples in the UK prepare for their legally-required Mediation Information Assessment Meeting (MIAM). Through voice and chat conversations with "Miam" - a compassionate AI mediator - users can organize their thoughts, understand the process, capture their position, and connect with accredited human mediators.
+**Miam Certificate Quest** (formerly MIAM.quest) is an AI-powered mediation preparation platform that helps separating couples in the UK prepare for their legally-required Mediation Information Assessment Meeting (MIAM) and obtain their MIAM certificate. Through voice and chat conversations with "Miam" - a compassionate AI mediator - users can organize their thoughts, understand the process, capture their position, and connect with accredited human mediators.
 
 ### Current Deployment
 
@@ -402,7 +403,7 @@ Booking system with calendar integration.
 | Family Mediation Council | Mediator directory | No preparation tools |
 | Direct Gov | MIAM information | Dry, no interactivity |
 | Private mediators | Full service | Expensive, no prep support |
-| **MIAM.quest** | AI preparation + directory | Unique positioning |
+| **Miam Certificate Quest** | AI preparation + directory | Unique positioning |
 
 ---
 
