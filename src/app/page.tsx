@@ -96,8 +96,8 @@ const FAQS = [
 const PROCESS_STEPS = [
   {
     number: "1",
-    title: "Talk to Miam",
-    description: "Have a warm, supportive conversation about your situation. Miam will help you understand the MIAM process and what to expect.",
+    title: "Start Chatting",
+    description: "Have a warm, supportive conversation about your situation. Our AI will help you understand the process and what to expect.",
     color: "rose"
   },
   {
@@ -306,7 +306,8 @@ export default function HomePage() {
         <div className="absolute inset-0">
           <Image
             src={IMAGES.hero}
-            alt="Supportive family mediation consultation"
+            alt="Supportive family mediation consultation for MIAM certificate preparation"
+            title="MIAM certificate preparation - family mediation consultation"
             fill
             className="object-cover object-center"
             priority
@@ -491,6 +492,7 @@ export default function HomePage() {
                 <Image
                   src="/Miam consultation.jpg"
                   alt="Family mediation consultation - parents discussing child arrangements with a professional mediator"
+                  title="MIAM certificate consultation with family mediator"
                   width={600}
                   height={450}
                   className="object-cover w-full"
@@ -646,6 +648,7 @@ export default function HomePage() {
                 <Image
                   src={IMAGES.documents}
                   alt="MIAM certificate and legal documents for family court"
+                  title="MIAM certificate documents for court application"
                   width={600}
                   height={450}
                   className="object-cover w-full"
@@ -711,7 +714,7 @@ export default function HomePage() {
               Your Preparation Partner
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-white mb-6">
-              How Miam Helps You Prepare
+              How We Help You Prepare
             </h2>
             <p className="text-xl text-zinc-600 dark:text-zinc-400">
               Going into family mediation prepared makes a real difference. Miam helps you organize your thoughts so you can focus on what matters most — your children.
@@ -744,7 +747,7 @@ export default function HomePage() {
 
           {/* Benefits grid */}
           <div className="mt-20">
-            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white text-center mb-10">Why Choose Miam?</h3>
+            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white text-center mb-10">Why Choose Us?</h3>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {BENEFITS.map((benefit, index) => (
                 <div key={index} className="flex items-start gap-4 p-6 bg-white dark:bg-zinc-800 rounded-2xl border border-zinc-100 dark:border-zinc-700">
@@ -977,7 +980,7 @@ export default function HomePage() {
 
           <div className="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-3xl p-10 text-center border border-rose-100 dark:border-rose-800">
             <div className="text-5xl mb-4">🎉</div>
-            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-4">Miam Certificate Quest Preparation is Always Free</h3>
+            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-4">Our Preparation Service is Always Free</h3>
             <p className="text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto text-lg">
               Our AI preparation assistant costs nothing. We help you get ready for your MIAM at no charge — you only pay when you meet with a real mediator.
             </p>
@@ -1091,7 +1094,7 @@ export default function HomePage() {
               Visual Guide
             </span>
             <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-white mb-6">
-              Watch: Understanding MIAMs
+              Video: Learn About the Process
             </h2>
             <p className="text-xl text-zinc-600 dark:text-zinc-400">
               Learn what to expect from a MIAM and how family mediation works in England and Wales.
@@ -1140,7 +1143,7 @@ export default function HomePage() {
               Authoritative Sources
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-zinc-900 dark:text-white mb-4">
-              Official MIAM Certificate Resources
+              Official Resources
             </h2>
             <p className="text-lg text-zinc-600 dark:text-zinc-400">
               We recommend these trusted, authoritative sources for official information about MIAMs and MIAM certificates in England &amp; Wales.
@@ -1283,7 +1286,7 @@ export default function HomePage() {
 
         <div className="relative max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Ready to Start Preparing for Your MIAM?
+            Ready to Get Started?
           </h2>
           <p className="text-xl sm:text-2xl text-rose-100 mb-10 max-w-2xl mx-auto">
             Talk to Miam now and take the first step toward a smoother, less stressful mediation experience. It&apos;s free, confidential, and available 24/7.
