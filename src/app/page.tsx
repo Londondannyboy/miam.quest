@@ -292,6 +292,20 @@ export default function HomePage() {
               We help you understand the process, organize your priorities, and feel ready for your mediation journey.
             </p>
 
+            {/* Voice Widget with Instructions */}
+            <div className="mb-8 flex items-center gap-4">
+              <VoiceInput
+                onMessage={handleVoiceMessage}
+                userName={user?.name || user?.email?.split("@")[0]}
+                userId={user?.id}
+                userEmail={user?.email}
+              />
+              <div className="text-white/80 text-sm max-w-xs">
+                <p className="font-semibold text-white mb-1">Talk to Miam</p>
+                <p>Click the microphone to speak. Ask about MIAM certificates, exemptions, costs, or anything about mediation.</p>
+              </div>
+            </div>
+
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <button
@@ -1267,19 +1281,12 @@ export default function HomePage() {
       </section>
 
       {/* ========== FLOATING ELEMENTS ========== */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <VoiceInput
-          onMessage={handleVoiceMessage}
-          userName={user?.name || user?.email?.split("@")[0]}
-          userId={user?.id}
-          userEmail={user?.email}
-        />
-      </div>
 
+      {/* Chat button - bottom right (only when sidebar closed) */}
       {!isChatOpen && (
         <button
           onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-6 right-24 z-40 w-16 h-16 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 rounded-full flex items-center justify-center shadow-xl shadow-rose-600/30 transition-all hover:scale-110"
+          className="fixed bottom-6 right-6 z-40 w-16 h-16 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 rounded-full flex items-center justify-center shadow-xl shadow-rose-600/30 transition-all hover:scale-110"
           title="Chat with Miam"
           aria-label="Chat with Miam"
         >
@@ -1289,6 +1296,7 @@ export default function HomePage() {
         </button>
       )}
 
+      {/* CopilotKit Sidebar */}
       <CopilotSidebar
         instructions={HOME_PROMPT}
         labels={{
