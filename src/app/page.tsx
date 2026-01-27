@@ -206,6 +206,52 @@ const faqSchema = {
 };
 
 // Video Schema for JSON-LD (SEO)
+// HowTo Schema for "How to Get a MIAM Certificate"
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Get a MIAM Certificate in England & Wales",
+  "description": "Step-by-step guide to obtaining your MIAM certificate for family court proceedings",
+  "totalTime": "PT2H",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "GBP",
+    "value": "100-150"
+  },
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Check if you qualify for an exemption",
+      "text": "Before booking a MIAM, check if you're exempt due to domestic abuse, urgency, or other qualifying circumstances.",
+      "position": 1
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Find an FMC-accredited mediator",
+      "text": "Search for a Family Mediation Council accredited mediator in your area or one offering remote sessions.",
+      "position": 2
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Book your MIAM appointment",
+      "text": "Contact the mediator to book your MIAM. Sessions typically last 45-60 minutes and cost £100-£150 (or free with legal aid).",
+      "position": 3
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Attend the MIAM meeting",
+      "text": "Meet with the mediator who will explain mediation, assess suitability, and discuss your options.",
+      "position": 4
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Receive your MIAM certificate",
+      "text": "After the meeting, the mediator will sign your FM1 form, providing the MIAM certificate valid for 4 months.",
+      "position": 5
+    }
+  ]
+};
+
 const videoSchema = {
   "@context": "https://schema.org",
   "@type": "VideoObject",
@@ -241,6 +287,10 @@ export default function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(videoSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
 
       {/* ========== HERO SECTION ========== */}
