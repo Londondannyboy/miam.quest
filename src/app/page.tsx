@@ -272,6 +272,13 @@ export default function HomePage() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatKey, setChatKey] = useState(0);
+
+  // Open chat by forcing re-mount with new key
+  const openChat = useCallback(() => {
+    setChatKey(prev => prev + 1);
+    setIsChatOpen(true);
+  }, []);
 
   const handleVoiceMessage = useCallback((text: string, role?: "user" | "assistant") => {
     console.log(`[Voice] ${role}: ${text.slice(0, 50)}...`);
@@ -359,7 +366,7 @@ export default function HomePage() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <button
-                onClick={() => setIsChatOpen(true)}
+                onClick={openChat}
                 className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-white hover:bg-rose-50 text-rose-700 rounded-2xl font-bold text-lg transition-all shadow-2xl shadow-rose-900/20 hover:shadow-rose-900/30 hover:scale-[1.02]"
               >
                 <span className="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center group-hover:bg-rose-200 transition-colors">
@@ -754,7 +761,7 @@ export default function HomePage() {
           {/* CTA */}
           <div className="mt-16 text-center">
             <button
-              onClick={() => setIsChatOpen(true)}
+              onClick={openChat}
               className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white rounded-2xl font-bold text-lg transition-all shadow-xl shadow-rose-600/20 hover:shadow-rose-600/30 hover:scale-[1.02]"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -890,7 +897,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
-                  onClick={() => setIsChatOpen(true)}
+                  onClick={openChat}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-rose-50 text-rose-600 rounded-xl font-bold transition-all shadow-lg"
                 >
                   Ask Miam About Exemptions
@@ -1026,7 +1033,7 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-4">
                 <button
-                  onClick={() => setIsChatOpen(true)}
+                  onClick={openChat}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-rose-50 text-rose-700 rounded-xl font-semibold transition-all"
                 >
                   Try Miam Free
@@ -1248,7 +1255,7 @@ export default function HomePage() {
           <div className="mt-12 text-center">
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">Still have questions?</p>
             <button
-              onClick={() => setIsChatOpen(true)}
+              onClick={openChat}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white rounded-xl font-bold transition-all shadow-lg"
             >
               Ask Miam Anything
@@ -1283,7 +1290,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={() => setIsChatOpen(true)}
+              onClick={openChat}
               className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white hover:bg-rose-50 text-rose-700 rounded-2xl font-bold text-lg transition-all shadow-2xl hover:scale-[1.02]"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1335,7 +1342,7 @@ export default function HomePage() {
       {/* Chat button - bottom right (only when sidebar closed) */}
       {!isChatOpen && (
         <button
-          onClick={() => setIsChatOpen(true)}
+          onClick={openChat}
           className="fixed bottom-6 right-6 z-40 w-16 h-16 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 rounded-full flex items-center justify-center shadow-xl shadow-rose-600/30 transition-all hover:scale-110"
           title="Chat with Miam"
           aria-label="Chat with Miam"
@@ -1346,8 +1353,9 @@ export default function HomePage() {
         </button>
       )}
 
-      {/* CopilotKit Sidebar */}
+      {/* CopilotKit Sidebar - key forces re-mount when opening */}
       <CopilotSidebar
+        key={chatKey}
         instructions={HOME_PROMPT}
         labels={{
           title: "Chat with Miam",
