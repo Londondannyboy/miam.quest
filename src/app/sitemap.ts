@@ -13,6 +13,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
+      url: `${BASE_URL}/child-maintenance-calculator`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/miam/exemptions`,
       lastModified: new Date().toISOString(),
       changeFrequency: "monthly",

@@ -539,6 +539,11 @@ export default function ChildMaintenanceCalculatorPage() {
                     Citizens Advice - Child Maintenance
                   </a>
                 </li>
+                <li>
+                  <a href="https://www.moneyhelper.org.uk/en/family-and-care/divorce-and-separation/how-much-child-maintenance-should-i-pay" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
+                    MoneyHelper - How Much Should I Pay?
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
