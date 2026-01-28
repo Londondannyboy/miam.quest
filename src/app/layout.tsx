@@ -165,10 +165,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Preconnect to external domains for faster resource loading */}
-        <link rel="preconnect" href="https://stream.mux.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://image.mux.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://stream.mux.com" />
-        <link rel="dns-prefetch" href="https://image.mux.com" />
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
 

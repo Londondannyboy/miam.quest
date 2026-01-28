@@ -20,9 +20,7 @@ const VoiceInput = dynamic(
 // Unsplash images - warm, friendly, professional
 // Optimized: using smaller widths and lower quality for faster loading
 const IMAGES = {
-  // Hero - maximum compression since heavy gradient overlay covers most detail
-  // Mobile-first: 640px width, q=30 - overlay hides quality loss
-  hero: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=640&q=30&auto=format",
+  // Hero now uses CSS gradient - no image needed
   consultation: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=450&fit=crop&q=70&auto=format",
   family: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=600&q=70&auto=format",
   support: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=70&auto=format",
@@ -292,34 +290,15 @@ export default function HomePage() {
       />
 
       {/* ========== HERO SECTION ========== */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* Background Video */}
-        <div className="absolute inset-0">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 w-full h-full object-cover"
-            poster="https://image.mux.com/WT2OI3n1pU8l4sNoZHSUeLbT00L5r6XUZzpgxu01rQvoA/thumbnail.jpg?width=640&height=360&time=0"
-          >
-            <source
-              src="https://stream.mux.com/WT2OI3n1pU8l4sNoZHSUeLbT00L5r6XUZzpgxu01rQvoA.m3u8"
-              type="application/x-mpegURL"
-            />
-            <source
-              src="https://stream.mux.com/WT2OI3n1pU8l4sNoZHSUeLbT00L5r6XUZzpgxu01rQvoA/high.mp4"
-              type="video/mp4"
-            />
-          </video>
-          {/* Warm gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-rose-900/70 via-rose-800/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-        </div>
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-rose-950 via-rose-900 to-slate-900">
+        {/* Gradient overlays for depth */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-rose-900/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
         {/* Decorative elements */}
-        <div className="absolute top-20 right-20 w-72 h-72 bg-rose-400/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-20 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-20 w-80 h-80 bg-pink-500/15 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-rose-400/10 rounded-full blur-3xl" />
 
         {/* Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
