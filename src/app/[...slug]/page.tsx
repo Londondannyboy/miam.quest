@@ -92,6 +92,15 @@ const mdxComponents = {
     <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400 border-t border-zinc-200 dark:border-zinc-700" {...props} />
   ),
   hr: () => <hr className="my-8 border-zinc-200 dark:border-zinc-800" />,
+  img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      {...props}
+      alt={props.alt || ""}
+      className="rounded-xl my-6 w-full object-cover max-h-[400px]"
+      loading="lazy"
+    />
+  ),
   Callout: ({ type = "info", title, children }: { type?: "info" | "warning" | "success"; title?: string; children: React.ReactNode }) => {
     const styles = {
       info: "bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200",
