@@ -252,19 +252,24 @@ p.poweredBy,
   display: none !important;
 }
 
-/* CopilotKit Sidebar Overrides - ensure proper z-index and input visibility */
-[class*="copilotKitSidebar"],
-[class*="CopilotSidebar"],
-[data-copilotkit-sidebar],
-aside[class*="copilot"] {
-  z-index: 9999 !important;
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  height: 100vh !important;
-  height: 100dvh !important;
+/* CopilotKit Chat Overrides - ensure proper layout and input visibility */
+[class*="copilotKitChat"],
+[class*="CopilotChat"],
+[data-copilotkit-chat] {
+  height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
+}
+
+/* Ensure message container scrolls and doesn't hide input */
+[class*="copilotKitMessages"],
+[class*="CopilotMessages"],
+[class*="messageList"],
+[class*="message-list"],
+[class*="messagesContainer"] {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  min-height: 0 !important;
 }
 
 /* Ensure the chat input container is visible at bottom */
@@ -274,29 +279,19 @@ aside[class*="copilot"] {
 [class*="input-container"],
 [data-copilotkit-input],
 form[class*="copilot"] {
-  position: sticky !important;
-  bottom: 0 !important;
+  flex-shrink: 0 !important;
   background: white !important;
-  padding: 1rem !important;
+  padding: 0.75rem 1rem !important;
   border-top: 1px solid #e5e7eb !important;
-  z-index: 10 !important;
 }
 
 /* Dark mode support for input */
-.dark [class*="copilotKitInput"],
-.dark [class*="CopilotInput"],
-.dark [class*="inputContainer"],
-.dark form[class*="copilot"] {
-  background: #18181b !important;
-  border-top-color: #3f3f46 !important;
-}
-
-/* Ensure message container scrolls and doesn't hide input */
-[class*="copilotKitMessages"],
-[class*="CopilotMessages"],
-[class*="messageList"],
-[class*="message-list"] {
-  flex: 1 !important;
-  overflow-y: auto !important;
-  min-height: 0 !important;
+@media (prefers-color-scheme: dark) {
+  [class*="copilotKitInput"],
+  [class*="CopilotInput"],
+  [class*="inputContainer"],
+  form[class*="copilot"] {
+    background: #18181b !important;
+    border-top-color: #3f3f46 !important;
+  }
 }
