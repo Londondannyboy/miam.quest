@@ -231,11 +231,16 @@ body {
   display: none !important;
 }
 
-/* Ensure popup is visible and positioned correctly */
-[class*="copilotKitPopup"],
-[class*="CopilotPopup"] {
-  position: fixed !important;
-  bottom: 20px !important;
-  right: 20px !important;
+/* CopilotSidebar - ensure proper z-index and positioning */
+[class*="copilotKitSidebar"],
+[class*="CopilotSidebar"],
+[data-copilot-kit-sidebar] {
   z-index: 10000 !important;
+}
+
+/* Sidebar content area */
+[class*="copilotKitSidebar"] > div,
+[class*="sidebarContent"],
+[class*="chatContainer"] {
+  z-index: 10001 !important;
 }
