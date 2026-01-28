@@ -1,0 +1,219 @@
+# Miam Certificate Quest
+> Free AI-Powered MIAM Certificate Preparation for UK Family Disputes
+
+## About This Site
+
+Miam Certificate Quest (https://miam.quest) helps UK separating couples prepare for their legally-required MIAM (Mediation Information Assessment Meeting) through an AI-powered assistant named Miam.
+
+**Important Disclaimer:**
+This is a beta AI preparation tool launching Q1 2026. We help users prepare for mediation but CANNOT:
+- Provide legal advice
+- Issue MIAM certificates (only FMC-accredited mediators can do this)
+- Conduct mediation sessions
+- Replace professional family law solicitors
+
+For MIAM certificates and legally-binding mediation, users must contact an FMC-accredited mediator via https://www.familymediationcouncil.org.uk/find-local-mediator/
+
+---
+
+## Topics Covered
+
+This site provides authoritative information on:
+
+- **MIAM** - Mediation Information Assessment Meeting requirements, costs, process
+- **Family Mediation** - How mediation works for separating couples in the UK
+- **Child Arrangements** - Resolving where children live and contact schedules
+- **Divorce Mediation** - Financial settlements, property division, pensions
+- **Court Orders** - Consent orders, prohibited steps orders, specific issue orders
+- **C100 Form** - How to apply to family court for child arrangements
+- **Legal Aid** - Free mediation eligibility and Family Mediation Voucher Scheme
+- **Domestic Abuse Support** - MIAM exemptions and support resources
+
+---
+
+## Authoritative Sources We Cite
+
+All content references official UK government and regulatory sources:
+
+- **Gov.uk** - https://www.gov.uk/looking-after-children-divorce/mediation
+- **Family Mediation Council** - https://www.familymediationcouncil.org.uk/
+- **Cafcass** - https://www.cafcass.gov.uk/
+- **HMCTS** - https://www.gov.uk/government/organisations/hm-courts-and-tribunals-service
+- **Legal Aid Agency** - https://www.gov.uk/government/organisations/legal-aid-agency
+- **Women's Aid** - https://www.womensaid.org.uk/
+- **National Family Mediation** - https://www.nfm.org.uk/
+
+---
+
+## Full Page Index (45 Pages)
+
+### MIAM Cluster
+Information about Mediation Information Assessment Meetings
+
+- **/what-is-a-miam** - What is a MIAM?
+  What a MIAM is, what happens during the meeting, costs, and how to prepare for this legally-required first step before family court.
+
+- **/miam-certificate** - MIAM Certificate
+  Everything about MIAM certificates (Form FM1) - what they are, how to get one, validity, and requirements for C100 court applications.
+
+- **/miam-exemptions** - MIAM Exemptions: When You Don't Need Mediation
+  Complete guide to MIAM exemptions including domestic abuse, urgency, child protection, and other valid reasons to skip mediation.
+
+- **/miam-cost** - MIAM Cost UK 2026: How Much Does a MIAM Meeting Cost?
+  Typical MIAM fees (£90-£150), free MIAM with legal aid, what the fee includes, and how to reduce costs.
+
+- **/miam-near-me** - MIAM Near Me: Find a MIAM Meeting in Your Area UK
+  How to find local MIAM providers, book appointments, and choose between in-person and online MIAMs.
+
+- **/is-miam-compulsory** - Is MIAM Compulsory? When You Must Attend a MIAM UK
+  Legal requirements for MIAM attendance, when it's mandatory, exemptions, and consequences of not attending.
+
+- **/miam-meeting** - MIAM Meeting: What to Expect at Your MIAM Appointment
+  Detailed guide to what happens at a MIAM appointment, how to prepare, questions asked, and next steps.
+
+- **/form-fm1** - FM1 Form Guide
+  Complete guide to the FM1 form (MIAM certificate), what it looks like, who can issue it, and outcome meanings.
+
+### Mediation Cluster
+Family mediation processes, costs, and finding mediators
+
+- **/family-mediation** - Family Mediation UK: Complete Guide to Resolving Family Disputes
+  Comprehensive guide to family mediation for separating couples covering child arrangements and finances.
+
+- **/what-is-mediation** - What is Mediation? Definition, Meaning & Complete UK Guide
+  Understanding mediation definition, how it works, types of mediation, and when to use it.
+
+- **/divorce-mediation** - Divorce Mediation
+  Guide to divorce mediation for financial settlements, property division, pensions, and child arrangements.
+
+- **/free-mediation** - Free Mediation UK: How to Get Free Family Mediation Services
+  How to access free mediation through legal aid, Family Mediation Voucher Scheme, and other funding options.
+
+- **/legal-aid-mediation** - Legal Aid Mediation UK: Eligibility, How to Apply & What's Covered
+  Legal aid eligibility criteria, application process, and what mediation costs are covered.
+
+- **/mediation-cost** - Mediation Costs UK: How Much Does Mediation Cost?
+  Full breakdown of mediation costs, who pays, and funding options.
+
+- **/mediation-near-me** - Mediation Near Me: Find Family Mediators in Your Area UK
+  Finding local family mediators, comparing services, and booking appointments.
+
+- **/family-mediation-near-me** - Family Mediation Near Me: Find Local Family Mediators UK
+  Finding local family mediators for child arrangements and divorce with legal aid options.
+
+- **/family-mediation-voucher-scheme** - Family Mediation Voucher Scheme
+  Government voucher scheme providing up to £500 towards mediation costs.
+
+- **/find-a-mediator** - Find a Mediator UK: How to Choose an FMC-Accredited Family Mediator
+  How to choose the right mediator, what to look for, and questions to ask.
+
+- **/mediation-london** - Mediation London: Find Family Mediators in London UK
+  Finding family mediators across London boroughs with legal aid availability.
+
+- **/child-custody-mediation** - Child Custody Mediation UK: Resolving Child Arrangements
+  How child arrangements mediation works, costs, and finding a mediator.
+
+- **/mediation-vs-court** - Mediation vs Court: Which is Better for Family Disputes UK?
+  Comparing mediation and court for costs, timescales, and outcomes.
+
+- **/shuttle-mediation** - Shuttle Mediation
+  How shuttle mediation works when parties cannot be in the same room.
+
+- **/workplace-mediation** - Workplace Mediation: Resolve Conflicts at Work
+  Guide to workplace mediation compared to grievance procedures.
+
+- **/how-long-does-mediation-take** - How Long Does Mediation Take?
+  Timelines for child arrangements, financial mediation, and divorce mediation.
+
+- **/benefits-of-mediation** - Benefits of Mediation
+  Key benefits of family mediation over court proceedings.
+
+### Court Orders Cluster
+Understanding family court orders
+
+- **/consent-order** - Consent Order
+  How consent orders make agreements legally binding, the approval process, and costs.
+
+- **/prohibited-steps-order** - Prohibited Steps Order
+  What prohibited steps orders are, when to apply, and common examples.
+
+- **/specific-issue-order** - Specific Issue Order
+  Guide to specific issue orders for schooling, medical treatment, and other decisions.
+
+### Forms Cluster
+Court forms and applications
+
+- **/c100-form** - C100 Form Guide
+  Complete guide to the C100 form for applying to family court for child arrangements orders.
+
+- **/what-happens-after-c100** - What Happens After C100: The Family Court Process Explained
+  Family court process after submitting C100 including Cafcass, hearings, and timelines.
+
+### Guides Cluster
+Practical guides for separated families
+
+- **/parenting-plan** - Parenting Plan
+  How to create a parenting plan covering living arrangements, holidays, and communication.
+
+- **/parallel-parenting** - Parallel Parenting
+  Guide to parallel parenting for high-conflict situations and narcissistic ex-partners.
+
+- **/supervised-contact** - Supervised Contact
+  Guide to supervised contact, when courts order it, and contact centre visits.
+
+- **/co-parenting-apps** - Best Co-Parenting Apps UK 2026
+  Comparison of co-parenting apps including OurFamilyWizard and court-approved options.
+
+- **/grandparents-rights** - Grandparents Rights UK
+  Legal rights of grandparents to see grandchildren and how to apply for contact.
+
+- **/parenting-plan-cafcass** - Parenting Plan Cafcass: Official Template & Guide
+  Official Cafcass parenting plan template and how it's used in family court.
+
+- **/separation-agreement** - Separation Agreement UK
+  Guide to separation agreements for couples separating without immediate divorce.
+
+- **/separation-agreement-template** - Separation Agreement Template UK
+  What to include in a separation agreement with template guidance.
+
+### Articles Cluster
+In-depth articles on specific topics
+
+- **/financial-disclosure-divorce** - Financial Disclosure in Divorce: Can You Refuse?
+  Legal requirements for financial disclosure, Form E, and consequences of hiding assets.
+
+- **/mediation-with-narcissist** - Mediation with a Narcissist: Can It Work?
+  Strategies for mediation with narcissistic ex-partners and when to avoid it.
+
+- **/stages-of-grief-divorce** - Stages of Grief in Divorce
+  Understanding the emotional stages of divorce and coping strategies.
+
+### Resources Cluster
+Practical resources and support
+
+- **/mediation-preparation-checklist** - Mediation Preparation Checklist
+  Complete checklist for preparing for family mediation.
+
+- **/how-to-prepare-for-mediation** - How to Prepare for Mediation
+  Practical tips for successful family mediation outcomes.
+
+- **/mediation-glossary** - Mediation Glossary: Family Mediation Terms Explained
+  Glossary of mediation and family law terminology explained simply.
+
+- **/domestic-abuse-support** - Domestic Abuse Support UK: Help, Resources & MIAM Exemptions
+  Support services, helplines, and information about MIAM exemptions for domestic abuse.
+
+---
+
+## Contact
+
+Website: https://miam.quest
+For mediation services: https://www.familymediationcouncil.org.uk/find-local-mediator/
+
+---
+
+## Legal Notice
+
+Miam Certificate Quest is an AI preparation tool and information resource. We do not provide legal advice. Content is for educational purposes only. Users should always consult qualified professionals (FMC-accredited mediators, family law solicitors) for their specific situations.
+
+Last updated: January 2026

@@ -320,3 +320,14 @@ GitHub: https://github.com/Londondannyboy/miam.quest
 - Performance optimizations (LCP image priority, image sizing)
 - Updated beta banner with Q1 2026 launch
 - Updated all metadata and JSON-LD schemas
+- **Content expansion**: 19 pages live, 21 more planned (see CONTENT_CREATION_PLAN.md)
+
+---
+
+## Related Documents
+
+| Document | Purpose |
+|----------|---------|
+| `CONTENT_CREATION_PLAN.md` | Prioritized content gap analysis and creation roadmap |
+| `CONTENT_PLAN.md` | Original keyword research and site architecture |
+| `PRD.md` | Product requirements document |
