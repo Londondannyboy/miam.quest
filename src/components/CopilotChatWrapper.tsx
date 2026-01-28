@@ -11,7 +11,7 @@ interface CopilotChatWrapperProps {
 
 export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapperProps) {
   return (
-    <CopilotKit runtimeUrl="/api/copilotkit" agent="each_way_agent">
+    <CopilotKit runtimeUrl="/api/copilotkit" agent="miam_agent">
       <CopilotPopup
         instructions={prompt}
         labels={{
