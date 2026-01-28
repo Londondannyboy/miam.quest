@@ -515,13 +515,23 @@ export default function ChildMaintenanceCalculatorPage() {
               <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-4">Official Resources</h3>
               <ul className="space-y-2 text-zinc-600 dark:text-zinc-400">
                 <li>
-                  <a href="https://www.gov.uk/child-maintenance-service" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
-                    Gov.uk - Child Maintenance Service
+                  <a href="https://www.gov.uk/calculate-child-maintenance" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline font-semibold">
+                    Gov.uk - Official Child Maintenance Calculator
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.gov.uk/calculate-child-maintenance" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
-                    Gov.uk - Calculate Child Maintenance
+                  <a href="https://www.gov.uk/how-child-maintenance-is-worked-out" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
+                    Gov.uk - How Child Maintenance is Worked Out
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.nidirect.gov.uk/articles/calculate-child-maintenance" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
+                    NI Direct - Calculator (Northern Ireland)
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.gov.uk/child-maintenance-service" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
+                    Gov.uk - Child Maintenance Service
                   </a>
                 </li>
                 <li>

@@ -140,6 +140,13 @@ export function ChildMaintenanceCalculator() {
       weeklyAmount = Math.max(0, weeklyAmount - reduction);
     }
 
+    // Apply £7 minimum floor (payments cannot drop below £7/week except nil rate)
+    // Source: https://www.gov.uk/how-child-maintenance-is-worked-out
+    if (weeklyAmount > 0 && weeklyAmount < 7 && rateType !== "Nil Rate") {
+      breakdown.push(`Minimum floor applied: £7/week (per Gov.uk rules)`);
+      weeklyAmount = 7;
+    }
+
     breakdown.push(`Final weekly amount: £${weeklyAmount.toFixed(2)}`);
 
     setResult({
@@ -355,6 +362,16 @@ export function ChildMaintenanceCalculator() {
                   className="underline font-bold hover:text-amber-900"
                 >
                   NI Direct Calculator (Northern Ireland)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.gov.uk/how-child-maintenance-is-worked-out"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-amber-900"
+                >
+                  How maintenance is calculated (Gov.uk)
                 </a>
               </li>
             </ul>
