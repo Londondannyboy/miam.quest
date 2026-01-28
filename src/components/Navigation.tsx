@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { authClient } from "@/lib/auth/client";
 
 const MIAM_PAGES = [
   { href: "/what-is-a-miam", label: "What is a MIAM?" },
@@ -95,6 +96,10 @@ export function Navigation() {
   const [rightsDropdownOpen, setRightsDropdownOpen] = useState(false);
   const [supportDropdownOpen, setSupportDropdownOpen] = useState(false);
   const pathname = usePathname();
+
+  // Auth state
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
@@ -404,6 +409,43 @@ export function Navigation() {
                 </div>
               )}
             </div>
+
+            {/* Divider */}
+            <div className="h-6 w-px bg-zinc-200 dark:bg-zinc-700 mx-2" />
+
+            {/* Auth Buttons */}
+            {isPending ? (
+              <div className="w-20 h-8 bg-zinc-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
+            ) : user ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/profile"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                >
+                  <div className="w-6 h-6 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
+                    <span className="text-xs font-semibold text-rose-600 dark:text-rose-400">
+                      {user.name?.charAt(0) || user.email?.charAt(0) || "U"}
+                    </span>
+                  </div>
+                  <span className="hidden xl:inline max-w-[100px] truncate">
+                    {user.name?.split(" ")[0] || user.email?.split("@")[0]}
+                  </span>
+                </Link>
+                <button
+                  onClick={() => authClient.signOut()}
+                  className="px-3 py-2 rounded-lg text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/auth/sign-in"
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-rose-600 hover:bg-rose-700 text-white transition-colors"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -587,6 +629,46 @@ export function Navigation() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </a>
+
+              {/* Mobile Auth Section */}
+              <div className="border-t border-zinc-200 dark:border-zinc-700 mt-4 pt-4">
+                {user ? (
+                  <>
+                    <Link
+                      href="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
+                        <span className="text-sm font-semibold text-rose-600 dark:text-rose-400">
+                          {user.name?.charAt(0) || user.email?.charAt(0) || "U"}
+                        </span>
+                      </div>
+                      <div>
+                        <div className="font-medium">{user.name?.split(" ")[0] || "User"}</div>
+                        <div className="text-xs text-zinc-500">{user.email}</div>
+                      </div>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        authClient.signOut();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                    >
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/auth/sign-in"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block w-full text-center px-4 py-3 rounded-lg text-sm font-medium bg-rose-600 hover:bg-rose-700 text-white transition-colors"
+                  >
+                    Sign In
+                  </Link>
+                )}
+              </div>
             </div>
           </div>
         )}
