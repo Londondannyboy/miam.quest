@@ -120,6 +120,27 @@ async function generatePDF(browser: puppeteer.Browser, config: PDFConfig): Promi
         (el as HTMLElement).style.display = 'none';
       });
 
+      // Hide all images (they don't render well in PDFs)
+      document.querySelectorAll('img, picture, svg:not([class*="w-5"]):not([class*="h-5"])').forEach(el => {
+        (el as HTMLElement).style.display = 'none';
+      });
+
+      // Remove large gaps/margins
+      document.querySelectorAll('[class*="mb-"], [class*="mt-"], [class*="py-"], [class*="gap-"]').forEach(el => {
+        const element = el as HTMLElement;
+        // Reduce but don't eliminate spacing
+        if (element.classList.contains('mb-12') || element.classList.contains('mb-16')) {
+          element.style.marginBottom = '16px';
+        }
+        if (element.classList.contains('mt-12') || element.classList.contains('mt-16')) {
+          element.style.marginTop = '16px';
+        }
+        if (element.classList.contains('py-12') || element.classList.contains('py-16')) {
+          element.style.paddingTop = '12px';
+          element.style.paddingBottom = '12px';
+        }
+      });
+
       // Remove [ ] checkbox brackets from list items
       document.querySelectorAll('li').forEach(li => {
         const walker = document.createTreeWalker(li, NodeFilter.SHOW_TEXT);
@@ -131,14 +152,9 @@ async function generatePDF(browser: puppeteer.Browser, config: PDFConfig): Promi
         }
       });
 
-      // Add page-break-inside: avoid to key elements
+      // Add page-break-inside: avoid to key elements (less aggressive)
       const preventBreakElements = [
-        'h1', 'h2', 'h3', 'h4',
-        'section',
-        '[class*="rounded"]',
-        '[class*="border"]',
-        '[class*="bg-"]',
-        'ul', 'ol',
+        'h1', 'h2', 'h3',
         'table',
         'blockquote',
       ];
