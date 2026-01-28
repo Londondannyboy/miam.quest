@@ -216,31 +216,4 @@ body {
   color: #6b7280 !important;
 }
 
-/* CopilotKit - Minimal overrides only */
-
-/* Hide dev console and announcements */
-[data-copilotkit-dev-console],
-[class*="copilotkit"][class*="dev"],
-[class*="copilotkit"][class*="announcement"] {
-  display: none !important;
-}
-
-/* Hide "Powered by" text */
-[class*="poweredBy"],
-[class*="PoweredBy"] {
-  display: none !important;
-}
-
-/* CopilotSidebar - ensure proper z-index and positioning */
-[class*="copilotKitSidebar"],
-[class*="CopilotSidebar"],
-[data-copilot-kit-sidebar] {
-  z-index: 10000 !important;
-}
-
-/* Sidebar content area */
-[class*="copilotKitSidebar"] > div,
-[class*="sidebarContent"],
-[class*="chatContainer"] {
-  z-index: 10001 !important;
-}
+/* CopilotKit - No custom overrides, use default styles */

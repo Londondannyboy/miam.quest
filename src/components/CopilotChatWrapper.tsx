@@ -1,7 +1,7 @@
 'use client';
 
 import { CopilotKit } from '@copilotkit/react-core';
-import { CopilotSidebar } from '@copilotkit/react-ui';
+import { CopilotPopup } from '@copilotkit/react-ui';
 import '@copilotkit/react-ui/styles.css';
 
 interface CopilotChatWrapperProps {
@@ -11,8 +11,8 @@ interface CopilotChatWrapperProps {
 
 export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapperProps) {
   return (
-    <CopilotKit runtimeUrl="/api/copilotkit" agent="each_way_agent" showDevConsole={false}>
-      <CopilotSidebar
+    <CopilotKit runtimeUrl="/api/copilotkit" agent="each_way_agent">
+      <CopilotPopup
         instructions={prompt}
         labels={{
           title: "Chat with Miam",
@@ -24,10 +24,7 @@ export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapp
           if (!open) onClose();
         }}
         clickOutsideToClose={true}
-      >
-        {/* Empty children - sidebar renders alongside existing page content */}
-        <></>
-      </CopilotSidebar>
+      />
     </CopilotKit>
   );
 }
