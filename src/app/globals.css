@@ -216,7 +216,7 @@ body {
   color: #6b7280 !important;
 }
 
-/* Hide CopilotKit dev console and announcement banners */
+/* Hide CopilotKit dev console, announcement banners, and default toggle button */
 [class*="copilotkit"][class*="announcement"],
 [class*="copilotkit"][class*="toast"],
 [class*="copilotkit"][class*="banner"],
@@ -225,5 +225,13 @@ body {
 [class*="CopilotKit"][class*="Dev"],
 [data-copilotkit-announcement],
 [data-copilotkit-dev-console] {
+  display: none !important;
+}
+
+/* Hide CopilotKit's default floating toggle button - we use our own custom button */
+[class*="copilotkit"][class*="toggle"],
+[class*="copilotkit"][class*="Toggle"],
+[class*="copilotkit"][class*="button"]:not([class*="send"]):not([class*="submit"]),
+button[class*="copilotkit-"]:is([class*="toggle"], [class*="open"], [class*="floating"]) {
   display: none !important;
 }
