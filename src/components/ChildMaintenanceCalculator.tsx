@@ -154,10 +154,24 @@ export function ChildMaintenanceCalculator() {
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-lg border border-zinc-200 dark:border-zinc-700 overflow-hidden">
+      {/* Beta Warning Banner */}
+      <div className="bg-amber-500 px-6 py-3">
+        <p className="text-amber-950 text-sm font-medium flex items-center gap-2">
+          <svg className="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          BETA: This calculator provides estimates only. Use the{" "}
+          <a href="https://www.gov.uk/calculate-child-maintenance" target="_blank" rel="noopener noreferrer" className="underline font-bold">
+            official Gov.uk calculator
+          </a>{" "}
+          for accurate figures.
+        </p>
+      </div>
+
       {/* Header */}
       <div className="bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-4">
         <h2 className="text-xl font-bold text-white">Child Maintenance Calculator</h2>
-        <p className="text-emerald-100 text-sm">Estimate payments based on CMS formula (2024/25)</p>
+        <p className="text-emerald-100 text-sm">Estimate payments based on CMS formula (2024/25) - FOR GUIDANCE ONLY</p>
       </div>
 
       <div className="p-6">
@@ -315,18 +329,35 @@ export function ChildMaintenanceCalculator() {
 
         {/* Disclaimer */}
         {showDisclaimer && (
-          <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-700">
-            <p className="text-sm text-amber-800 dark:text-amber-200">
-              <strong>Important:</strong> This calculator provides an estimate only. The actual amount may differ based on your specific circumstances. For an official calculation, contact the{" "}
-              <a
-                href="https://www.gov.uk/child-maintenance-service"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-amber-900"
-              >
-                Child Maintenance Service (CMS)
-              </a>.
+          <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border-2 border-amber-400 dark:border-amber-600">
+            <p className="text-sm text-amber-800 dark:text-amber-200 font-medium mb-3">
+              <strong>IMPORTANT - BETA CALCULATOR:</strong> This calculator is for guidance only and is continuously being improved. The actual amount may differ significantly based on your specific circumstances.
             </p>
+            <p className="text-sm text-amber-800 dark:text-amber-200 mb-2">
+              <strong>For accurate, official calculations, please use:</strong>
+            </p>
+            <ul className="text-sm text-amber-800 dark:text-amber-200 space-y-1 ml-4">
+              <li>
+                <a
+                  href="https://www.gov.uk/calculate-child-maintenance"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline font-bold hover:text-amber-900"
+                >
+                  Gov.uk Child Maintenance Calculator (England, Wales, Scotland)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.nidirect.gov.uk/articles/calculate-child-maintenance"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline font-bold hover:text-amber-900"
+                >
+                  NI Direct Calculator (Northern Ireland)
+                </a>
+              </li>
+            </ul>
           </div>
         )}
 

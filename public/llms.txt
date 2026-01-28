@@ -172,6 +172,11 @@ Court forms and applications
 - **/what-happens-after-c100** - What Happens After C100: The Family Court Process Explained
   Family court process after submitting C100 including Cafcass, hearings, and timelines.
 
+### Tools & Calculators
+
+- **/child-maintenance-calculator** - Child Maintenance Calculator UK
+  Free calculator to estimate child maintenance payments based on the CMS formula. BETA - for guidance only, use official Gov.uk calculator for accurate figures.
+
 ### Guides Cluster
 Practical guides for separated families
 

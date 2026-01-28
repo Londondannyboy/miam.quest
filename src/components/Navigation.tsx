@@ -52,6 +52,7 @@ const COURT_ORDERS_PAGES = [
 ];
 
 const GUIDES_PAGES = [
+  { href: "/child-maintenance-calculator", label: "Child Maintenance Calculator" },
   { href: "/parenting-plan", label: "Parenting Plan" },
   { href: "/parenting-plan-cafcass", label: "Parenting Plan (Cafcass)" },
   { href: "/parenting-plan-template", label: "Parenting Plan Template" },
