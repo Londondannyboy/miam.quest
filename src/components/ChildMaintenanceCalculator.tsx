@@ -296,17 +296,17 @@ export function ChildMaintenanceCalculator() {
               Estimated Child Maintenance
             </h3>
 
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div className="text-center p-3 bg-white dark:bg-zinc-800 rounded-lg">
-                <p className="text-2xl font-bold text-emerald-600">£{result.weeklyAmount.toFixed(2)}</p>
+            <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-4">
+              <div className="text-center p-2 sm:p-3 bg-white dark:bg-zinc-800 rounded-lg min-w-0">
+                <p className="text-base sm:text-xl md:text-2xl font-bold text-emerald-600 truncate">£{result.weeklyAmount.toFixed(2)}</p>
                 <p className="text-xs text-zinc-500">per week</p>
               </div>
-              <div className="text-center p-3 bg-white dark:bg-zinc-800 rounded-lg">
-                <p className="text-2xl font-bold text-emerald-600">£{result.monthlyAmount.toFixed(2)}</p>
+              <div className="text-center p-2 sm:p-3 bg-white dark:bg-zinc-800 rounded-lg min-w-0">
+                <p className="text-base sm:text-xl md:text-2xl font-bold text-emerald-600 truncate">£{result.monthlyAmount.toFixed(2)}</p>
                 <p className="text-xs text-zinc-500">per month</p>
               </div>
-              <div className="text-center p-3 bg-white dark:bg-zinc-800 rounded-lg">
-                <p className="text-2xl font-bold text-emerald-600">£{result.yearlyAmount.toFixed(2)}</p>
+              <div className="text-center p-2 sm:p-3 bg-white dark:bg-zinc-800 rounded-lg min-w-0">
+                <p className="text-base sm:text-xl md:text-2xl font-bold text-emerald-600 truncate">£{result.yearlyAmount.toFixed(2)}</p>
                 <p className="text-xs text-zinc-500">per year</p>
               </div>
             </div>
