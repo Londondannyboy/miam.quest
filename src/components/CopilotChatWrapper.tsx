@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { CopilotKit } from '@copilotkit/react-core';
-import { CopilotPopup } from '@copilotkit/react-ui';
+import { CopilotKit, useCoAgent } from '@copilotkit/react-core';
+import { CopilotSidebar } from '@copilotkit/react-ui';
 import '@copilotkit/react-ui/styles.css';
 
 interface CopilotChatWrapperProps {
@@ -10,69 +10,62 @@ interface CopilotChatWrapperProps {
   onClose: () => void;
 }
 
-// Debug mode - set to true to see console logs
-const DEBUG = true;
+// Agent state type
+interface AgentState {
+  user: {
+    id: string;
+    name: string;
+  } | null;
+}
 
-function debugLog(...args: unknown[]) {
-  if (DEBUG) {
-    console.log('[CopilotKit Debug]', ...args);
-  }
+// Inner component that uses hooks
+function CopilotInner({ prompt, onClose }: CopilotChatWrapperProps) {
+  // Initialize agent state
+  useCoAgent<AgentState>({
+    name: "miam_agent",
+    initialState: {
+      user: null,
+    },
+  });
+
+  useEffect(() => {
+    console.log('[CopilotKit] Inner component mounted');
+  }, []);
+
+  return (
+    <CopilotSidebar
+      instructions={prompt}
+      labels={{
+        title: "Chat with Miam",
+        initial: "Hello! I'm Miam, your MIAM preparation assistant.\n\n**Beta Service:** For official guidance, consult an FMC-accredited mediator or GOV.UK.\n\nHow can I help you today?",
+        placeholder: "Ask about MIAMs, certificates, exemptions...",
+      }}
+      defaultOpen={true}
+      onSetOpen={(open) => {
+        console.log('[CopilotKit] Sidebar open state:', open);
+        if (!open) onClose();
+      }}
+      clickOutsideToClose={true}
+      className="z-[9999]"
+    >
+      {/* Empty placeholder - sidebar overlays existing content */}
+      <div className="hidden" />
+    </CopilotSidebar>
+  );
 }
 
 export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapperProps) {
   useEffect(() => {
-    debugLog('CopilotChatWrapper mounted');
-    debugLog('Runtime URL: /api/copilotkit');
-    debugLog('Agent: miam_agent');
-
-    // Test the API endpoint
-    fetch('/api/copilotkit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: [{ role: 'user', content: 'test' }],
-        agent: 'miam_agent'
-      })
-    })
-      .then(res => {
-        debugLog('API response status:', res.status);
-        return res.text();
-      })
-      .then(text => {
-        debugLog('API response (first 500 chars):', text.substring(0, 500));
-      })
-      .catch(err => {
-        debugLog('API error:', err);
-      });
-
-    return () => {
-      debugLog('CopilotChatWrapper unmounted');
-    };
+    console.log('[CopilotKit] Wrapper mounted, agent: miam_agent');
+    console.log('[CopilotKit] Runtime URL: /api/copilotkit');
   }, []);
 
   return (
     <CopilotKit
       runtimeUrl="/api/copilotkit"
       agent="miam_agent"
-      onError={(error) => {
-        debugLog('CopilotKit error:', error);
-        console.error('CopilotKit error:', error);
-      }}
     >
-      <CopilotPopup
-        instructions={prompt}
-        labels={{
-          title: "Chat with Miam",
-          initial: "Hello! I'm Miam, your MIAM preparation assistant.\n\n**Beta Service:** For official guidance, consult an FMC-accredited mediator or GOV.UK.\n\nHow can I help you today?",
-          placeholder: "Ask about MIAMs, certificates, exemptions...",
-        }}
-        defaultOpen={true}
-        onSetOpen={(open) => {
-          debugLog('CopilotPopup open state changed:', open);
-          if (!open) onClose();
-        }}
-        clickOutsideToClose={true}
-      />
+      <CopilotInner prompt={prompt} onClose={onClose} />
     </CopilotKit>
   );
 }
