@@ -44,7 +44,10 @@ export default function ProfilePage() {
                   ← Back to Home
                 </Link>
                 <button
-                  onClick={() => authClient.signOut()}
+                  onClick={async () => {
+                    await authClient.signOut();
+                    window.location.href = '/';
+                  }}
                   className="text-gray-500 hover:text-gray-700 cursor-pointer"
                 >
                   Sign Out

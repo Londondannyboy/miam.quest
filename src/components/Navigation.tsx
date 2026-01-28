@@ -432,7 +432,10 @@ export function Navigation() {
                   </span>
                 </Link>
                 <button
-                  onClick={() => authClient.signOut()}
+                  onClick={async () => {
+                    await authClient.signOut();
+                    window.location.href = '/';
+                  }}
                   className="px-3 py-2 rounded-lg text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 >
                   Sign Out
@@ -650,9 +653,10 @@ export function Navigation() {
                       </div>
                     </Link>
                     <button
-                      onClick={() => {
-                        authClient.signOut();
+                      onClick={async () => {
                         setMobileMenuOpen(false);
+                        await authClient.signOut();
+                        window.location.href = '/';
                       }}
                       className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-500 dark:hover:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                     >
