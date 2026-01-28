@@ -379,7 +379,7 @@ export default function HomePage() {
               </button>
 
               <Link
-                href="/miam/what-is-a-miam"
+                href="/what-is-a-miam"
                 className="inline-flex items-center justify-center gap-2 px-8 py-5 bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20 hover:border-white/50 text-white rounded-2xl font-semibold text-lg transition-all"
               >
                 Learn About MIAMs
@@ -470,12 +470,12 @@ export default function HomePage() {
                 </p>
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
                   Under the <a href="https://www.gov.uk/looking-after-children-divorce" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">Children and Families Act 2014</a>,
-                  you must attend a MIAM or qualify for an <Link href="/miam/exemptions" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">exemption</Link> before
-                  submitting a <Link href="/forms/c100" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">C100 form</Link> (see the official <a href="https://assets.publishing.service.gov.uk/media/6628df55db4b9f0448a7e58e/FM1_0424.pdf" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">FM1 form</a>).
+                  you must attend a MIAM or qualify for an <Link href="/miam-exemptions" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">exemption</Link> before
+                  submitting a <Link href="/c100-form" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">C100 form</Link> (see the official <a href="https://assets.publishing.service.gov.uk/media/6628df55db4b9f0448a7e58e/FM1_0424.pdf" target="_blank" rel="noopener noreferrer" className="text-rose-600 hover:text-rose-700 underline decoration-rose-200 hover:decoration-rose-400 underline-offset-2">FM1 form</a>).
                 </p>
               </div>
 
-              <Link href="/miam/what-is-a-miam" className="inline-flex items-center gap-2 mt-8 text-rose-600 hover:text-rose-700 font-semibold group">
+              <Link href="/what-is-a-miam" className="inline-flex items-center gap-2 mt-8 text-rose-600 hover:text-rose-700 font-semibold group">
                 Learn more about MIAMs
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -625,7 +625,7 @@ export default function HomePage() {
 
           <div className="mt-12 text-center">
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">Not sure if you need a MIAM? You might qualify for an exemption.</p>
-            <Link href="/miam/exemptions" className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-rose-600 font-semibold hover:border-rose-300 dark:hover:border-rose-700 transition-colors">
+            <Link href="/miam-exemptions" className="inline-flex items-center gap-2 px-6 py-3 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-xl text-rose-600 font-semibold hover:border-rose-300 dark:hover:border-rose-700 transition-colors">
               Check MIAM exemptions
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -691,7 +691,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <Link href="/miam/certificate" className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl font-semibold transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/30">
+              <Link href="/miam-certificate" className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white rounded-xl font-semibold transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/30">
                 Learn about MIAM certificates
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -905,7 +905,7 @@ export default function HomePage() {
                 >
                   Ask Miam About Exemptions
                 </button>
-                <Link href="/miam/exemptions" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold transition-all border border-white/30">
+                <Link href="/miam-exemptions" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold transition-all border border-white/30">
                   View All Exemptions
                 </Link>
               </div>
@@ -984,7 +984,7 @@ export default function HomePage() {
             <p className="text-zinc-600 dark:text-zinc-400 mb-6 max-w-2xl mx-auto text-lg">
               Our AI preparation assistant costs nothing. We help you get ready for your MIAM at no charge — you only pay when you meet with a real mediator.
             </p>
-            <Link href="/mediation/cost" className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold text-lg">
+            <Link href="/mediation-cost" className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-semibold text-lg">
               Learn more about mediation costs
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -1126,9 +1126,9 @@ export default function HomePage() {
               <h3 className="text-xl font-bold text-amber-900 dark:text-amber-100 mb-2">Important to Know</h3>
               <p className="text-amber-800 dark:text-amber-200">
                 Miam is an AI assistant that helps you prepare for family mediation. She cannot provide legal advice
-                and cannot issue <Link href="/miam/certificate" className="underline hover:no-underline font-medium">MIAM certificates</Link>. Only <a href="https://www.familymediationcouncil.org.uk/" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline font-medium">FMC-accredited human mediators</a> can
+                and cannot issue <Link href="/miam-certificate" className="underline hover:no-underline font-medium">MIAM certificates</Link>. Only <a href="https://www.familymediationcouncil.org.uk/" target="_blank" rel="noopener noreferrer" className="underline hover:no-underline font-medium">FMC-accredited human mediators</a> can
                 issue the certificates required for court. If you&apos;re experiencing domestic abuse, you may
-                qualify for a <Link href="/miam/exemptions" className="underline hover:no-underline font-medium">MIAM exemption</Link>.
+                qualify for a <Link href="/miam-exemptions" className="underline hover:no-underline font-medium">MIAM exemption</Link>.
               </p>
             </div>
           </div>
@@ -1302,7 +1302,7 @@ export default function HomePage() {
               Chat with Miam Now
             </button>
             <Link
-              href="/mediators"
+              href="/find-a-mediator"
               className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white rounded-2xl font-semibold text-lg transition-all"
             >
               Find a Mediator

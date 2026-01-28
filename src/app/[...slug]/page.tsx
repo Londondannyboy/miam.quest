@@ -228,7 +228,7 @@ export default async function ContentPage({ params }: PageProps) {
                   Prepare with Miam (Free)
                 </Link>
                 <Link
-                  href="/miam/what-is-a-miam"
+                  href="/what-is-a-miam"
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 rounded-lg font-medium transition-colors"
                 >
                   Learn About MIAMs
