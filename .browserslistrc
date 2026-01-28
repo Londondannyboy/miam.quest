@@ -1,0 +1,5 @@
+# Target modern browsers only to avoid unnecessary polyfills
+# This eliminates ~14KB of legacy JavaScript
+defaults and fully supports es6-module
+not dead
+not op_mini all

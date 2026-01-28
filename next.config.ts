@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
     optimizePackageImports: [
       "@copilotkit/react-ui",
       "@copilotkit/react-core",
-      "recharts",
+      "@humeai/voice-react",
+      "@neondatabase/auth",
+      "openai",
+      "@google/generative-ai",
     ],
   },
 
