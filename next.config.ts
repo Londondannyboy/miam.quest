@@ -156,6 +156,17 @@ const nextConfig: NextConfig = {
         destination: "/supervised-contact",
         permanent: true,
       },
+      // Fix 404 broken links
+      {
+        source: "/guides",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/mediators",
+        destination: "/find-a-mediator",
+        permanent: true,
+      },
     ];
   },
 };

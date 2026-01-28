@@ -232,13 +232,22 @@ body {
 [class*="copilotkit"][class*="toggle"],
 [class*="copilotkit"][class*="Toggle"],
 [class*="copilotkit"][class*="button"]:not([class*="send"]):not([class*="submit"]),
-button[class*="copilotkit-"]:is([class*="toggle"], [class*="open"], [class*="floating"]) {
+button[class*="copilotkit-"]:is([class*="toggle"], [class*="open"], [class*="floating"]),
+/* More specific selectors for CopilotKit toggle button */
+button[class*="copilotKitButton"],
+[class*="copilotKitButton"],
+div[class*="copilotKit"] > button:first-child,
+[data-state] > button[class*="absolute"],
+.fixed.bottom-4.right-4,
+.fixed.bottom-6.right-6:has([class*="copilot"]) {
   display: none !important;
 }
 
 /* Hide CopilotKit "Powered by" text - accessibility contrast issue */
 .poweredBy,
 [class*="poweredBy"],
-p.poweredBy {
+p.poweredBy,
+[class*="powered-by"],
+[class*="PoweredBy"] {
   display: none !important;
 }

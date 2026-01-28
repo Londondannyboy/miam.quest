@@ -1,16 +1,15 @@
 "use client";
 
-import { useState, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { authClient } from "@/lib/auth/client";
 import { HOME_PROMPT } from "@/lib/prompts";
 
-// Lazy load heavy components
-const CopilotSidebar = dynamic(
-  () => import("@copilotkit/react-ui").then((mod) => mod.CopilotSidebar),
-  { ssr: false, loading: () => null }
+// Lazy load heavy components - only load when user interacts
+const LazyChat = dynamic(
+  () => import("@/components/LazyChat").then((mod) => mod.LazyChat),
+  { ssr: false }
 );
 
 const VoiceInput = dynamic(
@@ -272,18 +271,8 @@ const videoSchema = {
 export default function HomePage() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatKey, setChatKey] = useState(0);
 
-  // Open chat by forcing re-mount with new key
-  const openChat = useCallback(() => {
-    setChatKey(prev => prev + 1);
-    setIsChatOpen(true);
-  }, []);
-
-  const handleVoiceMessage = useCallback((text: string, role?: "user" | "assistant") => {
-    console.log(`[Voice] ${role}: ${text.slice(0, 50)}...`);
-  }, []);
+  // Chat state removed - now handled by LazyChat component for better performance
 
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
@@ -355,7 +344,7 @@ export default function HomePage() {
             {/* Voice Widget with Instructions */}
             <div className="mb-8 flex items-center gap-4">
               <VoiceInput
-                onMessage={handleVoiceMessage}
+                onMessage={() => {}}
                 userName={user?.name || user?.email?.split("@")[0]}
                 userId={user?.id}
                 userEmail={user?.email}
@@ -369,7 +358,7 @@ export default function HomePage() {
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
               <button
-                onClick={openChat}
+                onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
                 className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-white hover:bg-rose-50 text-rose-700 rounded-2xl font-bold text-lg transition-all shadow-2xl shadow-rose-900/20 hover:shadow-rose-900/30 hover:scale-[1.02]"
               >
                 <span className="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center group-hover:bg-rose-200 transition-colors">
@@ -768,7 +757,7 @@ export default function HomePage() {
           {/* CTA */}
           <div className="mt-16 text-center">
             <button
-              onClick={openChat}
+              onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
               className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white rounded-2xl font-bold text-lg transition-all shadow-xl shadow-rose-600/20 hover:shadow-rose-600/30 hover:scale-[1.02]"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -906,7 +895,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
-                  onClick={openChat}
+                  onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-rose-50 text-rose-600 rounded-xl font-bold transition-all shadow-lg"
                 >
                   Ask Miam About Exemptions
@@ -1044,7 +1033,7 @@ export default function HomePage() {
 
               <div className="flex flex-wrap gap-4">
                 <button
-                  onClick={openChat}
+                  onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-rose-50 text-rose-700 rounded-xl font-semibold transition-all"
                 >
                   Try Miam Free
@@ -1266,7 +1255,7 @@ export default function HomePage() {
           <div className="mt-12 text-center">
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">Still have questions?</p>
             <button
-              onClick={openChat}
+              onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white rounded-xl font-bold transition-all shadow-lg"
             >
               Ask Miam Anything
@@ -1302,7 +1291,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={openChat}
+              onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
               className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white hover:bg-rose-50 text-rose-700 rounded-2xl font-bold text-lg transition-all shadow-2xl hover:scale-[1.02]"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1336,7 +1325,7 @@ export default function HomePage() {
               { href: "/miam/exemptions", label: "MIAM Exemptions" },
               { href: "/forms/c100", label: "C100 Form Guide" },
               { href: "/mediation/cost", label: "Mediation Costs" },
-              { href: "/mediators", label: "Find a Mediator" },
+              { href: "/find-a-mediator", label: "Find a Mediator" },
             ].map((link, i) => (
               <Link key={i} href={link.href} className="px-5 py-2.5 bg-rose-700 dark:bg-rose-800 rounded-full text-white hover:bg-rose-800 dark:hover:bg-rose-700 transition-colors text-sm font-medium">
                 {link.label}
@@ -1349,35 +1338,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========== FLOATING ELEMENTS ========== */}
-
-      {/* Chat button - bottom right (only when sidebar closed) */}
-      {!isChatOpen && (
-        <button
-          onClick={openChat}
-          className="fixed bottom-6 right-6 z-40 w-16 h-16 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 rounded-full flex items-center justify-center shadow-xl shadow-rose-600/30 transition-all hover:scale-110"
-          title="Chat with Miam"
-          aria-label="Chat with Miam"
-        >
-          <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-        </button>
-      )}
-
-      {/* CopilotKit Sidebar - key forces re-mount when opening */}
-      <CopilotSidebar
-        key={chatKey}
-        instructions={HOME_PROMPT}
-        labels={{
-          title: "Chat with Miam",
-          initial: "Hello! I'm Miam, your mediation preparation assistant. I'm here to help you understand the MIAM process and prepare for mediation. How can I help you today?",
-          placeholder: "Ask about MIAMs, certificates, exemptions...",
-        }}
-        defaultOpen={isChatOpen}
-        onSetOpen={setIsChatOpen}
-        clickOutsideToClose={true}
-      />
+      {/* ========== LAZY CHAT - Only loads CopilotKit when user clicks ========== */}
+      <LazyChat prompt={HOME_PROMPT} />
     </div>
   );
 }

@@ -225,6 +225,6 @@ export const PAGE_SEO = {
       "miam mediator",
       "local family mediation",
     ],
-    canonical: `${SITE_URL}/mediators`,
+    canonical: `${SITE_URL}/find-a-mediator`,
   },
 } as const;

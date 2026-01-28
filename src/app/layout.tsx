@@ -19,11 +19,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Miam Certificate Quest | Free MIAM Certificate Help UK",
-    template: "%s | Miam Certificate Quest",
+    default: "MIAM Certificate Help UK | Free AI Preparation | Miam Quest",
+    template: "%s | Miam Quest",
   },
   description:
-    "Get your MIAM certificate with free AI help. Prepare for your Mediation Information Assessment Meeting and understand MIAM certificates for family court in England & Wales.",
+    "Get your MIAM certificate with free AI help. Prepare for your Mediation Information Assessment Meeting for family court in England & Wales.",
   keywords: [
     "miam",
     "miam certificate",

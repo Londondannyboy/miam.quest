@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!page) return {};
 
   return {
-    title: `${page.title} | MIAM.quest`,
+    title: page.title,
     description: page.meta_description,
     keywords: page.keywords,
     alternates: {
