@@ -20,9 +20,9 @@ const VoiceInput = dynamic(
 // Unsplash images - warm, friendly, professional
 // Optimized: using smaller widths and lower quality for faster loading
 const IMAGES = {
-  // Hero - optimized for mobile-first (640px mobile, 1280px desktop)
-  // Lower quality since heavy gradient overlay covers detail
-  hero: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1280&q=60&auto=format",
+  // Hero - aggressive optimization since heavy gradient overlay covers most detail
+  // Mobile-first: 800px width, q=50 is fine with overlay
+  hero: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=50&auto=format",
   consultation: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=450&fit=crop&q=70&auto=format",
   family: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=600&q=70&auto=format",
   support: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=70&auto=format",
@@ -303,8 +303,8 @@ export default function HomePage() {
             className="object-cover object-center"
             priority
             fetchPriority="high"
-            quality={60}
-            sizes="100vw"
+            quality={50}
+            sizes="(max-width: 768px) 100vw, 50vw"
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAgIBAwQDAAAAAAAAAAAAAQIDBAAFBhESITFBUWFx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAYEQEBAQEBAAAAAAAAAAAAAAABAAIREv/aAAwDAQACEQMRAD8AzXatx6pte5LMVWtDNHXl6JC7EMQUIPccfea5vDee5d0afDp+pSwNXhk8sJYQQxHHBwxPrjGMYrKX2f/Z"
           />
