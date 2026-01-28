@@ -19,33 +19,34 @@ const VoiceInput = dynamic(
 );
 
 // Unsplash images - warm, friendly, professional
+// Optimized: using smaller widths and lower quality for faster loading
 const IMAGES = {
-  // Hero & general
-  hero: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&q=80",
-  consultation: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
-  family: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=1200&q=80",
-  support: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80",
-  documents: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80",
-  meeting: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=80",
-  couple: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=1200&q=80",
-  child: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80",
-  office: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80",
+  // Hero & general - hero needs full width, others optimized
+  hero: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1920&q=75&auto=format",
+  consultation: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=640&q=75&auto=format",
+  family: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=800&q=75&auto=format",
+  support: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=75&auto=format",
+  documents: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=75&auto=format",
+  meeting: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=75&auto=format",
+  couple: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=75&auto=format",
+  child: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=640&q=75&auto=format",
+  office: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=75&auto=format",
 
-  // Key facts cards
-  clock: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=800&q=80",
-  money: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
-  courthouse: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80",
+  // Key facts cards - smaller thumbnails
+  clock: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=640&q=75&auto=format",
+  money: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=640&q=75&auto=format",
+  courthouse: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=640&q=75&auto=format",
 
-  // Who needs MIAM
-  coupleTalking: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=800&q=80",
-  divorce: "https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=800&q=80",
-  grandparents: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=800&q=80",
-  legal: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=800&q=80",
+  // Who needs MIAM - smaller thumbnails
+  coupleTalking: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=640&q=75&auto=format",
+  divorce: "https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=640&q=75&auto=format",
+  grandparents: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=640&q=75&auto=format",
+  legal: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=640&q=75&auto=format",
 
   // Exemptions & Cost
-  helpSupport: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&q=80",
-  calculator: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=1200&q=80",
-  piggyBank: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=1200&q=80",
+  helpSupport: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&q=75&auto=format",
+  calculator: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&q=75&auto=format",
+  piggyBank: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=75&auto=format",
 };
 
 // Expanded FAQ data targeting ranking keywords
@@ -312,7 +313,8 @@ export default function HomePage() {
             className="object-cover object-center"
             priority
             fetchPriority="high"
-            quality={90}
+            quality={75}
+            sizes="100vw"
           />
           {/* Warm gradient overlay - less opaque to show image */}
           <div className="absolute inset-0 bg-gradient-to-r from-rose-900/70 via-rose-800/50 to-transparent" />
@@ -490,14 +492,14 @@ export default function HomePage() {
 
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/Miam consultation.jpg"
+                  src={IMAGES.consultation}
                   alt="Family mediation consultation - parents discussing child arrangements with a professional mediator"
                   title="MIAM certificate consultation with family mediator"
                   width={600}
                   height={450}
                   className="object-cover w-full"
                   sizes="(max-width: 768px) 100vw, 600px"
-                  quality={75}
+                  loading="lazy"
                 />
               </div>
 
@@ -576,6 +578,7 @@ export default function HomePage() {
             alt="Supportive family conversation"
             fill
             className="object-cover opacity-10 dark:opacity-5"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-50/95 via-zinc-50/98 to-zinc-50 dark:from-zinc-900/95 dark:via-zinc-900/98 dark:to-zinc-900" />
         </div>
@@ -652,6 +655,7 @@ export default function HomePage() {
                   width={600}
                   height={450}
                   className="object-cover w-full"
+                  loading="lazy"
                 />
               </div>
 
@@ -817,6 +821,7 @@ export default function HomePage() {
                   width={600}
                   height={450}
                   className="object-cover w-full"
+                  loading="lazy"
                 />
               </div>
 
@@ -884,6 +889,7 @@ export default function HomePage() {
                 alt="Supportive hands - help with MIAM exemptions"
                 fill
                 className="object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-rose-900/90 via-pink-800/85 to-rose-900/90" />
             </div>
@@ -923,6 +929,7 @@ export default function HomePage() {
             alt="Savings and costs for family mediation"
             fill
             className="object-cover opacity-10 dark:opacity-5"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/98 to-white dark:from-zinc-950/95 dark:via-zinc-950/98 dark:to-zinc-950" />
         </div>
@@ -1003,6 +1010,7 @@ export default function HomePage() {
             alt="Modern office workspace"
             fill
             className="object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-900/95 via-zinc-900/90 to-zinc-900/80" />
         </div>
@@ -1276,6 +1284,7 @@ export default function HomePage() {
             alt="Professional handshake - starting your mediation journey"
             fill
             className="object-cover"
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-rose-900/90 via-pink-800/80 to-rose-900/90" />
         </div>

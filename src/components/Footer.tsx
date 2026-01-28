@@ -3,6 +3,8 @@ import Link from "next/link";
 const MIAM_LINKS = [
   { href: "/what-is-a-miam", label: "What is a MIAM?" },
   { href: "/miam-certificate", label: "MIAM Certificate" },
+  { href: "/online-miam", label: "Online MIAM" },
+  { href: "/urgent-miam", label: "Urgent MIAM" },
   { href: "/miam-exemptions", label: "MIAM Exemptions" },
   { href: "/miam-cost", label: "MIAM Cost" },
   { href: "/miam-near-me", label: "MIAM Near Me" },

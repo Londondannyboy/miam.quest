@@ -5,7 +5,6 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { BetaBanner } from "@/components/BetaBanner";
 import { CookieConsent } from "@/components/CookieConsent";
-import "@copilotkit/react-ui/styles.css";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -165,6 +164,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Preconnect to external domains for faster resource loading */}
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://plus.unsplash.com" />
+        <link rel="dns-prefetch" href="https://plus.unsplash.com" />
+
         {/* Favicon */}
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

@@ -50,7 +50,7 @@ All content references official UK government and regulatory sources:
 
 ---
 
-## Full Page Index (57 Pages)
+## Full Page Index (59 Pages)
 
 ### MIAM Cluster
 Information about Mediation Information Assessment Meetings
@@ -60,6 +60,12 @@ Information about Mediation Information Assessment Meetings
 
 - **/miam-certificate** - MIAM Certificate
   Everything about MIAM certificates (Form FM1) - what they are, how to get one, validity, and requirements for C100 court applications.
+
+- **/online-miam** - Online MIAM: Book Your Digital MIAM Certificate Appointment UK
+  Book an online MIAM from home via video call. Get your digital MIAM certificate with full legal validity. Available nationwide.
+
+- **/urgent-miam** - Urgent MIAM: Same Day & Emergency MIAM Appointments UK
+  Need an urgent MIAM? Find same-day and emergency appointments. Fast-track your MIAM certificate for time-sensitive court applications.
 
 - **/miam-exemptions** - MIAM Exemptions: When You Don't Need Mediation
   Complete guide to MIAM exemptions including domestic abuse, urgency, child protection, and other valid reasons to skip mediation.

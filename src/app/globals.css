@@ -235,3 +235,10 @@ body {
 button[class*="copilotkit-"]:is([class*="toggle"], [class*="open"], [class*="floating"]) {
   display: none !important;
 }
+
+/* Hide CopilotKit "Powered by" text - accessibility contrast issue */
+.poweredBy,
+[class*="poweredBy"],
+p.poweredBy {
+  display: none !important;
+}
