@@ -30,7 +30,7 @@ export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapp
       </div>
 
       {/* Chat */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-0">
         <CopilotKit runtimeUrl="/api/copilotkit" agent="each_way_agent" showDevConsole={false}>
           <CopilotChat
             instructions={prompt}
@@ -39,7 +39,7 @@ export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapp
               initial: "Hello! I'm Miam, your mediation preparation assistant. I'm here to help you understand the MIAM process and prepare for mediation.\n\n**Note:** This is a beta service in open testing. How can I help you today?",
               placeholder: "Ask about MIAMs, certificates, exemptions...",
             }}
-            className="h-full"
+            className="flex-1 flex flex-col h-full"
           />
         </CopilotKit>
       </div>
