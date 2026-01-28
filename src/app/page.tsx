@@ -23,30 +23,30 @@ const IMAGES = {
   // Hero - optimized for mobile-first (640px mobile, 1280px desktop)
   // Lower quality since heavy gradient overlay covers detail
   hero: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1280&q=60&auto=format",
-  consultation: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=640&q=75&auto=format",
-  family: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=800&q=75&auto=format",
-  support: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=75&auto=format",
-  documents: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=75&auto=format",
-  meeting: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=75&auto=format",
-  couple: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=75&auto=format",
-  child: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=640&q=75&auto=format",
-  office: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=75&auto=format",
+  consultation: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=450&fit=crop&q=70&auto=format",
+  family: "https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=600&q=70&auto=format",
+  support: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=70&auto=format",
+  documents: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=70&auto=format",
+  meeting: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=70&auto=format",
+  couple: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=70&auto=format",
+  child: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=500&q=70&auto=format",
+  office: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=70&auto=format",
 
   // Key facts cards - smaller thumbnails
-  clock: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=640&q=75&auto=format",
-  money: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=640&q=75&auto=format",
-  courthouse: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=640&q=75&auto=format",
+  clock: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=400&q=70&auto=format",
+  money: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=70&auto=format",
+  courthouse: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=70&auto=format",
 
   // Who needs MIAM - smaller thumbnails
-  coupleTalking: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=640&q=75&auto=format",
-  divorce: "https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=640&q=75&auto=format",
-  grandparents: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=640&q=75&auto=format",
-  legal: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=640&q=75&auto=format",
+  coupleTalking: "https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=400&q=70&auto=format",
+  divorce: "https://images.unsplash.com/photo-1516585427167-9f4af9627e6c?w=400&q=70&auto=format",
+  grandparents: "https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=400&q=70&auto=format",
+  legal: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=400&q=70&auto=format",
 
   // Exemptions & Cost
-  helpSupport: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&q=75&auto=format",
-  calculator: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&q=75&auto=format",
-  piggyBank: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=800&q=75&auto=format",
+  helpSupport: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=800&q=70&auto=format",
+  calculator: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=600&q=70&auto=format",
+  piggyBank: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&q=70&auto=format",
 };
 
 // Expanded FAQ data targeting ranking keywords

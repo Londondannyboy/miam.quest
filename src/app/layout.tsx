@@ -165,9 +165,9 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Preconnect to external domains for faster resource loading */}
-        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        <link rel="preconnect" href="https://plus.unsplash.com" />
+        <link rel="preconnect" href="https://plus.unsplash.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://plus.unsplash.com" />
 
         {/* Favicon */}

@@ -1,5 +1,8 @@
-# Target modern browsers only to avoid unnecessary polyfills
-# This eliminates ~14KB of legacy JavaScript
-defaults and fully supports es6-module
+# Target modern browsers only - eliminates legacy polyfills
+# Chrome 90+, Firefox 90+, Safari 14+, Edge 90+
+chrome >= 90
+firefox >= 90
+safari >= 14
+edge >= 90
 not dead
 not op_mini all
