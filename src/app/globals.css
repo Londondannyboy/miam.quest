@@ -216,112 +216,24 @@ body {
   color: #6b7280 !important;
 }
 
-/* Hide CopilotKit dev console, announcement banners, and default toggle button */
-[class*="copilotkit"][class*="announcement"],
-[class*="copilotkit"][class*="toast"],
-[class*="copilotkit"][class*="banner"],
+/* CopilotKit - Minimal overrides only */
+
+/* Hide dev console and announcements */
+[data-copilotkit-dev-console],
 [class*="copilotkit"][class*="dev"],
-[class*="CopilotKit"][class*="announcement"],
-[class*="CopilotKit"][class*="Dev"],
-[data-copilotkit-announcement],
-[data-copilotkit-dev-console] {
+[class*="copilotkit"][class*="announcement"] {
   display: none !important;
 }
 
-/* Hide CopilotKit's default floating toggle button - we use our own custom button */
-[class*="copilotkit"][class*="toggle"],
-[class*="copilotkit"][class*="Toggle"],
-[class*="copilotkit"][class*="button"]:not([class*="send"]):not([class*="submit"]),
-button[class*="copilotkit-"]:is([class*="toggle"], [class*="open"], [class*="floating"]),
-/* More specific selectors for CopilotKit toggle button */
-button[class*="copilotKitButton"],
-[class*="copilotKitButton"],
-div[class*="copilotKit"] > button:first-child,
-[data-state] > button[class*="absolute"],
-.fixed.bottom-4.right-4,
-.fixed.bottom-6.right-6:has([class*="copilot"]) {
-  display: none !important;
-}
-
-/* Hide CopilotKit "Powered by" text - accessibility contrast issue */
-.poweredBy,
+/* Hide "Powered by" text */
 [class*="poweredBy"],
-p.poweredBy,
-[class*="powered-by"],
 [class*="PoweredBy"] {
   display: none !important;
 }
 
-/* CopilotKit Chat Overrides - ensure proper layout and input visibility */
-[class*="copilotKitChat"],
-[class*="CopilotChat"],
-[data-copilotkit-chat],
-[class*="copilotkit"] > div {
-  height: 100% !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-/* Ensure message container scrolls and doesn't hide input */
-[class*="copilotKitMessages"],
-[class*="CopilotMessages"],
-[class*="messageList"],
-[class*="message-list"],
-[class*="messagesContainer"],
-[class*="copilotkit"] [class*="messages"] {
-  flex: 1 !important;
-  overflow-y: auto !important;
-  min-height: 0 !important;
-  max-height: calc(100% - 80px) !important;
-}
-
-/* Ensure the chat input container is visible at bottom */
-[class*="copilotKitInput"],
-[class*="CopilotInput"],
-[class*="inputContainer"],
-[class*="input-container"],
-[data-copilotkit-input],
-form[class*="copilot"],
-[class*="copilotkit"] form,
-[class*="copilotkit"] [class*="input"] {
-  flex-shrink: 0 !important;
-  background: white !important;
-  padding: 0.75rem 1rem !important;
-  border-top: 1px solid #e5e7eb !important;
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  min-height: 60px !important;
-}
-
-/* Ensure textarea/input is visible */
-[class*="copilotkit"] textarea,
-[class*="copilotkit"] input[type="text"] {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  min-height: 40px !important;
-  width: 100% !important;
-  border: 1px solid #e5e7eb !important;
-  border-radius: 0.5rem !important;
-  padding: 0.5rem !important;
-}
-
-/* Dark mode support for input */
-@media (prefers-color-scheme: dark) {
-  [class*="copilotKitInput"],
-  [class*="CopilotInput"],
-  [class*="inputContainer"],
-  form[class*="copilot"],
-  [class*="copilotkit"] form {
-    background: #18181b !important;
-    border-top-color: #3f3f46 !important;
-  }
-
-  [class*="copilotkit"] textarea,
-  [class*="copilotkit"] input[type="text"] {
-    background: #27272a !important;
-    border-color: #3f3f46 !important;
-    color: white !important;
-  }
+/* Ensure sidebar is above navigation (nav is z-50) */
+[class*="copilotKitSidebar"],
+[data-state="open"][class*="copilot"],
+aside[class*="copilot"] {
+  z-index: 9999 !important;
 }
