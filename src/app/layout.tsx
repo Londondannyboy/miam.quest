@@ -55,12 +55,21 @@ export const metadata: Metadata = {
     title: "Miam Certificate Quest | Free MIAM Certificate Preparation",
     description:
       "Get your MIAM certificate with free AI help. Understand MIAM certificates, prepare for mediation, and connect with accredited mediators in England & Wales.",
+    images: [
+      {
+        url: "https://miam.quest/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Miam Certificate Quest - Free MIAM Certificate Preparation",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Miam Certificate Quest | Free MIAM Certificate Help",
     description:
       "Get your MIAM certificate with free AI help. Understand MIAM certificates and prepare for family court in England & Wales.",
+    images: ["https://miam.quest/og-image.png"],
   },
   robots: {
     index: true,

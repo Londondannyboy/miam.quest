@@ -24,9 +24,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: page.canonical_url || `https://miam.quest/${page.slug}`,
     },
     openGraph: {
+      type: "article",
       title: page.og_title || page.title,
       description: page.og_description || page.meta_description,
       url: page.canonical_url || `https://miam.quest/${page.slug}`,
+      images: [
+        {
+          url: "https://miam.quest/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: page.title,
+        },
+      ],
     },
   };
 }

@@ -4,7 +4,7 @@ import { getAllPublishedPages } from "@/lib/db";
 const BASE_URL = "https://miam.quest";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Static pages
+  // Static pages (not in database)
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -17,24 +17,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date().toISOString(),
       changeFrequency: "monthly",
       priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/miam/exemptions`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/mediation/what-is-mediation`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/mediation/cost`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: "monthly",
-      priority: 0.8,
     },
     {
       url: `${BASE_URL}/privacy`,
