@@ -293,22 +293,26 @@ export default function HomePage() {
 
       {/* ========== HERO SECTION ========== */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        {/* Background Image */}
+        {/* Background Video */}
         <div className="absolute inset-0">
-          <Image
-            src={IMAGES.hero}
-            alt="Supportive family mediation consultation for MIAM certificate preparation"
-            title="MIAM certificate preparation - family mediation consultation"
-            fill
-            className="object-cover object-center"
-            priority
-            fetchPriority="high"
-            quality={30}
-            sizes="(max-width: 768px) 640px, 640px"
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAYH/8QAIhAAAgIBAwQDAAAAAAAAAAAAAQIDBAAFBhESITFBUWFx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAgP/xAAYEQEBAQEBAAAAAAAAAAAAAAABAAIREv/aAAwDAQACEQMRAD8AzXatx6pte5LMVWtDNHXl6JC7EMQUIPccfea5vDee5d0afDp+pSwNXhk8sJYQQxHHBwxPrjGMYrKX2f/Z"
-          />
-          {/* Warm gradient overlay - less opaque to show image */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+            poster="https://image.mux.com/WT2OI3n1pU8l4sNoZHSUeLbT00L5r6XUZzpgxu01rQvoA/thumbnail.jpg?width=640&height=360&time=0"
+          >
+            <source
+              src="https://stream.mux.com/WT2OI3n1pU8l4sNoZHSUeLbT00L5r6XUZzpgxu01rQvoA.m3u8"
+              type="application/x-mpegURL"
+            />
+            <source
+              src="https://stream.mux.com/WT2OI3n1pU8l4sNoZHSUeLbT00L5r6XUZzpgxu01rQvoA/high.mp4"
+              type="video/mp4"
+            />
+          </video>
+          {/* Warm gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-rose-900/70 via-rose-800/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
         </div>
