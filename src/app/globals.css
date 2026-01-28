@@ -215,3 +215,15 @@ body {
   font-size: 0.875rem !important;
   color: #6b7280 !important;
 }
+
+/* Hide CopilotKit dev console and announcement banners */
+[class*="copilotkit"][class*="announcement"],
+[class*="copilotkit"][class*="toast"],
+[class*="copilotkit"][class*="banner"],
+[class*="copilotkit"][class*="dev"],
+[class*="CopilotKit"][class*="announcement"],
+[class*="CopilotKit"][class*="Dev"],
+[data-copilotkit-announcement],
+[data-copilotkit-dev-console] {
+  display: none !important;
+}

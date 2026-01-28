@@ -12,10 +12,6 @@ export function BetaBanner() {
             <span className="font-semibold text-amber-900 dark:text-amber-100">
               Q1 2026 Launch
             </span>
-            <span className="hidden sm:inline text-amber-400">|</span>
-            <span className="px-2.5 py-1 bg-zinc-800 text-white text-xs font-bold rounded-full uppercase tracking-wide">
-              AI Tool
-            </span>
           </div>
           <span className="text-amber-800 dark:text-amber-200 text-center">
             We cannot provide legal advice or issue MIAM certificates.{" "}

@@ -295,6 +295,27 @@ python -m uvicorn src.agent:app --reload   # http://localhost:8000
 - Certificate validity: 4 months
 - Only FMC-accredited mediators can sign court forms
 
+### Citation Policy (E-A-T for SEO)
+When stating facts about MIAMs, mediation, or family law, **always cite authoritative sources** with links:
+
+**Priority sources (in order):**
+1. **UK Government** - Gov.uk, HMCTS, Legal Aid Agency
+2. **Family Mediation Council (FMC)** - Official accreditation body
+3. **National Family Mediation (NFM)** - Established charity
+4. **Cafcass** - Children and Family Court Advisory Service
+5. **Established UK solicitors** - Burnetts, Family Law Partners, etc.
+
+**How to cite:**
+- Inline links: "According to the [Family Mediation Council](https://www.familymediationcouncil.org.uk/...), a MIAM typically lasts 45-60 minutes."
+- Reference sections: Group external links at end of relevant sections
+- PDF footers: Include "Source: familymediationcouncil.org.uk" in footer
+
+**Why this matters:**
+- Demonstrates expertise and trustworthiness (E-A-T)
+- Users can verify facts independently
+- Protects against liability (we're citing, not advising)
+- Improves SEO through authoritative outbound links
+
 ### Sensitive Topics
 Handle with care:
 - Domestic abuse → Provide exemption info, support resources
