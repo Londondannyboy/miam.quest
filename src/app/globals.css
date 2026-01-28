@@ -231,9 +231,11 @@ body {
   display: none !important;
 }
 
-/* Ensure sidebar is above navigation (nav is z-50) */
-[class*="copilotKitSidebar"],
-[data-state="open"][class*="copilot"],
-aside[class*="copilot"] {
-  z-index: 9999 !important;
+/* Ensure popup is visible and positioned correctly */
+[class*="copilotKitPopup"],
+[class*="CopilotPopup"] {
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 10000 !important;
 }
