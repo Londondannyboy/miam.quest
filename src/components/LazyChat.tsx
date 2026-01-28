@@ -9,11 +9,9 @@ const CopilotChatWrapper = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="fixed inset-y-0 right-0 w-[400px] bg-white dark:bg-zinc-900 shadow-xl z-50 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-zinc-500 dark:text-zinc-400">Loading Miam...</span>
-        </div>
+      <div className="fixed bottom-24 right-6 bg-white dark:bg-zinc-900 rounded-xl shadow-xl z-50 p-4 flex items-center gap-3">
+        <div className="w-6 h-6 border-2 border-rose-500 border-t-transparent rounded-full animate-spin" />
+        <span className="text-zinc-500 dark:text-zinc-400 text-sm">Loading chat...</span>
       </div>
     )
   }
