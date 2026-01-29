@@ -158,6 +158,11 @@ export function LazyChat({ prompt }: LazyChatProps) {
           key={chatKey}
           prompt={prompt}
           onClose={() => setIsOpen(false)}
+          user={{
+            id: user.id,
+            name: user.name || '',
+            email: user.email || '',
+          }}
         />
       )}
     </>
