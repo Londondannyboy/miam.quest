@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useCoAgent } from '@copilotkit/react-core';
+import { useCoAgent, useCopilotReadable } from '@copilotkit/react-core';
 import { CopilotSidebar } from '@copilotkit/react-ui';
 
 interface UserInfo {
@@ -27,14 +27,25 @@ interface AgentState {
 }
 
 export default function CopilotChatWrapper({ prompt, onClose, user }: CopilotChatWrapperProps) {
-  // Initialize agent state - use setState to sync user (like fractional.quest pattern)
+  // Make user info readable by the agent (pattern from deep-agents example)
+  // This exposes user context to the agent's system prompt
+  useCopilotReadable({
+    description: "The current logged-in user's information",
+    value: {
+      userId: user.id,
+      userName: user.name,
+      userEmail: user.email,
+      userFirstName: user.name ? user.name.split(' ')[0] : '',
+    },
+  });
+
+  // Also use coAgent for bidirectional state sync
   const { state, setState } = useCoAgent<AgentState>({
     name: "miam_agent",
     initialState: {},
   });
 
   // Sync user to agent state when component mounts or user changes
-  // This is the pattern from fractional.quest that properly syncs state to the agent
   useEffect(() => {
     console.log('[CopilotKit] User sync - user:', user.name, 'state.user:', state?.user?.name);
     if (user && (!state?.user || state.user.id !== user.id)) {
