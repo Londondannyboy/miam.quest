@@ -298,12 +298,16 @@ Help users identify:
 - Financial support
 
 ## TOOLS AVAILABLE
+- `load_user_memory`: **Call this FIRST** to load user context from memory
 - `capture_position`: Record a position item from the user
 - `get_position_summary`: Show current captured position
 - `get_miam_info`: Get information about MIAM process
 - `check_exemption_eligibility`: Check for potential MIAM exemptions
 - `search_mediators`: Find FMC-accredited mediators
 - `generate_preparation_summary`: Create a preparation document
+
+## IMPORTANT - FIRST MESSAGE
+When starting a new conversation, ALWAYS call `load_user_memory` first to check for previous context about this user.
 
 ## CONVERSATION STYLE
 - Be concise but warm
@@ -713,6 +717,63 @@ async def generate_preparation_summary(ctx: RunContext[StateDeps[AppState]]) -> 
         "summary": summary,
         "disclaimer": "This summary is for preparation purposes only. It is not legal advice and cannot replace professional mediation."
     }
+
+
+# ============================================================================
+# AGENT TOOLS - USER MEMORY
+# ============================================================================
+
+@agent.tool
+async def load_user_memory(ctx: RunContext[StateDeps[AppState]]) -> dict:
+    """
+    Load user memory and context from Zep.
+    Call this at the start of a conversation to personalize responses.
+
+    Returns:
+        User context and known facts from previous conversations
+    """
+    state = ctx.deps.state
+
+    if not state.user or not state.user.id:
+        return {
+            "success": False,
+            "message": "No user identified. Cannot load memory."
+        }
+
+    if not zep_client:
+        return {
+            "success": False,
+            "message": "Memory service not configured."
+        }
+
+    user_id = state.user.id
+
+    try:
+        # Ensure user exists in Zep
+        await get_or_create_zep_user(
+            user_id,
+            state.user.email if state.user else None,
+            state.user.name if state.user else None
+        )
+
+        # Get user context
+        zep_context = await get_user_context(user_id)
+
+        # Update state with context
+        ctx.deps.state.zep_context = zep_context
+
+        return {
+            "success": True,
+            "user_id": user_id[:8] + "...",
+            "context_loaded": bool(zep_context),
+            "context": zep_context if zep_context else "No previous context found for this user."
+        }
+    except Exception as e:
+        print(f"[TOOL] load_user_memory error: {e}", file=sys.stderr)
+        return {
+            "success": False,
+            "error": str(e)
+        }
 
 
 # ============================================================================
