@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { CopilotKit, useCoAgent } from '@copilotkit/react-core';
+import { useCoAgent } from '@copilotkit/react-core';
 import { CopilotSidebar } from '@copilotkit/react-ui';
-import '@copilotkit/react-ui/styles.css';
 
 interface CopilotChatWrapperProps {
   prompt: string;
@@ -18,9 +17,8 @@ interface AgentState {
   } | null;
 }
 
-// Inner component that uses hooks
-function CopilotInner({ prompt, onClose }: CopilotChatWrapperProps) {
-  // Initialize agent state
+export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapperProps) {
+  // Initialize agent state - must match agent name in providers.tsx
   useCoAgent<AgentState>({
     name: "miam_agent",
     initialState: {
@@ -29,7 +27,7 @@ function CopilotInner({ prompt, onClose }: CopilotChatWrapperProps) {
   });
 
   useEffect(() => {
-    console.log('[CopilotKit] Inner component mounted');
+    console.log('[CopilotKit] Chat wrapper mounted');
   }, []);
 
   return (
@@ -48,24 +46,8 @@ function CopilotInner({ prompt, onClose }: CopilotChatWrapperProps) {
       clickOutsideToClose={true}
       className="z-[9999]"
     >
-      {/* Empty placeholder - sidebar overlays existing content */}
-      <div className="hidden" />
+      {/* Sidebar overlays existing content */}
+      <div />
     </CopilotSidebar>
-  );
-}
-
-export default function CopilotChatWrapper({ prompt, onClose }: CopilotChatWrapperProps) {
-  useEffect(() => {
-    console.log('[CopilotKit] Wrapper mounted, agent: miam_agent');
-    console.log('[CopilotKit] Runtime URL: /api/copilotkit');
-  }, []);
-
-  return (
-    <CopilotKit
-      runtimeUrl="/api/copilotkit"
-      agent="miam_agent"
-    >
-      <CopilotInner prompt={prompt} onClose={onClose} />
-    </CopilotKit>
   );
 }

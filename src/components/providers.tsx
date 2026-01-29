@@ -1,9 +1,9 @@
 'use client';
 
 import { NeonAuthUIProvider } from '@neondatabase/auth/react/ui';
+import { CopilotKit } from '@copilotkit/react-core';
 import { authClient } from '@/lib/auth/client';
-
-// CopilotKit is now lazy-loaded via LazyChat component for better performance
+import '@copilotkit/react-ui/styles.css';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,7 +12,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
       redirectTo="/"
       social={{ providers: ['google'] }}
     >
-      {children}
+      <CopilotKit runtimeUrl="/api/copilotkit" agent="miam_agent">
+        {children}
+      </CopilotKit>
     </NeonAuthUIProvider>
   );
 }
