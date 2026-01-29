@@ -14,17 +14,17 @@ function debugLog(...args: unknown[]) {
   }
 }
 
-// Agent URL - Railway Pydantic AI agent (same as Hume CLM)
+// Agent URL - Railway LangChain Deep Agents (AG-UI at root)
 const agentUrl = process.env.AGENT_URL
-  ? `${process.env.AGENT_URL}/agui/`
-  : "http://localhost:8000/agui/";
+  ? `${process.env.AGENT_URL}/`
+  : "http://localhost:8000/";
 
 debugLog("Agent URL:", agentUrl);
 
-// Use empty adapter - all processing done by backend agent
+// Use empty adapter - all processing done by LangChain Deep Agents backend
 const serviceAdapter = new ExperimentalEmptyAdapter();
 
-// Create CopilotRuntime with HttpAgent pointing to Railway agent
+// Create CopilotRuntime with HttpAgent pointing to LangChain agent
 const runtime = new CopilotRuntime({
   agents: {
     miam_agent: new HttpAgent({
@@ -69,6 +69,7 @@ export const GET = async () => {
     status: "ok",
     agentUrl,
     adapter: "ExperimentalEmptyAdapter + HttpAgent",
+    backend: "LangChain Deep Agents",
     debug: DEBUG,
   });
 };
