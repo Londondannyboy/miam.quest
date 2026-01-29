@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useCoAgent } from '@copilotkit/react-core';
 import { CopilotSidebar } from '@copilotkit/react-ui';
 
 interface UserInfo {
@@ -15,6 +16,15 @@ interface CopilotChatWrapperProps {
   user: UserInfo;
 }
 
+// Agent state type - synced with backend via AG-UI
+interface AgentState {
+  user?: {
+    id?: string;
+    name?: string;
+    email?: string;
+  };
+}
+
 // Helper to get first name
 function getFirstName(fullName: string | undefined): string {
   if (!fullName) return '';
@@ -24,12 +34,33 @@ function getFirstName(fullName: string | undefined): string {
 export default function CopilotChatWrapper({ prompt, onClose, user }: CopilotChatWrapperProps) {
   const firstName = getFirstName(user.name);
 
-  useEffect(() => {
-    console.log('[CopilotKit] Chat wrapper mounted with user:', user.name, user.id);
-  }, [user.name, user.id]);
+  // Sync user to agent state via AG-UI protocol
+  const { state, setState } = useCoAgent<AgentState>({
+    name: "miam_agent",
+    initialState: {
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    },
+  });
 
-  // Build instructions with user context directly embedded (relocation.quest pattern)
-  // This is the pattern that WORKS - user context goes directly into the instructions string
+  // Re-sync when user changes
+  useEffect(() => {
+    console.log('[CopilotKit] Syncing user to agent state:', user.name, user.id);
+    console.log('[CopilotKit] Current agent state:', JSON.stringify(state));
+
+    setState({
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  }, [user.id, user.name, user.email, setState]);
+
+  // Build instructions with user context as backup
   const instructions = `${prompt}
 
 CRITICAL USER CONTEXT:
@@ -38,8 +69,7 @@ CRITICAL USER CONTEXT:
 - User First Name: ${firstName || 'User'}
 - User Email: ${user.email || 'Not provided'}
 
-IMPORTANT: Always address the user by their first name "${firstName || 'there'}" when appropriate.
-You know who this user is - use their name naturally in conversation.`;
+IMPORTANT: Always address the user by their first name "${firstName || 'there'}" when appropriate.`;
 
   return (
     <CopilotSidebar

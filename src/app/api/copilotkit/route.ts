@@ -1,8 +1,9 @@
 import {
   CopilotRuntime,
-  GoogleGenerativeAIAdapter,
+  ExperimentalEmptyAdapter,
   copilotRuntimeNextJSAppRouterEndpoint,
 } from "@copilotkit/runtime";
+import { HttpAgent } from "@ag-ui/client";
 import { NextRequest, NextResponse } from "next/server";
 
 // Debug logging
@@ -13,16 +14,24 @@ function debugLog(...args: unknown[]) {
   }
 }
 
-// Use Gemini adapter - this interprets instructions and calls actions
-// This is the pattern that WORKS in relocation.quest
-const serviceAdapter = new GoogleGenerativeAIAdapter({
-  model: "gemini-2.0-flash",
+// Agent URL - Railway Pydantic AI agent (same as Hume CLM)
+const agentUrl = process.env.AGENT_URL
+  ? `${process.env.AGENT_URL}/agui/`
+  : "http://localhost:8000/agui/";
+
+debugLog("Agent URL:", agentUrl);
+
+// Use empty adapter - all processing done by backend agent
+const serviceAdapter = new ExperimentalEmptyAdapter();
+
+// Create CopilotRuntime with HttpAgent pointing to Railway agent
+const runtime = new CopilotRuntime({
+  agents: {
+    miam_agent: new HttpAgent({
+      url: agentUrl,
+    }),
+  },
 });
-
-debugLog("Using GoogleGenerativeAIAdapter with gemini-2.0-flash");
-
-// Create CopilotRuntime - no external agent needed, Gemini handles it
-const runtime = new CopilotRuntime();
 
 // Next.js API route handler
 export const POST = async (req: NextRequest) => {
@@ -58,8 +67,8 @@ export const POST = async (req: NextRequest) => {
 export const GET = async () => {
   return NextResponse.json({
     status: "ok",
-    adapter: "GoogleGenerativeAIAdapter",
-    model: "gemini-2.0-flash",
+    agentUrl,
+    adapter: "ExperimentalEmptyAdapter + HttpAgent",
     debug: DEBUG,
   });
 };
