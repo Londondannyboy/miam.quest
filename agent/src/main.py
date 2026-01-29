@@ -23,7 +23,7 @@ import uvicorn
 from ag_ui_langgraph import add_langgraph_fastapi_endpoint
 from copilotkit import LangGraphAGUIAgent
 
-from agent import build_agent
+from .agent import build_agent
 
 # Zep for CLM memory
 from zep_cloud.client import Zep

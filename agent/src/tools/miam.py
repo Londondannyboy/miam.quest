@@ -20,7 +20,7 @@ from zep_cloud import NotFoundError
 import psycopg2
 
 # Import state constants
-from state import POSITION_CATEGORIES, POSITION_TOPICS, MIAM_EXEMPTIONS
+from ..state import POSITION_CATEGORIES, POSITION_TOPICS, MIAM_EXEMPTIONS
 
 
 # =============================================================================

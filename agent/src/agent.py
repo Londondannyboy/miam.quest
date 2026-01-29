@@ -16,7 +16,7 @@ from copilotkit import CopilotKitMiddleware
 from langgraph.checkpoint.memory import MemorySaver
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from tools.miam import MIAM_TOOLS
+from .tools.miam import MIAM_TOOLS
 
 
 # =============================================================================
