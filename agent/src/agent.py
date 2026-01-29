@@ -204,6 +204,11 @@ async def dynamic_system_prompt(ctx: RunContext[StateDeps[AppState]]) -> str:
     """Build system prompt with user context."""
     state = ctx.deps.state
 
+    # Debug: Log what state we have
+    print(f"[AGENT] System prompt building with state:", file=sys.stderr)
+    print(f"[AGENT]   user: {state.user}", file=sys.stderr)
+    print(f"[AGENT]   zep_context: {state.zep_context[:50] if state.zep_context else 'empty'}", file=sys.stderr)
+
     user_section = ""
     if state.user and state.user.name:
         user_section = f"""
