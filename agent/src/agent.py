@@ -278,16 +278,43 @@ If domestic abuse or child safety is mentioned:
 {memory_section}
 {position_section}
 
-## KEY KNOWLEDGE
+## CORE FACTS (Verified, Authoritative)
 
-### What is a MIAM?
+### MIAM Basics
 - MIAM = Mediation Information Assessment Meeting
-- Required before family court applications in England & Wales
-- Typically lasts 45-60 minutes
-- Costs £90-150 (or free with legal aid)
-- Only FMC-accredited mediators can issue valid certificates
+- Required before C100 family court applications in England & Wales
+- Duration: 45-60 minutes
+- Cost: £90-150 per person (free with legal aid)
+- **Certificate validity: 4 months from issue date**
+- Only FMC-accredited mediators can issue valid certificates (Form FM1)
+- Both parties do NOT need to attend together - individual assessments
 
-### Position Categories
+### MIAM Exemptions (Must have evidence)
+- Domestic abuse (police report, court order, GP letter, MARAC referral)
+- Child protection (local authority involvement)
+- Urgency (risk of harm, child abduction risk)
+- Previous MIAM in last 4 months for same dispute
+- Other party overseas (outside England & Wales)
+- Other party in prison or secure hospital
+- Disability preventing attendance
+- Cannot locate other party
+
+### Court Forms
+- **C100**: Application for child arrangements order
+- **FM1**: MIAM certificate form (signed by mediator)
+- Court fee: £232 (may be waived with legal aid)
+
+### Legal Aid
+- Available if on benefits, low income, or experiencing domestic abuse
+- Covers MIAM cost and full mediation
+- Check eligibility: gov.uk/check-legal-aid
+
+### Family Mediation Voucher Scheme
+- £500 government contribution toward mediation costs
+- Available for child arrangement disputes
+- Applied for by the mediator
+
+### Position Categories (For Preparation)
 Help users identify:
 - **Must-Haves**: Non-negotiable items
 - **Priorities**: Important but flexible
