@@ -18,31 +18,39 @@ interface CopilotChatWrapperProps {
 
 // Agent state type - must match AppState in agent.py
 interface AgentState {
-  user: {
+  user?: {
     id: string;
     name: string;
     email: string;
-  } | null;
-  zep_context: string;
+  };
+  zep_context?: string;
 }
 
 export default function CopilotChatWrapper({ prompt, onClose, user }: CopilotChatWrapperProps) {
-  // Initialize agent state with user info - must match agent name in providers.tsx
-  useCoAgent<AgentState>({
+  // Initialize agent state - use setState to sync user (like fractional.quest pattern)
+  const { state, setState } = useCoAgent<AgentState>({
     name: "miam_agent",
-    initialState: {
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
-      zep_context: "",
-    },
+    initialState: {},
   });
 
+  // Sync user to agent state when component mounts or user changes
+  // This is the pattern from fractional.quest that properly syncs state to the agent
   useEffect(() => {
-    console.log('[CopilotKit] Chat wrapper mounted with user:', user.name, user.id);
-  }, [user]);
+    console.log('[CopilotKit] User sync - user:', user.name, 'state.user:', state?.user?.name);
+    if (user && (!state?.user || state.user.id !== user.id)) {
+      console.log('[CopilotKit] Setting user state:', { id: user.id, name: user.name, email: user.email });
+      setState(prev => ({
+        ...prev,
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+        zep_context: prev?.zep_context ?? "",
+      }));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.id]);
 
   return (
     <CopilotSidebar
