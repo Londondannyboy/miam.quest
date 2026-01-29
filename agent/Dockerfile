@@ -12,5 +12,5 @@ COPY . .
 # Expose port
 EXPOSE 8080
 
-# Start command
-CMD python -m uvicorn src.agent:app --host 0.0.0.0 --port ${PORT:-8080}
+# Start command - use shell form for variable expansion
+CMD ["/bin/sh", "-c", "python -m uvicorn src.agent:app --host 0.0.0.0 --port ${PORT:-8080}"]
