@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useCoAgent, useCopilotReadable } from '@copilotkit/react-core';
 import { CopilotSidebar } from '@copilotkit/react-ui';
 
 interface UserInfo {
@@ -16,56 +15,35 @@ interface CopilotChatWrapperProps {
   user: UserInfo;
 }
 
-// Agent state type - must match AppState in agent.py
-interface AgentState {
-  user?: {
-    id: string;
-    name: string;
-    email: string;
-  };
-  zep_context?: string;
+// Helper to get first name
+function getFirstName(fullName: string | undefined): string {
+  if (!fullName) return '';
+  return fullName.split(' ')[0];
 }
 
 export default function CopilotChatWrapper({ prompt, onClose, user }: CopilotChatWrapperProps) {
-  // Make user info readable by the agent (pattern from deep-agents example)
-  // This exposes user context to the agent's system prompt
-  useCopilotReadable({
-    description: "The current logged-in user's information",
-    value: {
-      userId: user.id,
-      userName: user.name,
-      userEmail: user.email,
-      userFirstName: user.name ? user.name.split(' ')[0] : '',
-    },
-  });
+  const firstName = getFirstName(user.name);
 
-  // Also use coAgent for bidirectional state sync
-  const { state, setState } = useCoAgent<AgentState>({
-    name: "miam_agent",
-    initialState: {},
-  });
-
-  // Sync user to agent state when component mounts or user changes
   useEffect(() => {
-    console.log('[CopilotKit] User sync - user:', user.name, 'state.user:', state?.user?.name);
-    if (user && (!state?.user || state.user.id !== user.id)) {
-      console.log('[CopilotKit] Setting user state:', { id: user.id, name: user.name, email: user.email });
-      setState(prev => ({
-        ...prev,
-        user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        },
-        zep_context: prev?.zep_context ?? "",
-      }));
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.id]);
+    console.log('[CopilotKit] Chat wrapper mounted with user:', user.name, user.id);
+  }, [user.name, user.id]);
+
+  // Build instructions with user context directly embedded (relocation.quest pattern)
+  // This is the pattern that WORKS - user context goes directly into the instructions string
+  const instructions = `${prompt}
+
+CRITICAL USER CONTEXT:
+- User ID: ${user.id}
+- User Name: ${user.name || 'Unknown'}
+- User First Name: ${firstName || 'User'}
+- User Email: ${user.email || 'Not provided'}
+
+IMPORTANT: Always address the user by their first name "${firstName || 'there'}" when appropriate.
+You know who this user is - use their name naturally in conversation.`;
 
   return (
     <CopilotSidebar
-      instructions={prompt}
+      instructions={instructions}
       labels={{
         title: "Chat with Miam",
         initial: user.name
