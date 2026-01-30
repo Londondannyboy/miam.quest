@@ -42,6 +42,7 @@ const FIND_MEDIATOR_LINKS = [
 
 const COURT_ORDERS_LINKS = [
   { href: "/c100-form", label: "C100 Form Guide" },
+  { href: "/c100-form-download", label: "C100 Form Download" },
   { href: "/what-happens-after-c100", label: "After C100" },
   { href: "/consent-order", label: "Consent Order" },
   { href: "/consent-order-template", label: "Consent Order Template" },
@@ -88,6 +89,14 @@ const EXTERNAL_LINKS = [
   { href: "https://www.nfm.org.uk/", label: "National Family Mediation" },
   { href: "https://www.citizensadvice.org.uk/family/", label: "Citizens Advice" },
   { href: "https://www.nationaldahelpline.org.uk/", label: "DA Helpline" },
+  { href: "https://www.resolution.org.uk/", label: "Resolution" },
+  { href: "https://www.judiciary.uk/", label: "UK Judiciary" },
+];
+
+const PARTNER_LINKS = [
+  { href: "https://relocation.quest", label: "Relocation Quest", desc: "Family relocation advice" },
+  { href: "https://fractional.quest", label: "Fractional Quest", desc: "HR & executive support" },
+  { href: "https://rainmakrr.com", label: "Rainmakrr", desc: "Business growth platform" },
 ];
 
 const LEGAL_LINKS = [
@@ -237,7 +246,7 @@ export function Footer() {
 
         {/* External Resources */}
         <div className="mt-12 pt-8 border-t border-zinc-800">
-          <h3 className="text-white font-semibold mb-4 text-sm">Official Resources</h3>
+          <h3 className="text-white font-semibold mb-4 text-sm">Official MIAM Certificate Resources</h3>
           <div className="flex flex-wrap gap-4">
             {EXTERNAL_LINKS.map((link) => (
               <a
@@ -256,6 +265,25 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Partner Sites */}
+        <div className="mt-8 pt-8 border-t border-zinc-800">
+          <h3 className="text-white font-semibold mb-4 text-sm">Partner Services</h3>
+          <div className="flex flex-wrap gap-6">
+            {PARTNER_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm hover:text-white transition-colors"
+              >
+                <span className="font-medium">{link.label}</span>
+                <span className="text-zinc-500 ml-1">— {link.desc}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+
         {/* Disclaimer */}
         <div className="mt-8 pt-8 border-t border-zinc-800">
           <div className="bg-amber-900/20 border border-amber-700/30 rounded-lg p-4 mb-6">
@@ -269,9 +297,11 @@ export function Footer() {
 
         {/* Trust Signals */}
         <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white mb-8">
-          <span>Free AI MIAM certificate preparation</span>
+          <span>Free MIAM certificate preparation</span>
           <span className="text-zinc-500">|</span>
-          <span>Connects you to FMC-accredited mediators</span>
+          <span>FMC-accredited mediator connections</span>
+          <span className="text-zinc-500">|</span>
+          <span>MIAM certificate guidance UK</span>
           <span className="text-zinc-500">|</span>
           <span>Child-focused approach</span>
         </div>

@@ -21,15 +21,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "MIAM Certificate Help UK | Free AI Preparation | Miam Quest",
+    default: "MIAM Certificate UK | Free MIAM Certificate Help | Miam Quest",
     template: "%s | Miam Quest",
   },
   description:
-    "Get your MIAM certificate with free AI help. Prepare for your Mediation Information Assessment Meeting for family court in England & Wales.",
+    "Need a MIAM certificate? Free AI help to prepare for your MIAM and get your MIAM certificate for family court in England & Wales. Understand MIAM certificate requirements, costs & exemptions.",
   keywords: [
-    "miam",
     "miam certificate",
-    "what is a miam",
+    "miam",
+    "what is a miam certificate",
+    "miam certificate uk",
+    "miam certificate cost",
     "miam mediation",
     "miam exemption",
     "c100 form",
@@ -38,8 +40,8 @@ export const metadata: Metadata = {
     "child arrangements",
     "divorce mediation",
     "mediation costs uk",
-    "mediation preparation",
     "family court",
+    "miam certificate near me",
   ],
   authors: [{ name: "Miam Certificate Quest" }],
   creator: "Miam Certificate Quest",

@@ -88,6 +88,14 @@ const FAQS = [
   {
     question: "How long is a MIAM certificate valid?",
     answer: "A MIAM certificate is valid for 4 months from the date it was issued. If you don't submit your court application within this timeframe, you may need to attend another MIAM and obtain a new certificate. It's important to proceed with your application promptly after receiving your certificate."
+  },
+  {
+    question: "Where can I get a MIAM certificate near me?",
+    answer: "You can get a MIAM certificate from any FMC-accredited mediator in England and Wales. Many mediators now offer online MIAM sessions, so you don't need to attend in person. Use the Family Mediation Council's Find a Mediator tool or contact National Family Mediation to find accredited mediators near you who can issue your MIAM certificate."
+  },
+  {
+    question: "What happens if I don't have a MIAM certificate?",
+    answer: "Without a valid MIAM certificate, the family court will not process your C100 application for child arrangements. The court requires either a signed MIAM certificate (FM1 form) or evidence that you qualify for a MIAM exemption. If you submit your C100 without the required documentation, it will be rejected and returned to you."
   }
 ];
 
@@ -151,8 +159,8 @@ const MIAM_EXEMPTIONS = [
 const STATS = [
   { number: "70%", label: "of mediations reach agreement", icon: "✓" },
   { number: "£500", label: "voucher available for eligible families", icon: "💷" },
-  { number: "8-12", label: "weeks average mediation timeline", icon: "📅" },
-  { number: "Free", label: "preparation with Miam AI", icon: "🤖" }
+  { number: "4 months", label: "MIAM certificate validity period", icon: "📋" },
+  { number: "Free", label: "MIAM certificate preparation help", icon: "🤖" }
 ];
 
 // About Us - Authentic content
@@ -309,7 +317,7 @@ export default function HomePage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
               </span>
-              Free AI-Powered Mediation Preparation
+              Free MIAM Certificate Preparation Tool
             </div>
 
             {/* Heading */}
@@ -321,10 +329,10 @@ export default function HomePage() {
 
             {/* Subheading */}
             <p className="text-xl sm:text-2xl text-white/90 mb-4 leading-relaxed">
-              Meet <strong className="text-white">Miam</strong> — your compassionate AI assistant for family mediation preparation in England & Wales.
+              Need a <strong className="text-white">MIAM certificate</strong> for family court? Meet <strong className="text-white">Miam</strong> — your free AI assistant for MIAM and mediation preparation in England &amp; Wales.
             </p>
             <p className="text-lg text-white/70 mb-8">
-              We help you understand the process, organize your priorities, and feel ready for your mediation journey.
+              We help you understand the MIAM certificate process, organize your priorities, and feel ready for your mediation journey.
             </p>
 
             {/* Voice Widget with Instructions */}
@@ -435,7 +443,7 @@ export default function HomePage() {
               <h2 className="text-4xl sm:text-5xl font-bold text-zinc-900 dark:text-white mb-6 leading-tight">
                 What is a{" "}
                 <span className="bg-gradient-to-r from-rose-600 to-pink-600 bg-clip-text text-transparent">MIAM</span>{" "}
-                &amp; MIAM Certificate?
+                &amp; How to Get Your MIAM Certificate
               </h2>
               <div className="prose prose-lg dark:prose-invert">
                 <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-4">
@@ -1302,25 +1310,37 @@ export default function HomePage() {
       <section className="py-12 bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-6 text-center">
-            Helpful Resources
+            MIAM Certificate &amp; Mediation Resources
           </h3>
           <div className="flex flex-wrap justify-center gap-3 mb-8">
             {[
-              { href: "/miam/what-is-a-miam", label: "What is a MIAM?" },
-              { href: "/miam/certificate", label: "MIAM Certificate" },
-              { href: "/miam/exemptions", label: "MIAM Exemptions" },
-              { href: "/forms/c100", label: "C100 Form Guide" },
-              { href: "/mediation/cost", label: "Mediation Costs" },
+              { href: "/what-is-a-miam", label: "What is a MIAM?" },
+              { href: "/miam-certificate", label: "MIAM Certificate Guide" },
+              { href: "/miam-exemptions", label: "MIAM Exemptions" },
+              { href: "/c100-form", label: "C100 Form Guide" },
+              { href: "/mediation-cost", label: "Mediation Costs" },
               { href: "/find-a-mediator", label: "Find a Mediator" },
+              { href: "/form-fm1", label: "FM1 Form" },
+              { href: "/family-mediation-voucher-scheme", label: "£500 Voucher Scheme" },
             ].map((link, i) => (
               <Link key={i} href={link.href} className="px-5 py-2.5 bg-rose-700 dark:bg-rose-800 rounded-full text-white hover:bg-rose-800 dark:hover:bg-rose-700 transition-colors text-sm font-medium">
                 {link.label}
               </Link>
             ))}
           </div>
-          <p className="text-center text-sm text-zinc-700 dark:text-zinc-300 max-w-2xl mx-auto">
-            If you or your family are considering moving as part of your separation, our partners at <a href="https://relocation.quest" target="_blank" rel="noopener noreferrer" className="text-rose-700 dark:text-rose-400 underline underline-offset-2 hover:text-rose-800 dark:hover:text-rose-300">Relocation Quest</a> provide AI-powered relocation advice.
-          </p>
+
+          {/* Partner Resources - Contextual Links */}
+          <div className="mt-8 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+            <h4 className="text-sm font-semibold text-zinc-600 dark:text-zinc-400 mb-4 text-center">Related Services from Our Partners</h4>
+            <div className="flex flex-wrap justify-center gap-6 text-sm">
+              <p className="text-zinc-600 dark:text-zinc-400 max-w-md text-center">
+                Relocating during separation? <a href="https://relocation.quest" target="_blank" rel="noopener noreferrer" className="text-rose-700 dark:text-rose-400 underline underline-offset-2 hover:text-rose-800 dark:hover:text-rose-300 font-medium">Relocation Quest</a> provides AI-powered moving advice for families.
+              </p>
+              <p className="text-zinc-600 dark:text-zinc-400 max-w-md text-center">
+                Need workplace mediation or HR support? <a href="https://fractional.quest" target="_blank" rel="noopener noreferrer" className="text-rose-700 dark:text-rose-400 underline underline-offset-2 hover:text-rose-800 dark:hover:text-rose-300 font-medium">Fractional Quest</a> connects you with experienced HR professionals.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
