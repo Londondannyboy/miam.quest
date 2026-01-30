@@ -1306,6 +1306,35 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ========== FIND MEDIATORS NEAR YOU ========== */}
+      <section className="py-12 bg-zinc-50 dark:bg-zinc-900 border-t border-zinc-100 dark:border-zinc-800">
+        <div className="max-w-7xl mx-auto px-4">
+          <h3 className="text-lg font-semibold text-zinc-900 dark:text-white mb-2 text-center">
+            Find Family Mediators &amp; Get Your MIAM Certificate
+          </h3>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-6 text-center max-w-2xl mx-auto">
+            Find FMC-accredited mediators near you who can issue your MIAM certificate for family court.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 mb-4">
+            {[
+              { href: "/find-a-mediator", label: "Find a Mediator" },
+              { href: "/mediation-london", label: "London" },
+              { href: "/surrey-family-mediation", label: "Surrey" },
+              { href: "/family-mediation-guildford", label: "Guildford" },
+              { href: "/kent-family-mediation", label: "Kent" },
+              { href: "/family-mediation-near-me", label: "Near Me" },
+            ].map((link, i) => (
+              <Link key={i} href={link.href} className="px-4 py-2 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-full text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:border-zinc-300 transition-colors text-sm font-medium">
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <p className="text-xs text-zinc-500 dark:text-zinc-500 text-center">
+            Mediators sourced from the <a href="https://www.familymediationcouncil.org.uk/find-local-mediator/" target="_blank" rel="noopener noreferrer" className="underline hover:text-zinc-700">Family Mediation Council</a> directory.
+          </p>
+        </div>
+      </section>
+
       {/* ========== RELATED LINKS ========== */}
       <section className="py-12 bg-white dark:bg-zinc-950 border-t border-zinc-100 dark:border-zinc-800">
         <div className="max-w-7xl mx-auto px-4">

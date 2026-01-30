@@ -131,20 +131,58 @@ Homepage links to official sources for credibility:
 3. [Gov.uk FM1 Form](https://assets.publishing.service.gov.uk/media/6628df55db4b9f0448a7e58e/FM1_0424.pdf) - Official form
 4. [Burnetts Solicitors](https://www.burnetts.co.uk/legal-news/family-law-faqs-what-is-a-miam-do-i-need-to-attend-one/) - Legal FAQ
 
-### SEO Content Pages (Live)
+### SEO Content Pages (Live - 62+ pages)
 
-| Page | URL | Target Keywords | Est. Volume |
-|------|-----|-----------------|-------------|
-| Homepage | / | miam certificate, mediation, miam | 17,700 |
-| What is a MIAM | /miam/what-is-a-miam | what is a miam | 210 |
-| MIAM Certificate | /miam/certificate | miam certificate | 480 |
-| MIAM Exemptions | /miam/exemptions | miam exemption | 210 |
-| What is Mediation | /mediation/what-is-mediation | mediation meaning, definition | 11,000 |
-| Mediation Costs | /mediation/cost | mediation costs uk | 390 |
-| Workplace Mediation | /mediation/workplace | workplace mediation | 880 |
-| C100 Form | /forms/c100 | c100 form | 12,100 |
+**MIAM Cluster:**
+- `/what-is-a-miam` - What is a MIAM guide
+- `/miam-certificate` - MIAM Certificate complete guide
+- `/miam-certificate-cost` - MIAM certificate costs (NEW)
+- `/miam-exemptions` - MIAM exemptions
+- `/online-miam`, `/urgent-miam`, `/miam-cost`, `/miam-near-me`, `/miam-meeting`
+- `/is-miam-compulsory`, `/form-fm1`
 
-**Total estimated search volume: ~43,000/month**
+**C100 Cluster:**
+- `/what-is-c100-form` - What is a C100 form? (NEW)
+- `/c100-form` - C100 form complete guide
+- `/c100-form-download` - C100 form download (NEW)
+- `/what-happens-after-c100` - After C100 process
+
+**Location Pages (NEW - Local SEO):**
+- `/family-mediation-guildford` - Guildford mediators with verified directory
+- `/surrey-family-mediation` - Surrey county coverage
+- `/mediation-london` - London mediators
+- `/kent-family-mediation` - Kent mediators
+- `/family-mediation-near-me`, `/mediation-near-me`, `/find-a-mediator`
+
+**Other Clusters:** Mediation, Guides, Rights, Support (50+ additional pages)
+
+**Total estimated search volume: ~85,000/month**
+
+### Mediators Database (NEW)
+
+Location pages pull from the `mediators` table in Neon:
+
+```sql
+CREATE TABLE mediators (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  organization VARCHAR(255),
+  address TEXT,
+  city VARCHAR(100) NOT NULL,
+  county VARCHAR(100),
+  postcode VARCHAR(20),
+  website VARCHAR(500),
+  fmc_accredited BOOLEAN DEFAULT true,
+  legal_aid_available BOOLEAN DEFAULT false,
+  online_sessions BOOLEAN DEFAULT true,
+  services TEXT[],
+  description TEXT,
+  source_url VARCHAR(500),
+  is_verified BOOLEAN DEFAULT false
+);
+```
+
+**Verified mediators added:** Guildford/Surrey (SFMS, Mediate UK, Surrey Family Mediation, Relate West Surrey, Moore Barlow, FMACS)
 
 ---
 
