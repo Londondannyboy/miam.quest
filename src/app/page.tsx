@@ -265,7 +265,7 @@ const videoSchema = {
   "name": "What is a MIAM? - Mediation Information Assessment Meeting Explained",
   "description": "Learn what a MIAM (Mediation Information Assessment Meeting) is, why it's required before family court in England and Wales, and how to prepare for your meeting with an accredited mediator.",
   "thumbnailUrl": "https://img.youtube.com/vi/715gjNV5ffE/maxresdefault.jpg",
-  "uploadDate": "2026-01-01",
+  "uploadDate": "2026-01-01T00:00:00Z",
   "contentUrl": "https://www.youtube.com/watch?v=715gjNV5ffE",
   "embedUrl": "https://www.youtube.com/embed/715gjNV5ffE",
   "publisher": {
