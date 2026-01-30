@@ -3,6 +3,7 @@ import Link from "next/link";
 const MIAM_LINKS = [
   { href: "/what-is-a-miam", label: "What is a MIAM?" },
   { href: "/miam-certificate", label: "MIAM Certificate" },
+  { href: "/miam-certificate-cost", label: "MIAM Certificate Cost" },
   { href: "/online-miam", label: "Online MIAM" },
   { href: "/urgent-miam", label: "Urgent MIAM" },
   { href: "/miam-exemptions", label: "MIAM Exemptions" },
@@ -41,6 +42,7 @@ const FIND_MEDIATOR_LINKS = [
 ];
 
 const COURT_ORDERS_LINKS = [
+  { href: "/what-is-c100-form", label: "What is a C100?" },
   { href: "/c100-form", label: "C100 Form Guide" },
   { href: "/c100-form-download", label: "C100 Form Download" },
   { href: "/what-happens-after-c100", label: "After C100" },

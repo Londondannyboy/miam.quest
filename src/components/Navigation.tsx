@@ -8,6 +8,7 @@ import { authClient } from "@/lib/auth/client";
 const MIAM_PAGES = [
   { href: "/what-is-a-miam", label: "What is a MIAM?" },
   { href: "/miam-certificate", label: "MIAM Certificate" },
+  { href: "/miam-certificate-cost", label: "MIAM Certificate Cost" },
   { href: "/online-miam", label: "Online MIAM" },
   { href: "/urgent-miam", label: "Urgent MIAM" },
   { href: "/miam-exemptions", label: "MIAM Exemptions" },
@@ -46,6 +47,7 @@ const FIND_MEDIATOR_PAGES = [
 ];
 
 const COURT_ORDERS_PAGES = [
+  { href: "/what-is-c100-form", label: "What is a C100 Form?" },
   { href: "/c100-form", label: "C100 Form Guide" },
   { href: "/c100-form-download", label: "C100 Form Download" },
   { href: "/what-happens-after-c100", label: "What Happens After C100" },
