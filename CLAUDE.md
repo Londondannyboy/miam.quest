@@ -131,29 +131,40 @@ Homepage links to official sources for credibility:
 3. [Gov.uk FM1 Form](https://assets.publishing.service.gov.uk/media/6628df55db4b9f0448a7e58e/FM1_0424.pdf) - Official form
 4. [Burnetts Solicitors](https://www.burnetts.co.uk/legal-news/family-law-faqs-what-is-a-miam-do-i-need-to-attend-one/) - Legal FAQ
 
-### SEO Content Pages (Live - 62+ pages)
+### SEO Content Pages (Live - 88 pages)
 
 **MIAM Cluster:**
 - `/what-is-a-miam` - What is a MIAM guide
 - `/miam-certificate` - MIAM Certificate complete guide
-- `/miam-certificate-cost` - MIAM certificate costs (NEW)
+- `/miam-certificate-cost` - MIAM certificate costs
 - `/miam-exemptions` - MIAM exemptions
 - `/online-miam`, `/urgent-miam`, `/miam-cost`, `/miam-near-me`, `/miam-meeting`
 - `/is-miam-compulsory`, `/form-fm1`
 
 **C100 Cluster:**
-- `/what-is-c100-form` - What is a C100 form? (NEW)
+- `/what-is-c100-form` - What is a C100 form?
 - `/c100-form` - C100 form complete guide
-- `/c100-form-download` - C100 form download (NEW)
+- `/c100-form-download` - C100 form download
 - `/what-happens-after-c100` - After C100 process
+
+**High-Volume Mediation Pages (NEW Jan 2026):**
+- `/family-mediation-council` - FMC guide (5,400/mo search volume)
+- `/mediation-services` - UK mediation services (2,400/mo)
+- `/family-mediation-services` - Family mediation services (880/mo)
+- `/family-law-mediation` - Family law mediation guide (880/mo)
+- `/family-mediation-solicitors` - Mediation solicitors guide (480/mo)
+- `/commercial-mediation-services` - Commercial/business mediation
+- `/mediation-services-near-me` - Services locator page (880/mo)
 
 **Location Pages (Local SEO - Verified Mediator Directories):**
 
-*Major Cities - England (Jan 2026):*
+*Major Cities - England:*
 - `/family-mediation-london` - London mediators (9 verified providers)
 - `/family-mediation-manchester` - Manchester/Greater Manchester (6 verified providers)
 - `/family-mediation-birmingham` - Birmingham/West Midlands (8 verified providers)
 - `/family-mediation-leeds` - Leeds/West Yorkshire (7 verified providers)
+- `/family-mediation-sheffield` - Sheffield/South Yorkshire (6 verified providers) NEW
+- `/family-mediation-nottingham` - Nottingham/Nottinghamshire (5 verified providers) NEW
 - `/family-mediation-newcastle` - Newcastle/North East (7 verified providers)
 - `/family-mediation-bristol` - Bristol/South West (8 verified providers)
 - `/family-mediation-liverpool` - Liverpool/Merseyside (8 verified providers)
@@ -175,16 +186,16 @@ Homepage links to official sources for credibility:
 
 *Regional Pages:*
 - `/family-mediation-guildford` - Guildford mediators (7 verified providers)
-- `/surrey-family-mediation` - Surrey county coverage
-- `/kent-family-mediation` - Kent mediators
-- `/mediation-london` - London overview (redirects to full page)
+- `/surrey-family-mediation` - Surrey mediation services (optimized for KD 5 keyword)
+- `/kent-family-mediation` - Kent mediation services (optimized for KD 1 keyword)
+- `/mediation-london` - London overview
 
 *Finder Pages:*
 - `/family-mediation-near-me`, `/mediation-near-me`, `/find-a-mediator`
 
 **Other Clusters:** Mediation, Guides, Rights, Support (50+ additional pages)
 
-**Total pages:** 79 published | **Estimated search volume: ~120,000/month**
+**Total pages:** 88 published | **Estimated search volume: ~135,000/month**
 
 ### Location Page Features
 
