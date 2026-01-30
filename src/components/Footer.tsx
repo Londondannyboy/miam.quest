@@ -16,6 +16,8 @@ const MIAM_LINKS = [
 
 const MEDIATION_LINKS = [
   { href: "/what-is-mediation", label: "What is Mediation?" },
+  { href: "/mediation-definition", label: "Mediation Meaning" },
+  { href: "/what-is-a-mediator", label: "What is a Mediator?" },
   { href: "/family-mediation", label: "Family Mediation" },
   { href: "/family-mediation-council", label: "Family Mediation Council" },
   { href: "/family-mediation-services", label: "Family Mediation Services" },
@@ -33,6 +35,7 @@ const MEDIATION_LINKS = [
   { href: "/how-long-does-mediation-take", label: "How Long?" },
   { href: "/benefits-of-mediation", label: "Benefits" },
   { href: "/mediation-vs-court", label: "Mediation vs Court" },
+  { href: "/when-mediation-is-not-suitable", label: "When Not Suitable" },
   { href: "/mediation-preparation-checklist", label: "Preparation Checklist" },
   { href: "/how-to-prepare-for-mediation", label: "How to Prepare" },
   { href: "/mediation-glossary", label: "Glossary" },
@@ -71,6 +74,7 @@ const COURT_ORDERS_LINKS = [
   { href: "/c100-form", label: "C100 Form Guide" },
   { href: "/c100-form-download", label: "C100 Form Download" },
   { href: "/what-happens-after-c100", label: "After C100" },
+  { href: "/family-court-costs", label: "Family Court Costs" },
   { href: "/consent-order", label: "Consent Order" },
   { href: "/consent-order-template", label: "Consent Order Template" },
   { href: "/prohibited-steps-order", label: "Prohibited Steps Order" },
@@ -98,6 +102,7 @@ const RIGHTS_LINKS = [
   { href: "/grandparents-rights-cafcass", label: "Grandparents & Cafcass" },
   { href: "/grandparents-rights-scotland", label: "Scotland" },
   { href: "/child-custody-mediation", label: "Child Custody Mediation" },
+  { href: "/children-in-mediation", label: "Children in Mediation" },
 ];
 
 const SUPPORT_LINKS = [
