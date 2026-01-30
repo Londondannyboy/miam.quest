@@ -41,10 +41,16 @@ const FIND_MEDIATOR_PAGES = [
   { href: "/mediation-near-me", label: "Mediation Near Me" },
   { href: "/family-mediation-near-me", label: "Family Mediation Near Me" },
   { href: "/national-family-mediation", label: "National Family Mediation" },
-  { href: "/mediation-london", label: "Mediation London" },
-  { href: "/surrey-family-mediation", label: "Surrey Family Mediation" },
+  { href: "/family-mediation-london", label: "London Mediation" },
+  { href: "/family-mediation-manchester", label: "Manchester Mediation" },
+  { href: "/family-mediation-birmingham", label: "Birmingham Mediation" },
+  { href: "/family-mediation-leeds", label: "Leeds Mediation" },
+  { href: "/family-mediation-newcastle", label: "Newcastle Mediation" },
+  { href: "/family-mediation-bristol", label: "Bristol Mediation" },
+  { href: "/family-mediation-liverpool", label: "Liverpool Mediation" },
+  { href: "/surrey-family-mediation", label: "Surrey Mediation" },
   { href: "/family-mediation-guildford", label: "Guildford Mediation" },
-  { href: "/kent-family-mediation", label: "Kent Family Mediation" },
+  { href: "/kent-family-mediation", label: "Kent Mediation" },
 ];
 
 const COURT_ORDERS_PAGES = [

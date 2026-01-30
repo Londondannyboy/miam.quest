@@ -147,42 +147,60 @@ Homepage links to official sources for credibility:
 - `/c100-form-download` - C100 form download (NEW)
 - `/what-happens-after-c100` - After C100 process
 
-**Location Pages (NEW - Local SEO):**
-- `/family-mediation-guildford` - Guildford mediators with verified directory
+**Location Pages (Local SEO - Verified Mediator Directories):**
+
+*Major Cities (Jan 2026):*
+- `/family-mediation-london` - London mediators (9 verified providers)
+- `/family-mediation-manchester` - Manchester/Greater Manchester (6 verified providers)
+- `/family-mediation-birmingham` - Birmingham/West Midlands (8 verified providers)
+- `/family-mediation-leeds` - Leeds/West Yorkshire (7 verified providers)
+- `/family-mediation-newcastle` - Newcastle/North East (7 verified providers)
+- `/family-mediation-bristol` - Bristol/South West (8 verified providers)
+- `/family-mediation-liverpool` - Liverpool/Merseyside (8 verified providers)
+
+*Regional Pages:*
+- `/family-mediation-guildford` - Guildford mediators (7 verified providers)
 - `/surrey-family-mediation` - Surrey county coverage
-- `/mediation-london` - London mediators
 - `/kent-family-mediation` - Kent mediators
+- `/mediation-london` - London overview (redirects to full page)
+
+*Finder Pages:*
 - `/family-mediation-near-me`, `/mediation-near-me`, `/find-a-mediator`
 
 **Other Clusters:** Mediation, Guides, Rights, Support (50+ additional pages)
 
-**Total estimated search volume: ~85,000/month**
+**Total pages:** 70 published | **Estimated search volume: ~100,000/month**
 
-### Mediators Database (NEW)
+### Location Page Features
 
-Location pages pull from the `mediators` table in Neon:
+Each city page includes:
+- Verified mediator directory with real addresses and contact details
+- External source links (official websites, Companies House)
+- FAQ schema markup for rich snippets
+- BreadcrumbList schema
+- Service schema for local SEO
+- Cost comparison tables
+- Local family court information
+- Internal links to MIAM certificate, C100, legal aid pages
+- Legal disclaimer
 
-```sql
-CREATE TABLE mediators (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  organization VARCHAR(255),
-  address TEXT,
-  city VARCHAR(100) NOT NULL,
-  county VARCHAR(100),
-  postcode VARCHAR(20),
-  website VARCHAR(500),
-  fmc_accredited BOOLEAN DEFAULT true,
-  legal_aid_available BOOLEAN DEFAULT false,
-  online_sessions BOOLEAN DEFAULT true,
-  services TEXT[],
-  description TEXT,
-  source_url VARCHAR(500),
-  is_verified BOOLEAN DEFAULT false
-);
-```
+### Database Storage
 
-**Verified mediators added:** Guildford/Surrey (SFMS, Mediate UK, Surrey Family Mediation, Relate West Surrey, Moore Barlow, FMACS)
+Location pages are stored in the `pages` table with `cluster = 'find-mediator'`:
+- Content stored as MDX in `content_mdx` column
+- JSON-LD schemas in `schema_jsonld` column
+- Related pages for internal linking
+- All pages dynamically included in sitemap
+
+**Verified mediators by city:**
+- London: The Family Mediation Centre, London Mediation, FMACS, Calm Mediation, Osbornes Law, We Mediate, Argutia, Children 1st, Peaceful Solutions
+- Manchester: Manchester Family Mediation Solutions, Family Mediation Practice, Forward Family Mediation, UK Family Mediation, Manchester & Cheshire Mediation
+- Birmingham: Access Mediation Services, FMACS, Mediation Matters Midlands, NFM, Anthony Collins Solicitors, Marcia Mediation, Aspire
+- Newcastle: Pax Mediation, Crowther Mediation, Marcia Mediation, Trusted Mediators, Compass Resolution, Trinity Chambers
+- Leeds: Turning Point Mediation, Direct Mediation Services, Consilia Legal, FMACS, Crowther Mediation
+- Bristol: Access Mediation Services, Children 1st, Lovegrove Mediation, Sharp Family Law, BLB Solicitors, Together Mediation, Clarke Willmott
+- Liverpool: Family Mediation Service, Winstanley Mediation, Crowther Mediation, FMACS, NFM, Mediation Solutions UK
+- Guildford: SFMS, Mediate UK, Surrey Family Mediation, Relate West Surrey, Moore Barlow, FMACS
 
 ---
 
