@@ -21,11 +21,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "MIAM Certificate UK | Free MIAM Certificate Help | Miam Quest",
+    default: "MIAM Certificate UK | Free Online Help ✓ Get Started Today",
     template: "%s | Miam Quest",
   },
   description:
-    "Need a MIAM certificate? Free AI help to prepare for your MIAM and get your MIAM certificate for family court in England & Wales. Understand MIAM certificate requirements, costs & exemptions.",
+    "Get your MIAM certificate fast ✓ Free online preparation for family court UK. AI guidance on costs, exemptions & what to expect. Start now.",
   keywords: [
     "miam certificate",
     "miam",
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: "https://miam.quest",
     siteName: "Miam Certificate Quest",
-    title: "Miam Certificate Quest | Free MIAM Certificate Preparation",
+    title: "MIAM Certificate UK | Free Online Help ✓ Get Started Today",
     description:
-      "Get your MIAM certificate with free AI help. Understand MIAM certificates, prepare for mediation, and connect with accredited mediators in England & Wales.",
+      "Get your MIAM certificate fast. Free online preparation for family court UK. AI guidance on costs, exemptions & what to expect.",
     images: [
       {
         url: "https://miam.quest/opengraph-image",
@@ -69,9 +69,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Miam Certificate Quest | Free MIAM Certificate Help",
+    title: "MIAM Certificate UK | Free Online Help ✓ Get Started Today",
     description:
-      "Get your MIAM certificate with free AI help. Understand MIAM certificates and prepare for family court in England & Wales.",
+      "Get your MIAM certificate fast. Free online preparation for family court UK. AI guidance on costs, exemptions & what to expect.",
     images: ["https://miam.quest/og-image.png"],
   },
   robots: {
