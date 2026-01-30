@@ -149,7 +149,7 @@ Homepage links to official sources for credibility:
 
 **Location Pages (Local SEO - Verified Mediator Directories):**
 
-*Major Cities (Jan 2026):*
+*Major Cities - England (Jan 2026):*
 - `/family-mediation-london` - London mediators (9 verified providers)
 - `/family-mediation-manchester` - Manchester/Greater Manchester (6 verified providers)
 - `/family-mediation-birmingham` - Birmingham/West Midlands (8 verified providers)
@@ -157,6 +157,21 @@ Homepage links to official sources for credibility:
 - `/family-mediation-newcastle` - Newcastle/North East (7 verified providers)
 - `/family-mediation-bristol` - Bristol/South West (8 verified providers)
 - `/family-mediation-liverpool` - Liverpool/Merseyside (8 verified providers)
+- `/family-mediation-southampton` - Southampton/Hampshire (7 verified providers)
+- `/family-mediation-norwich` - Norwich/Norfolk (6 verified providers)
+- `/family-mediation-colchester` - Colchester/Essex (7 verified providers)
+- `/family-mediation-truro` - Truro/Cornwall (6 verified providers)
+
+*Scotland (different legal system):*
+- `/family-mediation-edinburgh` - Edinburgh (Law Society of Scotland accredited)
+- `/family-mediation-glasgow` - Glasgow (Law Society of Scotland accredited)
+
+*Wales:*
+- `/family-mediation-cardiff` - Cardiff/South Wales (6 verified providers)
+- `/family-mediation-swansea` - Swansea/West Wales (7 verified providers)
+
+*Northern Ireland (different legal system):*
+- `/family-mediation-belfast` - Belfast (FREE pre-court mediation via FMNI)
 
 *Regional Pages:*
 - `/family-mediation-guildford` - Guildford mediators (7 verified providers)
@@ -169,7 +184,7 @@ Homepage links to official sources for credibility:
 
 **Other Clusters:** Mediation, Guides, Rights, Support (50+ additional pages)
 
-**Total pages:** 70 published | **Estimated search volume: ~100,000/month**
+**Total pages:** 79 published | **Estimated search volume: ~120,000/month**
 
 ### Location Page Features
 
@@ -200,6 +215,15 @@ Location pages are stored in the `pages` table with `cluster = 'find-mediator'`:
 - Leeds: Turning Point Mediation, Direct Mediation Services, Consilia Legal, FMACS, Crowther Mediation
 - Bristol: Access Mediation Services, Children 1st, Lovegrove Mediation, Sharp Family Law, BLB Solicitors, Together Mediation, Clarke Willmott
 - Liverpool: Family Mediation Service, Winstanley Mediation, Crowther Mediation, FMACS, NFM, Mediation Solutions UK
+- Edinburgh: MFMac, Drummond Miller, Harper Macleod, Relationships Scotland, CALM Scotland, Scottish Mediation
+- Glasgow: Family Mediation West, MSHB, MFMac, Relationships Scotland, Effective Dispute Solutions
+- Cardiff: Family Mediation Cymru, UK Family Mediation Cardiff, FMACS, Grant Stephens, Family Matters Mediation, Passmores
+- Belfast: Family Mediation NI (FREE), Pauline Knight Mediation, Mediation & Counselling NI, Francis Hanna & Co
+- Southampton: Evolve Mediation, Hampshire Mediation, UK Family Mediation, Moore Barlow, Amity Mediation, Summit Family Mediation, Paris Smith
+- Norwich: The Family Mediation Trust, Lighthouse Mediation, Amity Mediation, UK Family Mediation Norfolk, Patricia Brodie, FM Family Law
+- Swansea: FMACS, Mediation West Wales, Family Matters Mediation, Marcia Mediation, Direct Mediation Services
+- Truro: NFM, Accord Mediation, Children 1st Mediation, Cornwall Family Mediation, Marcia Mediation
+- Colchester: Lauren Sadler (Gleamed), Barclay DeVere, Essex Mediation, VR Family Mediation, Marcia Mediation, Amity Mediation
 - Guildford: SFMS, Mediate UK, Surrey Family Mediation, Relate West Surrey, Moore Barlow, FMACS
 
 ---
