@@ -38,6 +38,7 @@ const FIND_MEDIATOR_LINKS = [
   { href: "/national-family-mediation", label: "National Family Mediation" },
   { href: "/mediation-london", label: "Mediation London" },
   { href: "/surrey-family-mediation", label: "Surrey Mediation" },
+  { href: "/family-mediation-guildford", label: "Guildford Mediation" },
   { href: "/kent-family-mediation", label: "Kent Mediation" },
 ];
 
