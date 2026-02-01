@@ -73,11 +73,11 @@ Information about Mediation Information Assessment Meetings
 - **/miam-cost** - MIAM Cost UK 2026: How Much Does a MIAM Meeting Cost?
   Typical MIAM fees (£90-£150), free MIAM with legal aid, what the fee includes, and how to reduce costs.
 
-- **/miam-near-me** - MIAM Near Me: Find a MIAM Meeting in Your Area UK
-  How to find local MIAM providers, book appointments, and choose between in-person and online MIAMs.
+- **/miam-near-me** - MIAM Near Me UK: Complete Guide 2026
+  Comprehensive guide covering: FMC directory usage (1,000+ registered mediators), step-by-step search process, online vs in-person comparison, regional availability (London, South East, Midlands, North, Wales), cost range (£90-150), booking process, what happens at MIAM (6-step format). 5 FAQs. 18+ Official Resources. Citations: FMC, NFM, Gov.uk. Quality: Q9 (1,700 words).
 
-- **/is-miam-compulsory** - Is MIAM Compulsory? When You Must Attend a MIAM UK
-  Legal requirements for MIAM attendance, when it's mandatory, exemptions, and consequences of not attending.
+- **/is-miam-compulsory** - Is MIAM Compulsory UK: Complete Guide 2026
+  Comprehensive guide covering: Children and Families Act 2014 requirement, Practice Direction 3A rules, when MIAM is compulsory (C100, specific issue, prohibited steps orders), exemption categories (domestic abuse, child protection, urgency), consequences of non-compliance (rejection, costs orders), 5-step compulsory MIAM process. 5 FAQs. 18+ Official Resources. Citations: Practice Direction 3A, FPR Rule 3.8, legislation.gov.uk. Quality: Q9 (1,800 words).
 
 - **/miam-meeting** - MIAM Meeting UK: Complete Guide 2026
   Comprehensive guide covering: April 2024 FPR amendments (stricter requirements, Form FM5), what happens at MIAM (6-step process), questions mediators ask, preparation tips, outcomes (mediation/court/undecided). 8 FAQs. 15+ Official Resources. Citations: Family Procedure Rules, Judiciary.uk, FMC, Gov.uk. Quality: Q9 (1,800 words).
@@ -106,8 +106,8 @@ Family mediation processes, costs, and finding mediators
 - **/mediation-cost** - Mediation Costs UK: How Much Does Mediation Cost?
   Full breakdown of mediation costs, who pays, and funding options.
 
-- **/mediation-near-me** - Mediation Near Me: Find Family Mediators in Your Area UK
-  Finding local family mediators, comparing services, and booking appointments.
+- **/mediation-near-me** - Mediation Near Me UK: Complete Guide 2026
+  Comprehensive guide covering: FMC directory (1,000+ accredited mediators), NFM (500+ locations, 77% agreement rate), step-by-step search process, cost breakdown (MIAM £90-150, full mediation £600-1,200), Family Mediation Voucher Scheme (£500), legal aid eligibility, online vs in-person comparison, regional availability, 5-step booking process. 5 FAQs. 25+ Official Resources. Citations: FMC, NFM, Gov.uk, Legal Aid Agency. Quality: Q9 (2,200 words).
 
 - **/family-mediation-near-me** - Family Mediation Near Me: Find Local Family Mediators UK
   Finding local family mediators for child arrangements and divorce with legal aid options.
@@ -145,8 +145,8 @@ Family mediation processes, costs, and finding mediators
 - **/mediation-vs-court** - Mediation vs Court UK: Complete Guide 2026
   Comprehensive comparison covering: PLWG judiciary guidance on mediation, detailed cost comparison (£1,100-2,350 mediation vs £10,000-30,000+ court), timescales (2-4 months vs 12-18+ months), impact on children (Cafcass guidance), when each is appropriate, binding agreements, costs orders warning. 4 FAQs. 20+ Official Resources. Citations: Judiciary PLWG, Family Court Statistics, Cafcass. Quality: Q9 (1,800 words).
 
-- **/mediation-glossary** - Mediation Glossary: Family Mediation Terms Explained
-  Glossary of mediation and family law terminology explained simply.
+- **/mediation-glossary** - Mediation Glossary UK: Complete A-Z Guide 2026
+  Comprehensive glossary covering: 40+ family law terms defined (MIAM, C100, Cafcass, consent order, FHDRA, Form E, child arrangements, shuttle mediation, etc.), key legislation references (Children Act 1989, FPR 2010, Domestic Abuse Act 2021), current vs outdated terminology (custody→child arrangements, contact→spends time with). 15+ Official Resources. Citations: legislation.gov.uk, FMC, Judiciary.uk. Quality: Q9 (1,800 words).
 
 - **/mediation-preparation-checklist** - Mediation Preparation Checklist UK: Complete Guide 2026
   Comprehensive checklist covering: GOV.UK parenting plan template, pre-MIAM document checklist, child arrangements preparation (schedules, holidays, handovers), financial mediation documents (Form E, pensions, property), mental preparation, what to bring, questions for mediator, day-of checklist. 3 FAQs. 18+ Official Resources. Citations: Gov.uk Parenting Plan, FMC, Cafcass. Quality: Q9 (1,700 words).
@@ -160,17 +160,17 @@ Family mediation processes, costs, and finding mediators
 ### Court Orders Cluster
 Understanding family court orders
 
-- **/consent-order** - Consent Order: Complete UK Guide
-  Comprehensive guide to consent orders covering: when to apply (after conditional order), court fee (£60), Form D81 requirements, clean break clauses, Wyatt v Vince case example, 8 FAQs. Citations: Gov.uk, Family Mediation Council. Quality: Q9 (2,287 words).
+- **/consent-order** - Consent Order UK: Complete Guide 2026
+  Comprehensive guide covering: court fee (£60), legally binding once judge-approved, clean break protection, pension sharing requirements, Form D81 financial statement, when to apply (after conditional order), Wyatt v Vince case warning, DIY vs solicitor routes. 8 FAQs. 20+ Official Resources. Citations: Gov.uk, Matrimonial Causes Act 1973, FMC. Quality: Q9 (2,800 words).
 
 - **/consent-order-template** - Consent Order Template UK: What You Need to Know
   Guide to consent order templates, what they include, and how to complete them.
 
-- **/prohibited-steps-order** - Prohibited Steps Order
-  What prohibited steps orders are, when to apply, and common examples.
+- **/prohibited-steps-order** - Prohibited Steps Order UK: Complete Guide 2026
+  Comprehensive guide covering: Section 8 Children Act 1989 legal definition, court fee (£263), common uses (preventing relocation, name change, passport removal), emergency applications, MIAM requirements, enforcement options, comparison with specific issue orders. 6 FAQs. 15+ Official Resources. Citations: Children Act 1989, Practice Direction 12B, Gov.uk. Quality: Q9 (2,000 words).
 
-- **/specific-issue-order** - Specific Issue Order
-  Guide to specific issue orders for schooling, medical treatment, and other decisions.
+- **/specific-issue-order** - Specific Issue Order UK: Complete Guide 2026
+  Comprehensive guide covering: Section 8 Children Act 1989 legal definition, court fee (£263), common uses (school choice, medical treatment, religious upbringing, holidays abroad), MIAM requirements, court process, emergency applications, when refused. 6 FAQs. 15+ Official Resources. Citations: Children Act 1989, Practice Direction 12B, Gov.uk. Quality: Q9 (2,100 words).
 
 ### Forms Cluster
 Court forms and applications
@@ -181,8 +181,8 @@ Court forms and applications
 - **/what-is-c100-form** - What is a C100 Form? Complete UK Guide 2026
   Comprehensive guide covering: Section 8 Children Act 1989 legal definitions, child arrangements/prohibited steps/specific issue orders, court fee (£263), MIAM requirements, application process, timeline (10 months typical), form comparison table. 9 FAQs with legislation.gov.uk citations. 25+ Official Resources links. Citations: Gov.uk, legislation.gov.uk, Cafcass, Justice.gov.uk. Quality: Q9 (2,100 words).
 
-- **/what-happens-after-c100** - What Happens After C100: The Family Court Process Explained
-  Detailed timeline guide: Cafcass safeguarding checks (4 weeks), FHDRA first hearing (4-8 weeks), section 7 reports, DRA, final hearing. 8 FAQs with Gov.uk/Cafcass citations. Official resources section. Quality: Q8 (1,696 words).
+- **/what-happens-after-c100** - What Happens After C100 UK: Complete Guide 2026
+  Comprehensive guide covering: C100 fee (£263), Cafcass safeguarding checks (2 weeks), FHDRA first hearing (4-6 weeks), Section 7 reports, DRA dispute resolution, final hearing, case duration (6 months-2 years contested), consent orders for agreed cases. 8 FAQs. 18+ Official Resources. Citations: Family Court Statistics, Cafcass, Gov.uk. Quality: Q9 (2,100 words).
 
 ### Tools & Calculators
 
@@ -195,11 +195,11 @@ Practical guides for separated families
 - **/parenting-plan** - Parenting Plan UK: Complete Guide 2025
   Comprehensive guide covering: Cafcass "Our Child's Plan" template (downloadable Word doc), key sections (living arrangements, health, education, communication, finances), annual review recommendation, how to make legally binding via consent order. 15+ authority links. Citations: Cafcass, Gov.uk, Sorting Out Separation. Quality: Q9 (1,780 words).
 
-- **/parenting-plan-cafcass** - Parenting Plan Cafcass: Official Template & Guide
-  Official Cafcass parenting plan template and how it's used in family court.
+- **/parenting-plan-cafcass** - Parenting Plan Cafcass: Official Template & Guide UK 2026
+  Comprehensive guide covering: Cafcass "Our Child's Plan" template (child-focused, not legally binding on own but can attach to consent order), Children Act 1989 Welfare Checklist framework, 8-step creation process, key sections (living, holidays, education, healthcare, communication, decision-making), Cafcass Section 7 reports, making enforceable via consent order (£60 fee). 5 FAQs. 25+ Official Resources. Citations: Cafcass, Children Act 1989 Section 1, Gov.uk, FMC. Quality: Q9 (3,900 words).
 
-- **/parenting-plan-template** - Parenting Plan Template UK: Free Guide & Examples
-  Templates and examples for creating effective parenting plans.
+- **/parenting-plan-template** - Parenting Plan Template UK: Free Guide & Examples 2026
+  Comprehensive guide covering: Cafcass free template (downloadable PDF), 8-section framework (children, living, contact, holidays, communication, decision-making, education/healthcare, new partners), 3 sample arrangements (week-on/week-off, primary residence, 2-2-3 rotation), making legally binding via consent order (£60), mediation route, common mistakes. 5 FAQs. 26+ Official Resources. Citations: Cafcass, Gov.uk, Children Act 1989. Quality: Q9 (3,800 words).
 
 - **/parallel-parenting** - Parallel Parenting UK: Complete Guide 2026
   Comprehensive guide covering: BIFF method (High Conflict Institute), Grey Rock technique, parallel vs co-parenting comparison, communication strategies, court-approved apps (OurFamilyWizard, AppClose), handling narcissistic ex-partners. 7 FAQs. 15+ Official Resources. Citations: Children Act 1989, Cafcass, High Conflict Institute. Quality: Q9 (2,000 words).
@@ -211,7 +211,7 @@ Practical guides for separated families
   Comprehensive guide covering: Cafcass Our Childs Plan tool, Positive Co-Parenting Programme, co-parenting vs parallel parenting comparison, communication strategies, handling new partners, 5 key principles, co-parenting apps (OurFamilyWizard, AppClose). 6 FAQs. 15+ Official Resources. Citations: Cafcass, Gov.uk, One Plus One. Quality: Q9 (3,400 words).
 
 - **/co-parenting-apps** - Best Co-Parenting Apps UK 2026
-  Comparison of co-parenting apps including OurFamilyWizard and court-approved options.
+  Comprehensive guide covering: Top 5 apps compared (OurFamilyWizard £100-150/yr with ToneMeter AI, AppClose free tier, Cozi free, Google Calendar, 2Houses), court-ready documentation features, conflict reduction (40-60% via structured communication), parallel parenting suitability, expense tracking, setup guide, mediator recommendations. 5 FAQs. 22+ Official Resources. Citations: Cafcass, Gov.uk, FMC. Quality: Q9 (4,000 words).
 
 - **/separation-agreement** - Separation Agreement UK: Complete Guide 2026
   Comprehensive guide covering: legal status (not automatically binding but courts give weight), how to make binding via consent order, financial disclosure requirements, costs (DIY £0-50 to solicitor £1,000-4,000+), separation vs divorce comparison, unmarried couples, mediation route. 6 FAQs. 15+ Official Resources. Citations: Family Justice Council, Gov.uk, Citizens Advice. Quality: Q9 (3,400 words).
@@ -237,8 +237,8 @@ Understanding parental and family rights
 - **/unmarried-fathers-rights** - Unmarried Fathers Rights UK: Complete Guide 2026
   Comprehensive guide covering: Section 4 Children Act 1989 (3 routes to PR), 1 December 2003 birth certificate rule, Adoption and Children Act 2002 amendments, PR agreements and court orders, Re P [1995] case law on termination. 7 FAQs with legislation.gov.uk citations. 20+ Official Resources. Court fee corrected to £263. Citations: Children Act 1989, Gov.uk. Quality: Q9 (2,900 words).
 
-- **/child-custody-mediation** - Child Custody Mediation UK: Resolving Child Arrangements
-  How child arrangements mediation works, costs, and finding a mediator.
+- **/child-custody-mediation** - Child Custody Mediation UK: Complete Guide 2026
+  Comprehensive guide covering: Children Act 1989 welfare principle (Section 1), UK terminology (custody→child arrangements), 6-step mediation process, costs (£600-1,200 vs £10,000+ court), voucher scheme eligibility, living arrangements, contact schedules, parenting plan contents, when mediation may not work. 4 FAQs. 18+ Official Resources. Citations: Children Act 1989, Cafcass, Gov.uk. Quality: Q9 (1,800 words).
 
 ### Articles Cluster
 In-depth articles on specific topics

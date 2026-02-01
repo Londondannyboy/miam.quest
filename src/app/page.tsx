@@ -55,7 +55,7 @@ const FAQS = [
   },
   {
     question: "How much does a MIAM cost?",
-    answer: "A MIAM typically costs £100-£150 per person for a single session. However, you may qualify for free mediation through legal aid if you're on a low income or receive certain benefits. The Family Mediation Voucher Scheme also provides up to £500 towards mediation costs for eligible families."
+    answer: "A MIAM typically costs £115-£185 per person for a single session. However, you may qualify for free mediation through legal aid if you're on a low income or receive certain benefits. The Family Mediation Voucher Scheme also provides up to £500 towards mediation costs for eligible families."
   },
   {
     question: "What exemptions allow me to skip the MIAM?",
@@ -139,9 +139,9 @@ const MIAM_EXEMPTIONS = [
   { title: "Unable to Locate", desc: "Cannot find the other party", urgent: false }
 ];
 
-// Statistics
+// Statistics - Updated with Tavily-verified data (NFM 2024-25)
 const STATS = [
-  { number: "70%", label: "of mediations reach agreement", icon: "✓" },
+  { number: "77%", label: "of mediations reach agreement (NFM)", icon: "✓" },
   { number: "£500", label: "voucher available for eligible families", icon: "💷" },
   { number: "4 months", label: "certificate validity period", icon: "📋" },
   { number: "Free", label: "preparation help with Miam", icon: "🤖" }
