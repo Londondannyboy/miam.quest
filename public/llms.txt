@@ -136,23 +136,26 @@ Family mediation processes, costs, and finding mediators
 - **/workplace-mediation** - Workplace Mediation UK: Complete Guide 2026
   Comprehensive guide covering: ACAS 2024-25 statistics (9/10 disputes resolved without tribunal, 93% collective dispute rate), £28.5bn annual cost of conflict, 117,000 disputes handled, mediation vs grievance process comparison, ACAS early conciliation, when mediation is appropriate, 4-step process, costs (£1,000-3,000/day). 5 FAQs. 20+ Official Resources. Citations: ACAS Annual Report, CIPD, Gov.uk. Quality: Q9 (1,400 words).
 
-- **/how-long-does-mediation-take** - How Long Does Mediation Take?
-  Timelines for child arrangements, financial mediation, and divorce mediation.
+- **/how-long-does-mediation-take** - How Long Does Mediation Take UK: Complete Guide 2026
+  Comprehensive guide covering: FMC statistics on mediation duration (3-5 sessions, 70%+ success), timeline by type (child 2-3 sessions, financial 4-6 sessions), 6-step process timeline (MIAM to consent order), factors affecting duration, mediation vs court time comparison (2-5 months vs 12-18 months), session frequency, intensive mediation options. 5 FAQs. 18+ Official Resources. Citations: FMC, Family Court Statistics, Gov.uk. Quality: Q9 (1,700 words).
 
 - **/benefits-of-mediation** - Benefits of Mediation
   Key benefits of family mediation over court proceedings.
 
-- **/mediation-vs-court** - Mediation vs Court: Which is Better for Family Disputes UK?
-  Comparing mediation and court for costs, timescales, and outcomes.
+- **/mediation-vs-court** - Mediation vs Court UK: Complete Guide 2026
+  Comprehensive comparison covering: PLWG judiciary guidance on mediation, detailed cost comparison (£1,100-2,350 mediation vs £10,000-30,000+ court), timescales (2-4 months vs 12-18+ months), impact on children (Cafcass guidance), when each is appropriate, binding agreements, costs orders warning. 4 FAQs. 20+ Official Resources. Citations: Judiciary PLWG, Family Court Statistics, Cafcass. Quality: Q9 (1,800 words).
 
 - **/mediation-glossary** - Mediation Glossary: Family Mediation Terms Explained
   Glossary of mediation and family law terminology explained simply.
 
-- **/mediation-preparation-checklist** - Mediation Preparation Checklist
-  Complete checklist for preparing for family mediation.
+- **/mediation-preparation-checklist** - Mediation Preparation Checklist UK: Complete Guide 2026
+  Comprehensive checklist covering: GOV.UK parenting plan template, pre-MIAM document checklist, child arrangements preparation (schedules, holidays, handovers), financial mediation documents (Form E, pensions, property), mental preparation, what to bring, questions for mediator, day-of checklist. 3 FAQs. 18+ Official Resources. Citations: Gov.uk Parenting Plan, FMC, Cafcass. Quality: Q9 (1,700 words).
 
 - **/how-to-prepare-for-mediation** - How to Prepare for Mediation UK: Complete Guide 2026
   Comprehensive guide covering: FMC Code of Practice preparation guidance, 5-step preparation framework (priorities, perspective, children, documents, emotions), communication tips (I-statements, interests vs positions), mediation do's and don'ts, mindset preparation, post-session review. 4 FAQs. 18+ Official Resources. Citations: FMC Code of Practice, Cafcass, AdviceNow. Quality: Q9 (1,600 words).
+
+- **/family-mediation-solicitors** - Family Mediation Solicitors UK: Complete Guide 2026
+  Comprehensive guide covering: SRA regulation of family solicitors, when legal advice is essential (complex finances, property, consent orders), solicitor-mediator collaborative process, Resolution code of practice (6,500+ members), cost comparison (£150-350/hour), legal aid eligibility, solicitor-led vs mediator-led approaches, finding Resolution solicitors. 4 FAQs. 18+ Official Resources. Citations: SRA, Resolution, Legal Aid Agency. Quality: Q9 (1,700 words).
 
 ### Court Orders Cluster
 Understanding family court orders
