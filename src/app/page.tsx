@@ -1,21 +1,5 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic";
-import { authClient } from "@/lib/auth/client";
-import { HOME_PROMPT } from "@/lib/prompts";
-
-// Lazy load heavy components - only load when user interacts
-const LazyChat = dynamic(
-  () => import("@/components/LazyChat").then((mod) => mod.LazyChat),
-  { ssr: false }
-);
-
-const VoiceInput = dynamic(
-  () => import("@/components/VoiceInput").then((mod) => mod.VoiceInput),
-  { ssr: false, loading: () => null }
-);
 
 // Unsplash images - warm, friendly, professional
 // Optimized: using smaller widths and lower quality for faster loading
@@ -276,11 +260,6 @@ const videoSchema = {
 };
 
 export default function HomePage() {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
-
-  // Chat state removed - now handled by LazyChat component for better performance
-
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-950">
       {/* JSON-LD Structured Data */}
@@ -334,24 +313,10 @@ export default function HomePage() {
               We help you understand the process, organize your priorities, and feel ready for your mediation journey.
             </p>
 
-            {/* Voice Widget with Instructions */}
-            <div className="mb-8 flex items-center gap-4">
-              <VoiceInput
-                onMessage={() => {}}
-                userName={user?.name || user?.email?.split("@")[0]}
-                userId={user?.id}
-                userEmail={user?.email}
-              />
-              <div className="text-white/80 text-sm max-w-xs">
-                <p className="font-semibold text-white mb-1">Talk to Miam</p>
-                <p>Click the microphone to speak. Ask about certificates, exemptions, costs, or anything about mediation.</p>
-              </div>
-            </div>
-
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <button
-                onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
+              <Link
+                href="/chat"
                 className="group inline-flex items-center justify-center gap-3 px-8 py-5 bg-white hover:bg-rose-50 text-rose-700 rounded-2xl font-bold text-lg transition-all shadow-2xl shadow-rose-900/20 hover:shadow-rose-900/30 hover:scale-[1.02]"
               >
                 <span className="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center group-hover:bg-rose-200 transition-colors">
@@ -360,7 +325,7 @@ export default function HomePage() {
                   </svg>
                 </span>
                 Chat with Miam — It&apos;s Free
-              </button>
+              </Link>
 
               <Link
                 href="/what-is-a-miam"
@@ -749,15 +714,15 @@ export default function HomePage() {
 
           {/* CTA */}
           <div className="mt-16 text-center">
-            <button
-              onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
+            <Link
+              href="/chat"
               className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white rounded-2xl font-bold text-lg transition-all shadow-xl shadow-rose-600/20 hover:shadow-rose-600/30 hover:scale-[1.02]"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               Start Preparing with Miam
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -887,12 +852,12 @@ export default function HomePage() {
                 If you think you might qualify for a MIAM exemption, we can help you understand your options. Our AI assistant can explain the requirements.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button
-                  onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
+                <Link
+                  href="/chat"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white hover:bg-rose-50 text-rose-600 rounded-xl font-bold transition-all shadow-lg"
                 >
                   Ask Miam About Exemptions
-                </button>
+                </Link>
                 <Link href="/miam-exemptions" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold transition-all border border-white/30">
                   View All Exemptions
                 </Link>
@@ -1025,12 +990,12 @@ export default function HomePage() {
               </ul>
 
               <div className="flex flex-wrap gap-4">
-                <button
-                  onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
+                <Link
+                  href="/chat"
                   className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-rose-50 text-rose-700 rounded-xl font-semibold transition-all"
                 >
                   Try Miam Free
-                </button>
+                </Link>
                 <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-xl font-semibold transition-all border border-white/20">
                   Contact Us
                 </Link>
@@ -1247,12 +1212,12 @@ export default function HomePage() {
 
           <div className="mt-12 text-center">
             <p className="text-zinc-600 dark:text-zinc-400 mb-4">Still have questions?</p>
-            <button
-              onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
+            <Link
+              href="/chat"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white rounded-xl font-bold transition-all shadow-lg"
             >
               Ask Miam Anything
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -1283,15 +1248,15 @@ export default function HomePage() {
             Talk to Miam now and take the first step toward a smoother, less stressful mediation experience. It&apos;s free, confidential, and available 24/7.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => document.querySelector('.fixed.bottom-6.right-6')?.dispatchEvent(new MouseEvent('click', { bubbles: true }))}
+            <Link
+              href="/chat"
               className="inline-flex items-center justify-center gap-3 px-10 py-5 bg-white hover:bg-rose-50 text-rose-700 rounded-2xl font-bold text-lg transition-all shadow-2xl hover:scale-[1.02]"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
               </svg>
               Chat with Miam Now
-            </button>
+            </Link>
             <Link
               href="/find-a-mediator"
               className="inline-flex items-center justify-center gap-2 px-10 py-5 bg-white/10 backdrop-blur-sm border border-white/30 hover:bg-white/20 text-white rounded-2xl font-semibold text-lg transition-all"
@@ -1372,8 +1337,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========== LAZY CHAT - Only loads CopilotKit when user clicks ========== */}
-      <LazyChat prompt={HOME_PROMPT} />
     </div>
   );
 }

@@ -61,11 +61,11 @@ Information about Mediation Information Assessment Meetings
 - **/miam-certificate** - MIAM Certificate
   Everything about MIAM certificates (Form FM1) - what they are, how to get one, validity, and requirements for C100 court applications.
 
-- **/online-miam** - Online MIAM: Book Your Digital MIAM Certificate Appointment UK
-  Book an online MIAM from home via video call. Get your digital MIAM certificate with full legal validity. Available nationwide.
+- **/online-miam** - Online MIAM UK: Complete Guide 2026
+  Comprehensive guide covering: FMC position on remote MIAMs (full legal validity under PD 3A), online vs in-person comparison, digital certificate delivery, 4-step video MIAM process, technical requirements, finding online providers, identity verification. 5 FAQs. 15+ Official Resources. Citations: FMC, Practice Direction 3A, Gov.uk. Quality: Q9 (1,500 words).
 
-- **/urgent-miam** - Urgent MIAM: Same Day & Emergency MIAM Appointments UK
-  Need an urgent MIAM? Find same-day and emergency appointments. Fast-track your MIAM certificate for time-sensitive court applications.
+- **/urgent-miam** - Urgent MIAM UK: Complete Guide 2026
+  Comprehensive guide covering: PD 3A timing requirements (4-month validity, 3-week stay), same-day MIAM booking process, provider availability comparison, certificate delivery times, emergency MIAM exemptions, costs (£90-180), court expectations on planning. 5 FAQs. 15+ Official Resources. Citations: Practice Direction 3A, FMC, Gov.uk. Quality: Q9 (1,700 words).
 
 - **/miam-exemptions** - MIAM Exemptions: Complete UK Guide 2026
   Comprehensive guide to all 15 MIAM exemptions under Rule 3.8 FPR and Practice Direction 3A. Covers April 2024 FPR changes, domestic abuse evidence requirements (police, GP letters, IDVA, MARAC), urgency, child protection, bankruptcy, disability exemptions. Includes what happens if exemption rejected (3-week stay), 9 FAQs, 18 authority links. Citations: legislation.gov.uk, justice.gov.uk, Domestic Abuse Act 2021. Quality: Q9 (2,900 words).
@@ -115,8 +115,8 @@ Family mediation processes, costs, and finding mediators
 - **/family-mediation-voucher-scheme** - Family Mediation Voucher Scheme: Complete UK Guide 2025
   Comprehensive guide to £500 government voucher scheme: eligibility (child disputes, not means-tested), application process (mediator applies for you), what it covers/doesn't cover, March 2026 extension (£12.5m funding), success statistics (37,700+ families, 70% agreement rate, average 2 sessions). Legal aid compatibility. 9 FAQs. Citations: Gov.uk, FMC, NFM. Quality: Q9 (2,200 words).
 
-- **/find-a-mediator** - Find a Mediator UK: How to Choose an FMC-Accredited Family Mediator
-  How to choose the right mediator, what to look for, and questions to ask.
+- **/find-a-mediator** - Find a Mediator UK: Complete Guide 2026
+  Comprehensive guide covering: FMC accreditation requirements, using FMC directory (5-step process), legal aid vs voucher scheme funding, questions to ask mediators, types of mediators (child-inclusive, financial specialists, high-conflict). 4 FAQs. 15+ Official Resources. Citations: FMC, Gov.uk voucher scheme, AdviceNow. Quality: Q9 (1,400 words).
 
 - **/national-family-mediation** - National Family Mediation (NFM): Services, Costs & How to Access
   Guide to NFM services, how they work, costs, and how to access their mediators.
@@ -133,8 +133,8 @@ Family mediation processes, costs, and finding mediators
 - **/shuttle-mediation** - Shuttle Mediation UK: Complete Guide 2026
   Comprehensive guide covering: safeguarding framework (Judiciary Guide 2024), when shuttle is appropriate (domestic abuse, high conflict, restraining orders), online/video shuttle, hybrid lawyer-assisted mediation, cost comparison (£500-2,000), domestic abuse screening. 5 FAQs. 15+ Official Resources. Citations: Judiciary.uk, FMC Code of Practice, AdviceNow. Quality: Q9 (1,600 words).
 
-- **/workplace-mediation** - Workplace Mediation: Resolve Conflicts at Work
-  Guide to workplace mediation compared to grievance procedures.
+- **/workplace-mediation** - Workplace Mediation UK: Complete Guide 2026
+  Comprehensive guide covering: ACAS 2024-25 statistics (9/10 disputes resolved without tribunal, 93% collective dispute rate), £28.5bn annual cost of conflict, 117,000 disputes handled, mediation vs grievance process comparison, ACAS early conciliation, when mediation is appropriate, 4-step process, costs (£1,000-3,000/day). 5 FAQs. 20+ Official Resources. Citations: ACAS Annual Report, CIPD, Gov.uk. Quality: Q9 (1,400 words).
 
 - **/how-long-does-mediation-take** - How Long Does Mediation Take?
   Timelines for child arrangements, financial mediation, and divorce mediation.
@@ -151,8 +151,8 @@ Family mediation processes, costs, and finding mediators
 - **/mediation-preparation-checklist** - Mediation Preparation Checklist
   Complete checklist for preparing for family mediation.
 
-- **/how-to-prepare-for-mediation** - How to Prepare for Mediation
-  Practical tips for successful family mediation outcomes.
+- **/how-to-prepare-for-mediation** - How to Prepare for Mediation UK: Complete Guide 2026
+  Comprehensive guide covering: FMC Code of Practice preparation guidance, 5-step preparation framework (priorities, perspective, children, documents, emotions), communication tips (I-statements, interests vs positions), mediation do's and don'ts, mindset preparation, post-session review. 4 FAQs. 18+ Official Resources. Citations: FMC Code of Practice, Cafcass, AdviceNow. Quality: Q9 (1,600 words).
 
 ### Court Orders Cluster
 Understanding family court orders
@@ -204,8 +204,8 @@ Practical guides for separated families
 - **/supervised-contact** - Supervised Contact UK: Complete Guide 2026
   Comprehensive guide covering: Section 8 Children Act 1989 child arrangements orders, Practice Direction 12J (domestic abuse cases), supervised vs supported contact, NACCC contact centres (350+ nationwide), cost breakdown (free-£150/session), progression pathway to unsupervised. 8 FAQs with legislation.gov.uk citations. 15+ Official Resources. Citations: Children Act 1989, PD12J, NACCC, Cafcass. Quality: Q9 (2,000 words).
 
-- **/co-parenting** - Co-Parenting: Complete UK Guide to Successful Shared Parenting
-  Comprehensive guide to co-parenting after separation including communication and schedules.
+- **/co-parenting** - Co-Parenting UK: Complete Guide 2026
+  Comprehensive guide covering: Cafcass Our Childs Plan tool, Positive Co-Parenting Programme, co-parenting vs parallel parenting comparison, communication strategies, handling new partners, 5 key principles, co-parenting apps (OurFamilyWizard, AppClose). 6 FAQs. 15+ Official Resources. Citations: Cafcass, Gov.uk, One Plus One. Quality: Q9 (3,400 words).
 
 - **/co-parenting-apps** - Best Co-Parenting Apps UK 2026
   Comparison of co-parenting apps including OurFamilyWizard and court-approved options.
@@ -258,8 +258,8 @@ In-depth articles on specific topics
 ### Resources Cluster
 Practical resources and support
 
-- **/domestic-abuse-support** - Domestic Abuse Support UK: Help, Resources & MIAM Exemptions
-  Support services, helplines, and information about MIAM exemptions for domestic abuse.
+- **/domestic-abuse-support** - Domestic Abuse Support UK: Complete Guide 2026
+  Comprehensive guide covering: Domestic Abuse Act 2021 Section 1 statutory definition (5 categories of abusive behaviour), coercive control as criminal offence (Serious Crime Act 2015), national helplines (Women's Aid, Men's Advice Line, Galop, Karma Nirvana), MIAM exemption evidence requirements, legal protection orders (non-molestation, occupation, restraining), shuttle mediation option, legal aid eligibility, children's support services. 4 FAQs. 25+ Official Resources. Citations: legislation.gov.uk, Gov.uk, Women's Aid, Refuge. Quality: Q9 (2,100 words).
 
 ---
 
