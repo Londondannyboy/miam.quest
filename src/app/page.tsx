@@ -207,7 +207,7 @@ const howToSchema = {
   "estimatedCost": {
     "@type": "MonetaryAmount",
     "currency": "GBP",
-    "value": "100-150"
+    "value": "115-185"
   },
   "step": [
     {
@@ -225,7 +225,7 @@ const howToSchema = {
     {
       "@type": "HowToStep",
       "name": "Book your MIAM appointment",
-      "text": "Contact the mediator to book your MIAM. Sessions typically last 45-60 minutes and cost £100-£150 (or free with legal aid).",
+      "text": "Contact the mediator to book your MIAM. Sessions typically last 45-60 minutes and cost £115-£185 (or free with legal aid).",
       "position": 3
     },
     {
@@ -459,7 +459,7 @@ export default function HomePage() {
               </div>
 
               <div className="absolute -top-6 -right-6 bg-gradient-to-br from-rose-500 to-pink-600 text-white p-5 rounded-2xl shadow-xl">
-                <div className="text-2xl font-bold">£100-£150</div>
+                <div className="text-2xl font-bold">£115-£185</div>
                 <div className="text-sm text-rose-100">typical cost</div>
               </div>
             </div>
@@ -477,7 +477,7 @@ export default function HomePage() {
               {
                 image: IMAGES.money,
                 title: "Affordable Options",
-                desc: "Typical fee is £100-£150. May be free with legal aid or the Family Mediation Voucher Scheme (£500 available).",
+                desc: "Typical fee is £115-£185. May be free with legal aid or the Family Mediation Voucher Scheme (£500 available).",
                 color: "amber"
               },
               {
@@ -890,7 +890,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
               {
-                price: "£100-£150",
+                price: "£115-£185",
                 title: "Standard MIAM Fee",
                 desc: "Typical cost per person for a single MIAM session with an accredited mediator.",
                 gradient: "from-zinc-100 to-zinc-50 dark:from-zinc-800 dark:to-zinc-900",
