@@ -310,7 +310,7 @@ export function Footer() {
                 className="text-sm hover:text-white transition-colors"
               >
                 <span className="font-medium">{link.label}</span>
-                <span className="text-zinc-500 ml-1">— {link.desc}</span>
+                <span className="text-zinc-300 ml-1">— {link.desc}</span>
               </a>
             ))}
           </div>
@@ -330,11 +330,11 @@ export function Footer() {
         {/* Trust Signals */}
         <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-white mb-8">
           <span>Free MIAM certificate preparation</span>
-          <span className="text-zinc-500">|</span>
+          <span className="text-zinc-400">|</span>
           <span>FMC-accredited mediator connections</span>
-          <span className="text-zinc-500">|</span>
+          <span className="text-zinc-400">|</span>
           <span>MIAM certificate guidance UK</span>
-          <span className="text-zinc-500">|</span>
+          <span className="text-zinc-400">|</span>
           <span>Child-focused approach</span>
         </div>
       </div>

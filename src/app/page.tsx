@@ -159,8 +159,8 @@ const MIAM_EXEMPTIONS = [
 const STATS = [
   { number: "70%", label: "of mediations reach agreement", icon: "✓" },
   { number: "£500", label: "voucher available for eligible families", icon: "💷" },
-  { number: "4 months", label: "MIAM certificate validity period", icon: "📋" },
-  { number: "Free", label: "MIAM certificate preparation help", icon: "🤖" }
+  { number: "4 months", label: "certificate validity period", icon: "📋" },
+  { number: "Free", label: "preparation help with Miam", icon: "🤖" }
 ];
 
 // About Us - Authentic content
@@ -322,9 +322,9 @@ export default function HomePage() {
 
             {/* Heading */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
-              Get Your{" "}
+              Your{" "}
               <span className="bg-gradient-to-r from-rose-200 to-pink-200 bg-clip-text text-transparent">MIAM Certificate</span>{" "}
-              with Confidence
+              Made Easy
             </h1>
 
             {/* Subheading */}
@@ -332,7 +332,7 @@ export default function HomePage() {
               Need a <strong className="text-white">MIAM certificate</strong> for family court? Meet <strong className="text-white">Miam</strong> — your free AI assistant for MIAM and mediation preparation in England &amp; Wales.
             </p>
             <p className="text-lg text-white/70 mb-8">
-              We help you understand the MIAM certificate process, organize your priorities, and feel ready for your mediation journey.
+              We help you understand the process, organize your priorities, and feel ready for your mediation journey.
             </p>
 
             {/* Voice Widget with Instructions */}
@@ -345,7 +345,7 @@ export default function HomePage() {
               />
               <div className="text-white/80 text-sm max-w-xs">
                 <p className="font-semibold text-white mb-1">Talk to Miam</p>
-                <p>Click the microphone to speak. Ask about MIAM certificates, exemptions, costs, or anything about mediation.</p>
+                <p>Click the microphone to speak. Ask about certificates, exemptions, costs, or anything about mediation.</p>
               </div>
             </div>
 
@@ -475,9 +475,9 @@ export default function HomePage() {
 
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                 <Image
-                  src={IMAGES.consultation}
-                  alt="Family mediation consultation - parents discussing child arrangements with a professional mediator"
-                  title="MIAM certificate consultation with family mediator"
+                  src="/miam-certificate-consultation.jpg"
+                  alt="MIAM certificate consultation - family mediator helping parents prepare for mediation"
+                  title="MIAM certificate consultation with accredited family mediator"
                   width={600}
                   height={450}
                   className="object-cover w-full"
