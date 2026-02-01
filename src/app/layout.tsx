@@ -177,7 +177,6 @@ export default function RootLayout({
 
         {/* Preload critical resources */}
         <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
-        <link rel="preload" href="/miam-certificate-consultation.jpg" as="image" type="image/jpeg" />
 
         {/* Favicon */}
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />

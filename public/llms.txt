@@ -79,11 +79,11 @@ Information about Mediation Information Assessment Meetings
 - **/is-miam-compulsory** - Is MIAM Compulsory? When You Must Attend a MIAM UK
   Legal requirements for MIAM attendance, when it's mandatory, exemptions, and consequences of not attending.
 
-- **/miam-meeting** - MIAM Meeting: What to Expect at Your MIAM Appointment
-  Detailed guide to what happens at a MIAM appointment, how to prepare, questions asked, and next steps.
+- **/miam-meeting** - MIAM Meeting UK: Complete Guide 2026
+  Comprehensive guide covering: April 2024 FPR amendments (stricter requirements, Form FM5), what happens at MIAM (6-step process), questions mediators ask, preparation tips, outcomes (mediation/court/undecided). 8 FAQs. 15+ Official Resources. Citations: Family Procedure Rules, Judiciary.uk, FMC, Gov.uk. Quality: Q9 (1,800 words).
 
-- **/form-fm1** - FM1 Form Guide
-  Complete guide to the FM1 form (MIAM certificate), what it looks like, who can issue it, and outcome meanings.
+- **/form-fm1** - FM1 Form UK: Complete Guide 2026
+  Comprehensive guide covering: FM1 vs integrated MIAM certificate distinction, when FM1 is required (parental responsibility, guardianship, special guardianship), 4 FM1 outcomes explained, 4-month validity, FMC accreditation verification. 8 FAQs. 15+ Official Resources. Citations: FM1 official PDF, FPR, FMC, Judiciary.uk. Quality: Q9 (1,600 words).
 
 ### Mediation Cluster
 Family mediation processes, costs, and finding mediators
@@ -198,11 +198,11 @@ Practical guides for separated families
 - **/parenting-plan-template** - Parenting Plan Template UK: Free Guide & Examples
   Templates and examples for creating effective parenting plans.
 
-- **/parallel-parenting** - Parallel Parenting
-  Guide to parallel parenting for high-conflict situations and narcissistic ex-partners.
+- **/parallel-parenting** - Parallel Parenting UK: Complete Guide 2026
+  Comprehensive guide covering: BIFF method (High Conflict Institute), Grey Rock technique, parallel vs co-parenting comparison, communication strategies, court-approved apps (OurFamilyWizard, AppClose), handling narcissistic ex-partners. 7 FAQs. 15+ Official Resources. Citations: Children Act 1989, Cafcass, High Conflict Institute. Quality: Q9 (2,000 words).
 
-- **/supervised-contact** - Supervised Contact
-  Guide to supervised contact, when courts order it, and contact centre visits.
+- **/supervised-contact** - Supervised Contact UK: Complete Guide 2026
+  Comprehensive guide covering: Section 8 Children Act 1989 child arrangements orders, Practice Direction 12J (domestic abuse cases), supervised vs supported contact, NACCC contact centres (350+ nationwide), cost breakdown (free-£150/session), progression pathway to unsupervised. 8 FAQs with legislation.gov.uk citations. 15+ Official Resources. Citations: Children Act 1989, PD12J, NACCC, Cafcass. Quality: Q9 (2,000 words).
 
 - **/co-parenting** - Co-Parenting: Complete UK Guide to Successful Shared Parenting
   Comprehensive guide to co-parenting after separation including communication and schedules.
@@ -210,8 +210,8 @@ Practical guides for separated families
 - **/co-parenting-apps** - Best Co-Parenting Apps UK 2026
   Comparison of co-parenting apps including OurFamilyWizard and court-approved options.
 
-- **/separation-agreement** - Separation Agreement UK
-  Guide to separation agreements for couples separating without immediate divorce.
+- **/separation-agreement** - Separation Agreement UK: Complete Guide 2026
+  Comprehensive guide covering: legal status (not automatically binding but courts give weight), how to make binding via consent order, financial disclosure requirements, costs (DIY £0-50 to solicitor £1,000-4,000+), separation vs divorce comparison, unmarried couples, mediation route. 6 FAQs. 15+ Official Resources. Citations: Family Justice Council, Gov.uk, Citizens Advice. Quality: Q9 (3,400 words).
 
 - **/separation-agreement-template** - Separation Agreement Template UK
   What to include in a separation agreement with template guidance.

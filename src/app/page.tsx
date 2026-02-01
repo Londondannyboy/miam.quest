@@ -322,7 +322,6 @@ export default function HomePage() {
 
             {/* Heading */}
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1]">
-              Your{" "}
               <span className="bg-gradient-to-r from-rose-200 to-pink-200 bg-clip-text text-transparent">MIAM Certificate</span>{" "}
               Made Easy
             </h1>
