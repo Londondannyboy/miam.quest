@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Enable React strict mode for better error detection
+  reactStrictMode: true,
+
   // Experimental features for better performance
   experimental: {
     // Optimize package imports to reduce bundle size
@@ -12,6 +15,8 @@ const nextConfig: NextConfig = {
       "openai",
       "@google/generative-ai",
     ],
+    // Enable optimistic client cache for faster navigation
+    optimisticClientCache: true,
   },
 
   images: {

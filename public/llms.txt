@@ -94,8 +94,8 @@ Family mediation processes, costs, and finding mediators
 - **/family-mediation** - Family Mediation UK: Complete Guide to Resolving Family Disputes
   Comprehensive guide to family mediation for separating couples covering child arrangements and finances.
 
-- **/divorce-mediation** - Divorce Mediation
-  Guide to divorce mediation for financial settlements, property division, pensions, and child arrangements.
+- **/divorce-mediation** - Divorce Mediation UK: Complete Guide 2026
+  Comprehensive guide covering: April 2024 FPR amendments, April 2025 express procedure (under £250k), Form E requirements (29 pages, 35-day deadline), court fees (£313), mediation vs court costs comparison (£1,500-4,000 vs £10,000-30,000+), financial disclosure, pension sharing options, consent orders. 6 FAQs. 20+ Official Resources. Citations: Gov.uk, FMC, Family Court Statistics. Quality: Q9 (2,600 words).
 
 - **/free-mediation** - Free Mediation UK: Complete Guide 2025
   Comprehensive guide to free mediation: Legal aid (income under £2,657/month), voucher scheme (£500, March 2026 extension, 37,700+ families, 70% success). Who qualifies, application process, legal aid vs voucher comparison. Citations: Gov.uk, FMC. Quality: Q9 (2,100 words).
@@ -130,8 +130,8 @@ Family mediation processes, costs, and finding mediators
 - **/kent-family-mediation** - Kent Family Mediation: Find a Mediator Near You
   Finding family mediators in Kent with local services and legal aid options.
 
-- **/shuttle-mediation** - Shuttle Mediation
-  How shuttle mediation works when parties cannot be in the same room.
+- **/shuttle-mediation** - Shuttle Mediation UK: Complete Guide 2026
+  Comprehensive guide covering: safeguarding framework (Judiciary Guide 2024), when shuttle is appropriate (domestic abuse, high conflict, restraining orders), online/video shuttle, hybrid lawyer-assisted mediation, cost comparison (£500-2,000), domestic abuse screening. 5 FAQs. 15+ Official Resources. Citations: Judiciary.uk, FMC Code of Practice, AdviceNow. Quality: Q9 (1,600 words).
 
 - **/workplace-mediation** - Workplace Mediation: Resolve Conflicts at Work
   Guide to workplace mediation compared to grievance procedures.
